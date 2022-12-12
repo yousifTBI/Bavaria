@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.bavaria.ui.home.HomeFragment"
+        android:label="المنتجات"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/sellsID"
+        android:name="com.example.bavaria.ui.gallery.GalleryFragment"
+        android:label="المبيعات"
+        tools:layout="@layout/fragment_gallery" />
+
+
+    <fragment
+        android:id="@+id/clientsId"
+        android:name="com.example.bavaria.ui.gallery.GalleryFragment"
+        android:label="العملاء"
+        tools:layout="@layout/fragment_gallery" />
+
+    <fragment
+        android:id="@+id/receiptstatus"
+        android:name="com.example.bavaria.ui.slideshow.SlideshowFragment"
+        android:label="الايصالات"
+        tools:layout="@layout/fragment_slideshow" />
+    <fragment
+        android:id="@+id/sendsellsFragment"
+        android:name="com.example.bavaria.SellsFragment"
+        android:label="ارسال الايصالات"
+        tools:layout="@layout/fragment_sells" />
+  <fragment
+        android:id="@+id/sellsFragment"
+        android:name="com.example.bavaria.SellsFragment"
+        android:label="حالة الايصال"
+        tools:layout="@layout/fragment_sells" />
+    <fragment
+        android:id="@+id/companyDataFragment"
+        android:name="com.example.bavaria.CompanyDataFragment"
+        android:label="بيانات الشركة"
+        tools:layout="@layout/fragment_company_data" />
+    <fragment
+        android:id="@+id/usersFragment"
+        android:name="com.example.bavaria.UsersFragment"
+        android:label="المستخدمين"
+        tools:layout="@layout/fragment_users" />
+    <fragment
+        android:id="@+id/logoutFragment"
+        android:name="com.example.bavaria.LogoutFragment"
+        android:label="تسجيل خروج"
+        tools:layout="@layout/fragment_logout" />
+</navigation>
