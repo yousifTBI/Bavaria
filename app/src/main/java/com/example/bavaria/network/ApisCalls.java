@@ -48,6 +48,11 @@ public interface ApisCalls {
     Observable<Task3<LoginModel>>LoginAPI(@Body HashMap s);
 
 //
+
+    @Headers("Content-Type: application/json")
+    @POST("api/Account/Login")
+    Observable<Task3<LoginModel>>LoginAPI444444(@Body HashMap s);
+
 //    @Headers("Content-Type: application/json")
 //    @GET("api/Account/GetItems")
 //    Observable<Task4<ItemsModel>> GetItemsAPI(@Query("comID") String ComID);
