@@ -10,8 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bavaria.R;
-import com.example.bavaria.pojo.classes.ItemDatum;
-import com.example.bavaria.pojo.classes.models.Items;
 import com.example.bavaria.ui.roomContacts.productRoom.ItemsBill;
 
 import java.util.ArrayList;

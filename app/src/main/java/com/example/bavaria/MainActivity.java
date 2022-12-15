@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -20,12 +21,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.bavaria.databinding.ActivityMainBinding;
+import com.example.bavaria.ui.home.HomeViewModel;
 import com.example.bavaria.ui.roomContacts.ContactsDatabase;
 import com.example.bavaria.ui.roomContacts.ContactsRoom;
 import com.example.bavaria.ui.roomContacts.productRoom.Products;
@@ -50,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
     Dialog dialog;
     String  barcode="";
     OnClic onClic;
+    HomeViewModel homeViewModel;
+
 
     typebill item =new typebill();
 
@@ -67,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        homeViewModel = new ViewModelProvider(MainActivity.this).get(HomeViewModel.class);
 
 
         Toast.makeText(this, "here", Toast.LENGTH_SHORT).show();
@@ -86,6 +92,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         FloatingActionButton floatingActionButton = findViewById(R.id.addProductFAB);
+
+
+
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -191,6 +200,17 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+    // @Override
+    // public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    //     switch(item.getItemId())
+    //     {
+    //         case R.id.action_settings:
+    //             homeViewModel.getItems("3",getApplicationContext());
+    //             break;
+////
+    //     }
+    //     return true;
+    // }
 
 
     @Override
@@ -297,6 +317,7 @@ public class MainActivity extends AppCompatActivity {
 
            if (e.getAction() == KeyEvent.ACTION_DOWN) {
                // getItem(e.toString().trim());
+             //  homeViewModel.setQr("kk");
                //Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
              //  Log.i("TAG", "dispatchKeyEvent: " + e.toString());
                char pressedKey = (char) e.getUnicodeChar();
@@ -311,7 +332,9 @@ public class MainActivity extends AppCompatActivity {
              //  Log.d("TAG", barcode.trim());
             //  onClic.getQR(barcode);
               // Toast.makeText(this," QR", Toast.LENGTH_SHORT).show();
+               homeViewModel.setQr(barcode);
                barcode = "";
+
                //String curText =  textview.getText();
 
 

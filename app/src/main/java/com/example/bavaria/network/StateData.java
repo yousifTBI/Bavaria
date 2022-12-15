@@ -13,6 +13,20 @@ public class StateData<T> {
     @Nullable
     private Throwable error;
 
+    @Nullable
+    private String Problem;
+
+    @Nullable
+    public String getProblem() {
+        this.data = null;
+        this.error = null;
+        return Problem;
+    }
+
+    public StateData<String> setProblem(@Nullable String problem) {
+        Problem = problem;
+        return null;
+    }
 
     public StateData() {
         this.status = DataStatus.CREATED;
