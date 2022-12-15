@@ -160,27 +160,39 @@ public class SlideshowViewModel extends ViewModel {
 
             @Override
             public void onNext(@NonNull BillReturn billReturn) {
-                for (String p:billReturn.getQrCode()) {
-                    Log.d("onSuccess",p);
-                }
-                for (String p:billReturn.getErrorMessage()) {
-                    Log.d("onSuccess",p);
-                }
+                Log.d("Loginchhf2",billReturn.getStatus());
 
-                Log.d("onSuccess", billReturn.getStatus()+"1");
-             //  if (billReturn.getStatus()=="submitted"){
-             //      //delete();
+              if (billReturn.getSubmitionID()=="2"){
+                  Log.d("Loginchhf2",billReturn.getSubmitionID());
+                  Log.d("Loginchhf2",billReturn.getStatus());
+              }else {
+                  Log.d("Loginchhf2",billReturn.getSubmitionID());
+
+                  for (String p:billReturn.getQrCode()) {
+                      Log.d("onSuccess",p);
+                  }
+                  for (String p:billReturn.getErrorMessage()) {
+                      Log.d("onSuccess",p);
+                  }
+
+                  Log.d("onSuccess", billReturn.getStatus()+"1");
+                  //  if (billReturn.getStatus()=="submitted"){
+                  //      //delete();
                   stateBranchLiveData2.setValue(new StateData().success("تم ارسال الفواتير"));
-             //  }
-             //   stateBranchLiveData2.setValue(new StateData().success("يوجد مشاكل فى الفاتوره"));
-                Log.d("onSuccess",billReturn.getSubmitionID()+"2");
-                Log.d("onSuccess",billReturn.getSubmitted()+"3");
-              //  delete();
+                  //  }
+                  //   stateBranchLiveData2.setValue(new StateData().success("يوجد مشاكل فى الفاتوره"));
+                  Log.d("onSuccess",billReturn.getSubmitionID()+"2");
+                  Log.d("onSuccess",billReturn.getSubmitted()+"3");
+                  //  delete();
+              }
+
             }
 
             @Override
             public void onError(@NonNull Throwable e) {
                 stateBranchLiveData2.setValue(new StateData().error( e));
+                Log.d("Loginchhf2",e.getMessage());
+
                 Log.d("onSuccess", e.getMessage());
             }
 

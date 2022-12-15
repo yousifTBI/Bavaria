@@ -29,6 +29,8 @@ import com.example.bavaria.pojo.classes.ItemDatum;
 import com.example.bavaria.pojo.classes.Root;
 import com.example.bavaria.pojo.models.BillReturn;
 import com.example.bavaria.pojo.models.Items;
+import com.example.bavaria.pojo.models.Task3;
+import com.example.bavaria.ui.roomContacts.AccountInfo.LoginModel;
 import com.example.bavaria.ui.roomContacts.ContactsDatabase;
 import com.example.bavaria.ui.roomContacts.HeaderBill;
 import com.example.bavaria.ui.roomContacts.backup.HeaderBackup;
@@ -48,6 +50,7 @@ import com.journeyapps.barcodescanner.BarcodeEncoder;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -59,6 +62,7 @@ import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.core.SingleObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class HomeFragment extends Fragment implements OnClic {
 
@@ -79,6 +83,10 @@ public class HomeFragment extends Fragment implements OnClic {
         homeViewModel = new ViewModelProvider(getActivity()).get(HomeViewModel.class);
         binding.setLifecycleOwner(this);
         homeViewModel.getItemsOnline(getContext());
+        HashMap<String,String>ss=new HashMap<>();
+
+        ss.put("a","1524");
+        LoginFun("1524");
 
         homeViewModel.qr.observe(getActivity(), new androidx.lifecycle.Observer<String>() {
             @Override
@@ -1202,5 +1210,39 @@ public class HomeFragment extends Fragment implements OnClic {
     public void getQR(String QR) {
 
         Toast.makeText(getActivity(), QR, Toast.LENGTH_SHORT).show();
+    }
+
+    public void LoginFun(String s ){
+        Log.d("Login", "cf");
+
+        Observable observable = RetrofitRefranc.getInstance()
+                .getApiCalls()
+                .LoginAPI(s)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+        Observer<Task3<LoginModel>> observer=new Observer<Task3<LoginModel>>() {
+            @Override
+            public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(@io.reactivex.rxjava3.annotations.NonNull Task3<LoginModel> loginModelTask3) {
+                Log.d("Loginchhf", loginModelTask3.Message+"cf");
+
+
+            }
+
+            @Override
+            public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+                Log.d("Loginchhf", e.getMessage()+"chhf");
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        };
+        observable.subscribe(observer);
     }
 }

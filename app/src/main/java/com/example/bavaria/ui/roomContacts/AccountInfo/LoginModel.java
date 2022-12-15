@@ -81,19 +81,19 @@ public class LoginModel {
     String TypeVersion;
 
     @ColumnInfo(name = "SendToEtaWay")
-    String SendToEtaWay;
+    int SendToEtaWay;
 
     @ColumnInfo(name = "SendWayName")
     String SendWayName;
 
     @ColumnInfo(name = "ItemFlag")
-    String ItemFlag;
+    int  ItemFlag;
 
     @ColumnInfo(name = "ItemFlagName")
     String ItemFlagName;
 
     @ColumnInfo(name = "PriceFlag")
-    String PriceFlag;
+    int PriceFlag;
 
     @ColumnInfo(name = "PriceFlagName")
     String PriceFlagName;

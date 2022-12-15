@@ -271,7 +271,7 @@ MutableLiveData <StateData<String> >stateItemsLiveData =new MutableLiveData<>();
         };
         observable.subscribe(observer);
     }
-    public void LoginFun(HashMap s ){
+    public void LoginFun(String s ){
         Log.d("Login", "cf");
 
         Observable observable = RetrofitRefranc.getInstance()
