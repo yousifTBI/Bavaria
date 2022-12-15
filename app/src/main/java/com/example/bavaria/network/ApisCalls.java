@@ -47,7 +47,6 @@ public interface ApisCalls {
     @POST("api/Account/Login")
     Observable<Task3<LoginModel>>LoginAPI(@Body String s);
 
-//
 
 
 
