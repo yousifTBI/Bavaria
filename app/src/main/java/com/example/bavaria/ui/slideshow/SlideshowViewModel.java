@@ -5,18 +5,16 @@ import static io.reactivex.rxjava3.schedulers.Schedulers.io;
 
 import android.content.Context;
 import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.bavaria.network.RetrofitRefranc;
+import com.example.bavaria.network.StateData;
 import com.example.bavaria.pojo.classes.ItemDatum;
 import com.example.bavaria.pojo.classes.Receipts;
 import com.example.bavaria.pojo.classes.Root;
-import com.example.bavaria.pojo.classes.models.BillReturn;
+import com.example.bavaria.pojo.models.BillReturn;
 import com.example.bavaria.ui.roomContacts.ContactsDatabase;
 import com.example.bavaria.ui.roomContacts.HeaderBill;
 import com.example.bavaria.ui.roomContacts.productRoom.ItemsBill;
@@ -26,14 +24,10 @@ import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
-import io.reactivex.rxjava3.core.CompletableObserver;
 import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.core.ObservableEmitter;
-import io.reactivex.rxjava3.core.ObservableOnSubscribe;
 import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.core.SingleObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class SlideshowViewModel extends ViewModel {
 
@@ -151,7 +145,10 @@ public class SlideshowViewModel extends ViewModel {
 //                .subscribe();
 
     }
+
+    MutableLiveData <StateData<String>>stateBranchLiveData2 =new MutableLiveData<>();
     public void sendList(Receipts r){
+        stateBranchLiveData2.setValue(new StateData().loading());
         Observable GetTransactions= RetrofitRefranc.getInstance().getApiCalls().SetListBill(r)
                 .subscribeOn(io())
                 .observeOn(AndroidSchedulers.mainThread());
@@ -170,16 +167,23 @@ public class SlideshowViewModel extends ViewModel {
                     Log.d("onSuccess",p);
                 }
 
-                Log.d("onSuccess", billReturn.getStatus()+"");
-                Log.d("onSuccess",billReturn.getSubmitionID()+"");
-                Log.d("onSuccess",billReturn.getSubmitted()+"");
-                delete();
+                Log.d("onSuccess", billReturn.getStatus()+"1");
+             //  if (billReturn.getStatus()=="submitted"){
+             //      //delete();
+                  stateBranchLiveData2.setValue(new StateData().success("تم ارسال الفواتير"));
+             //  }
+             //   stateBranchLiveData2.setValue(new StateData().success("يوجد مشاكل فى الفاتوره"));
+                Log.d("onSuccess",billReturn.getSubmitionID()+"2");
+                Log.d("onSuccess",billReturn.getSubmitted()+"3");
+              //  delete();
             }
 
             @Override
             public void onError(@NonNull Throwable e) {
+                stateBranchLiveData2.setValue(new StateData().error( e));
                 Log.d("onSuccess", e.getMessage());
             }
+
 
             @Override
             public void onComplete() {

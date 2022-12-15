@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,10 +17,11 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.bavaria.databinding.FragmentSlideshowBinding;
 import com.example.bavaria.network.RetrofitRefranc;
+import com.example.bavaria.network.StateData;
 import com.example.bavaria.pojo.classes.ItemDatum;
 import com.example.bavaria.pojo.classes.Receipts;
 import com.example.bavaria.pojo.classes.Root;
-import com.example.bavaria.pojo.classes.models.BillReturn;
+import com.example.bavaria.pojo.models.BillReturn;
 import com.example.bavaria.ui.home.HomeViewModel;
 import com.example.bavaria.ui.roomContacts.ContactsDatabase;
 import com.example.bavaria.ui.roomContacts.HeaderBill;
@@ -58,7 +58,7 @@ public class SlideshowFragment extends Fragment implements OnClic {
         //     bind  ing.getRoot();
         //  getRoom();
         // getRoom();
-        getRoom();
+      //  getRoom();
         binding.setLifecycleOwner(this);
         getRoot();
          slideshowViewModel.getHeadersBill(getActivity());
@@ -74,8 +74,12 @@ public class SlideshowFragment extends Fragment implements OnClic {
         slideshowViewModel.liveDataHeaderBill.observe(getViewLifecycleOwner(), new Observer<List<HeaderBill>>() {
             @Override
             public void onChanged(List<HeaderBill> headerBills) {
-                if (headerBills.get(0).getBillNumber().isEmpty() && headerBills.get(0).getBillNumber() == null) {
-                    Toast.makeText(getContext(), "null", Toast.LENGTH_SHORT).show();
+                if (headerBills==null) {
+                    List<HeaderBill> list=new ArrayList<>();
+               //     adabter.setList(list);
+                    adabter.notifyDataSetChanged();
+                    binding.recyclerView.setAdapter(adabter);
+                    //Toast.makeText(getContext(), "null", Toast.LENGTH_SHORT).show();
                 } else {
 
                     adabter.setList(headerBills);
@@ -115,14 +119,47 @@ public class SlideshowFragment extends Fragment implements OnClic {
                   Log.d("onSuccess", "4" + gson.toJson(receipts));
                   slideshowViewModel.sendList(receipts);
 
-               delete();
+           //    delete();
+              slideshowViewModel.  stateBranchLiveData2.observe(getViewLifecycleOwner(), new Observer<StateData<String>>() {
+                  @Override
+                  public void onChanged(StateData<String> stringStateData) {
+                      switch (stringStateData.getStatus()) {
+                           case SUCCESS:
+                               List<HeaderBill> list=new ArrayList<>();
+                               adabter.setList(list);
+                               adabter.notifyDataSetChanged();
+                               binding.recyclerView.setAdapter(adabter);
+                               delete();
+                               Toast.makeText(getContext(), stringStateData.getData(), Toast.LENGTH_SHORT).show();
+                               Toast.makeText(getContext(), stringStateData.getData(), Toast.LENGTH_SHORT).show();
 
+                               break;
+                           case ERROR:
+                               List<HeaderBill> list2=new ArrayList<>();
+                         //     adabter.setList(list2);
+                               adabter.notifyDataSetChanged();
+                               binding.recyclerView.setAdapter(adabter);
+                              // delete();
+                               Toast.makeText(getContext(), "الانترنيت ضعيف او غير متصل --او ربما يوجد مشاكل فى السيرفر", Toast.LENGTH_SHORT).show();
+                               Toast.makeText(getContext(), "الانترنيت ضعيف او غير متصل --او ربما يوجد مشاكل فى السيرفر", Toast.LENGTH_SHORT).show();
+                               break;
+                          case LOADING:
+
+                          case COMPLETE:
+
+
+                      }
+                   //   Toast.makeText(getContext(), stringStateData., Toast.LENGTH_SHORT).show();
+                  }
+              });
 
 
                slideshowViewModel.liveDataHeaderBill.setValue(null);
+              // slideshowViewModel.liveDataHeaderBill.ZZZ
                //homeViewModel.liveDataHeaderBill
-                adabter.notifyDataSetChanged();
-
+               adabter.notifyDataSetChanged();
+             //  adabter.notify();
+//
                 binding.recyclerView.setAdapter(adabter);
 
 
@@ -151,13 +188,13 @@ public class SlideshowFragment extends Fragment implements OnClic {
         return binding.getRoot();
     }
 
-    public void delete(){
-        ContactsDatabase contactsDatabase = ContactsDatabase.getGetInstance(getContext());
-        contactsDatabase.headerBillDao().delete().subscribeOn(computation())
-//                .subscribeOn(computation())
-                .observeOn(computation())
-                .subscribe();
-    }
+  public void delete(){
+      ContactsDatabase contactsDatabase = ContactsDatabase.getGetInstance(getContext());
+      contactsDatabase.headerBillDao().delete().subscribeOn(computation())
+                .subscribeOn(computation())
+              .observeOn(computation())
+              .subscribe();
+  }
     public void getRoot() {
         ContactsDatabase contactsDatabase = ContactsDatabase.getGetInstance(getContext());
         contactsDatabase.headerBillDao().getHeaderBill()

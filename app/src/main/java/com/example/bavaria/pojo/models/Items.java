@@ -1,4 +1,4 @@
-package com.example.bavaria.pojo.classes.models;
+package com.example.bavaria.pojo.models;
 
 
 import ir.mirrajabi.searchdialog.core.Searchable;

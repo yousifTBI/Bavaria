@@ -7,7 +7,6 @@ import static io.reactivex.rxjava3.schedulers.Schedulers.io;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
 import android.os.Build;
 import android.util.Log;
 import android.widget.Toast;
@@ -18,7 +17,10 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.bavaria.network.RetrofitRefranc;
 import com.example.bavaria.network.StateData;
+import com.example.bavaria.ui.roomContacts.onlineProduct.ItemsModel;
+import com.example.bavaria.pojo.TaskAPI;
 import com.example.bavaria.pojo.classes.Beneficiary;
 import com.example.bavaria.pojo.classes.BranchAddress;
 import com.example.bavaria.pojo.classes.Buyer;
@@ -33,12 +35,14 @@ import com.example.bavaria.pojo.classes.Root;
 import com.example.bavaria.pojo.classes.Seller;
 import com.example.bavaria.pojo.classes.TaxTotal;
 import com.example.bavaria.pojo.classes.TaxableItem;
-import com.example.bavaria.pojo.classes.models.Items;
-import com.example.bavaria.pojo.classes.models.Product;
+import com.example.bavaria.pojo.models.BillReturn;
+import com.example.bavaria.pojo.models.Items;
 import com.example.bavaria.ui.roomContacts.ContactsDatabase;
 import com.example.bavaria.ui.roomContacts.HeaderBill;
 import com.example.bavaria.ui.roomContacts.backup.HeaderBackup;
 import com.example.bavaria.ui.roomContacts.backup.ItemsBackup;
+import com.example.bavaria.ui.roomContacts.onlineBill.HeaderBillOnline;
+import com.example.bavaria.ui.roomContacts.onlineBill.ItemsBillOnlin;
 import com.example.bavaria.ui.roomContacts.productRoom.ItemsBill;
 import com.example.bavaria.ui.roomContacts.productRoom.Products;
 import com.example.bavaria.ui.slideshow.OnClic;
@@ -48,14 +52,10 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.CompletableObserver;
@@ -63,14 +63,27 @@ import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.ObservableEmitter;
 import io.reactivex.rxjava3.core.ObservableOnSubscribe;
 import io.reactivex.rxjava3.core.Observer;
+import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.core.SingleObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import ir.mirrajabi.searchdialog.SimpleSearchDialogCompat;
 import ir.mirrajabi.searchdialog.core.BaseSearchDialogCompat;
 import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 
 public class HomeViewModel extends ViewModel  {
+
+    MutableLiveData<String>qr=new  MutableLiveData<String>() ;
+
+    public MutableLiveData<String> getQr() {
+        return qr;
+    }
+
+    public void setQr(String qr) {
+        this.qr.setValue(qr);
+    }
+
     OnClic onClic;
 
     public OnClic getOnClic() {
@@ -82,23 +95,23 @@ public class HomeViewModel extends ViewModel  {
     }
 
     ArrayList<ItemDatum> itemData=new ArrayList<>();
-    MutableLiveData <Items> itemsList=new MutableLiveData<>();
-    MutableLiveData <List<Items>> itemsList1=new MutableLiveData<>();
+    MutableLiveData <ItemsModel> itemsList=new MutableLiveData<>();
+    MutableLiveData <List<ItemsModel>> itemsList1=new MutableLiveData<>();
 
-   public MutableLiveData<List<Items>> getItemsList1() {
-       return itemsList1;
-   }
-
-   public void setItemsList1(List<Items> itemsList1) {
-       this.itemsList1.setValue(itemsList1);// = itemsList1;
-   }
-
-    public MutableLiveData<Items> getItemsList() {
+    public MutableLiveData<ItemsModel> getItemsList() {
         return itemsList;
     }
 
-    public void setItemsList(MutableLiveData<Items> itemsList) {
+    public void setItemsList(MutableLiveData<ItemsModel> itemsList) {
         this.itemsList = itemsList;
+    }
+
+    public MutableLiveData<List<ItemsModel>> getItemsList1() {
+        return itemsList1;
+    }
+
+    public void setItemsList1(MutableLiveData<List<ItemsModel>> itemsList1) {
+        this.itemsList1 = itemsList1;
     }
 
     private final MutableLiveData<String> mText;
@@ -106,17 +119,64 @@ public class HomeViewModel extends ViewModel  {
     public HomeViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("This is home fragment");
+
     }
 
+    public void Send(Root r,  HeaderBillOnline HeaderOnline,ArrayList<ItemsBillOnlin> postitem, Context context) {
+        //  Gson g=new Gson();
+        //  g.toJson(r);
+        //  Log.d("onSuccess", g.toJson(r));
+        Single ss = RetrofitRefranc.getInstance().getApiCalls().getProductm(r)
+                .subscribeOn(io())
+                .observeOn(AndroidSchedulers.mainThread());
+        SingleObserver<BillReturn> singleObserver = new SingleObserver<BillReturn>() {
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
 
-   void provideSimpleDialog(Context context) {
+            }
+
+            @Override
+            public void onSuccess(@NonNull BillReturn billReturn) {
+                if (billReturn.getStatus()=="submitted"){
+
+                }else {
+                  headBillRoomOnline(HeaderOnline,postitem,context);
+                }
+                //binding.progressBar2.setVisibility(View.GONE);
+
+                for (String p : billReturn.getQrCode()) {
+                    Log.d("onSuccess1", p);
+                }
+                for (String p : billReturn.getErrorMessage()) {
+                    Log.d("onSuccess1", p);
+                }
+                Log.d("onSuccess1",billReturn.getStatus()+"Status");
+                Log.d("onSuccess1",billReturn.getSubmitionID()+"SubmitionID");
+                Log.d("onSuccess1",billReturn.getSubmitted()+"Submitted");
+
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+                headBillRoomOnline(HeaderOnline,postitem,context);
+
+                Log.d("onSuccess", e.getMessage());
+
+            }
+        };
+        ss.subscribe(singleObserver);
+    }
+
+  ArrayList<ItemsModel> itemsModels1=new ArrayList<>();
+
+    void provideSimpleDialog(Context context) {
        SimpleSearchDialogCompat dialog = new SimpleSearchDialogCompat(context, "Search...",
-               "What are you looking for...?", null, createSampleData(),
-               new SearchResultListener<Items>() {
+               "What are you looking for...?", null, itemsModels1,
+               new SearchResultListener<ItemsModel>() {
                    @Override
-                   public void onSelected(BaseSearchDialogCompat dialog, Items item, int position) {
-                   //  Toast.makeText(context, item.getTax()+"", Toast.LENGTH_SHORT).show();
-                       itemsList.setValue(item);
+                   public void onSelected(BaseSearchDialogCompat dialog, ItemsModel item, int position) {
+                // Toast.makeText(context, item.getTax()+"ء", Toast.LENGTH_SHORT).show();
+                        itemsList.setValue(item);
                      //  onClic.getQR("d");
                       // itemsList1.setValue(new L);
                                //.add(item);
@@ -164,6 +224,51 @@ public class HomeViewModel extends ViewModel  {
         bill.setUnitPrice(price);
         bill.setIDBill(ID);
         return bill;
+    }
+    public ItemsBillOnlin setItemsRoomOnline(String nameItem,Double price,String ID ,String itemId){
+        ItemsBillOnlin bill=new ItemsBillOnlin();
+        bill.setPName(nameItem);
+        bill.setItemID(itemId);
+        bill.setUnitPrice(price);
+        bill.setIDBill(ID);
+        return bill;
+    }
+
+    public void getItems(String ComID,Context context){
+        Log.d("log","l");
+
+        Observable observable = RetrofitRefranc.getInstance()
+                .getApiCalls()
+                .GetItemsAPI(ComID)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+        Observer<TaskAPI<ItemsModel>> observer= new Observer<TaskAPI<ItemsModel>>() {
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+                Log.d("log","l");
+
+            }
+
+            @Override
+            public void onNext(@NonNull TaskAPI<ItemsModel> itemsModelTask4) {
+
+                setItemsOnline( itemsModelTask4.getData(),context);
+                Log.d("log",itemsModelTask4.State+"l");
+
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+                Log.d("log",e.getMessage());
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        } ;
+        observable.subscribe(observer);
     }
 
     public ItemDatum getItems(Double Quantity, double unitPrice,
@@ -363,6 +468,7 @@ public class HomeViewModel extends ViewModel  {
                 "6 Oct",
                 "Hyaber",
                 "1",
+
                 "",
                 "",
                 "",
@@ -458,7 +564,7 @@ public class HomeViewModel extends ViewModel  {
 
         //toGet
         String Number = sharedPreferenclanguageg.getString("NumberOFBill", "900");
-        Toast.makeText(context, Number, Toast.LENGTH_SHORT).show();
+     //   Toast.makeText(context, Number, Toast.LENGTH_SHORT).show();
         int newNumber=Integer.valueOf(Number)+1;
         //ToPost
         editsg.putString("NumberOFBill",String.valueOf(newNumber));
@@ -551,7 +657,49 @@ public class HomeViewModel extends ViewModel  {
 
  //  }
 
+
+
+    public HeaderBackup getHeaderBackup(String uuID,
+                                        String numberRicet,
+                                        String TimeRicet,
+                                        Double Tax,
+                                        Double price,
+                                        Double totalPrice,
+                                        String link
+
+                                        ){
+        HeaderBackup headerBill = new HeaderBackup();
+        headerBill.setUUID(uuID);
+        headerBill.setBillNumber(numberRicet);
+        headerBill.setInvoiceDate(TimeRicet);
+        headerBill.setTax(Tax);
+        headerBill.setNetPrice(price);
+        headerBill.setTotalPrice(totalPrice);
+        headerBill.setLink(link);
+        return headerBill;
+    }
+
+    public HeaderBillOnline getHeaderOnline(String uuID,
+                                        String numberRicet,
+                                        String TimeRicet,
+                                        Double Tax,
+                                        Double price,
+                                        Double totalPrice,
+                                        String link
+
+    ){
+        HeaderBillOnline headerBill = new HeaderBillOnline();
+        headerBill.setUUID(uuID);
+        headerBill.setBillNumber(numberRicet);
+        headerBill.setInvoiceDate(TimeRicet);
+        headerBill.setTax(Tax);
+        headerBill.setNetPrice(price);
+        headerBill.setTotalPrice(totalPrice);
+        headerBill.setLink(link);
+        return headerBill;
+    }
     public MutableLiveData<StateData<String>>setheadBill=new MutableLiveData<>();
+
 
     public void headBill(HeaderBill post, ArrayList<ItemsBill> postitem,Context context) {
 
@@ -681,6 +829,47 @@ public class HomeViewModel extends ViewModel  {
 
     }
 
+    public void setItemsOnline(List<ItemsModel> itemsOnline,Context context){
+        ContactsDatabase postsDataBass = ContactsDatabase.getGetInstance(context);
+        postsDataBass.itemOnlineDao().insertAllOrders(itemsOnline)
+                .subscribeOn(computation()).subscribe(new CompletableObserver() {
+                    @Override
+                    public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                        Log.d("log","sssssss");
+                    }
+
+                    @Override
+                    public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+                        Log.d("log",e.getMessage());
+                    }
+                });
+    }
+    public void getItemsOnline(Context context){
+        ContactsDatabase postsDataBass = ContactsDatabase.getGetInstance(context);
+        postsDataBass.itemOnlineDao().getContacts()
+                .subscribeOn(computation()).subscribe(new SingleObserver<List<ItemsModel>>() {
+                    @Override
+                    public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(@io.reactivex.rxjava3.annotations.NonNull List<ItemsModel> itemsModels) {
+                        itemsModels1= (ArrayList<ItemsModel>) itemsModels;
+                    }
+
+                    @Override
+                    public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+
+                    }
+                });
+    }
     public void setBillRoomBackup(ItemsBackup post,Context context) {
 
         //  postsDataBass.contactsDao().insertContacts()
@@ -769,4 +958,91 @@ public class HomeViewModel extends ViewModel  {
     // SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault());
     // String formattedDate = df.format(c);
     // Log.d("onSuccess",formattedDate);
+
+
+    public void headBillRoomOnline(HeaderBillOnline post, ArrayList<ItemsBillOnlin> postitem, Context context) {
+
+        ContactsDatabase postsDataBass = ContactsDatabase.getGetInstance(context);
+       // postsDataBass.HeaderBackupDao().insertHeaderBill(post)
+        postsDataBass.headerBillOnlineDao().insertHeaderBill(post)
+                .subscribeOn(computation())
+                .subscribe(new CompletableObserver() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                        setheadBillRoomBackup.postValue( new StateData().loading());
+
+                    }
+                    @Override
+                    public void onComplete() {
+
+
+                        Observable ob = Observable.create(new ObservableOnSubscribe<ItemsBillOnlin>() {
+                                    @Override
+                                    public void subscribe(@NonNull ObservableEmitter<ItemsBillOnlin> emitter) throws Exception {
+
+                                        ArrayList<ItemsBillOnlin> postArrayList = postitem;
+                                        for (ItemsBillOnlin x : postArrayList) {
+                                            emitter.onNext(x);
+
+                                        }
+                                    }
+                                }).subscribeOn(io())
+                                .observeOn(computation());
+
+                        Observer obs = new Observer<ItemsBillOnlin>() {
+                            @Override
+                            public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
+
+                            }
+
+                            @Override
+                            public void onNext(@io.reactivex.rxjava3.annotations.NonNull ItemsBillOnlin itemsBillOnlin) {
+                                setBillRoomOnline(itemsBillOnlin, context);
+                            }
+
+                            @Override
+                            public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+
+                            }
+
+                            @Override
+                            public void onComplete() {
+
+                            }
+
+                        };
+                        ob.subscribe(obs);
+                    }
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                    }
+                });
+
+    }
+
+    public void setBillRoomOnline(ItemsBillOnlin post,Context context) {
+
+        ContactsDatabase postsDataBass = ContactsDatabase.getGetInstance(context);
+       // postsDataBass.ItemBackupDao().insertContacts(post)
+        postsDataBass.itemsBillOnlineDao().insertContacts( post)
+                .subscribeOn(computation())
+                .subscribe(new CompletableObserver() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+                       // setheadBillRoomBackup.postValue( new StateData().complete());
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Log.d("onSuccess",e.getMessage());
+                    }
+                });
+    }
+
+
 }

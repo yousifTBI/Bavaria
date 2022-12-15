@@ -1,15 +1,14 @@
 package com.example.bavaria.network;
 
 
+import com.example.bavaria.ui.roomContacts.onlineProduct.ItemsModel;
+import com.example.bavaria.pojo.TaskAPI;
 import com.example.bavaria.pojo.classes.Receipts;
 import com.example.bavaria.pojo.classes.Root;
-import com.example.bavaria.pojo.classes.models.BillReturn;
-
-import java.util.HashMap;
+import com.example.bavaria.pojo.models.BillReturn;
 
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
-import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
@@ -114,4 +113,7 @@ public interface ApisCalls {
     @Headers("Content-Type: application/json")
     @POST("api2/AndroidReciets/SetListBill")
     Observable<BillReturn> SetListBill(@Body Receipts root);
+    @Headers("Content-Type: application/json")
+    @GET("api/Account/GetItems")
+    Observable<TaskAPI<ItemsModel>> GetItemsAPI(@Query("ComID") String ComID);
 }

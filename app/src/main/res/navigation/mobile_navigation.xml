@@ -31,12 +31,12 @@
         tools:layout="@layout/fragment_slideshow" />
     <fragment
         android:id="@+id/sendsellsFragment"
-        android:name="com.example.bavaria.SellsFragment"
+        android:name="com.example.bavaria.ui.billsOnline.SellsFragment"
         android:label="ارسال الايصالات"
         tools:layout="@layout/fragment_sells" />
   <fragment
         android:id="@+id/sellsFragment"
-        android:name="com.example.bavaria.SellsFragment"
+        android:name="com.example.bavaria.ui.billsOnline.SellsFragment"
         android:label="حالة الايصال"
         tools:layout="@layout/fragment_sells" />
     <fragment

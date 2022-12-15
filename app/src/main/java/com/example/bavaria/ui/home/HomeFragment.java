@@ -1,50 +1,44 @@
 package com.example.bavaria.ui.home;
 
-import static android.content.Context.MODE_PRIVATE;
 import static com.example.bavaria.print.Print_c.textAsBitmap;
 import static io.reactivex.rxjava3.schedulers.Schedulers.computation;
 import static io.reactivex.rxjava3.schedulers.Schedulers.io;
 
-import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.bavaria.Bluetoothprint.PrintBluetooth;
-import com.example.bavaria.MainActivity;
 import com.example.bavaria.databinding.FragmentHomeBinding;
 
 import com.example.bavaria.network.RetrofitRefranc;
 import com.example.bavaria.network.StateData;
 import com.example.bavaria.pojo.classes.ItemDatum;
 import com.example.bavaria.pojo.classes.Root;
-import com.example.bavaria.pojo.classes.models.BillReturn;
-import com.example.bavaria.pojo.classes.models.Items;
+import com.example.bavaria.pojo.models.BillReturn;
+import com.example.bavaria.pojo.models.Items;
 import com.example.bavaria.ui.roomContacts.ContactsDatabase;
 import com.example.bavaria.ui.roomContacts.HeaderBill;
+import com.example.bavaria.ui.roomContacts.backup.HeaderBackup;
 import com.example.bavaria.ui.roomContacts.backup.ItemsBackup;
+import com.example.bavaria.ui.roomContacts.onlineBill.HeaderBillOnline;
+import com.example.bavaria.ui.roomContacts.onlineBill.ItemsBillOnlin;
+import com.example.bavaria.ui.roomContacts.onlineProduct.ItemsModel;
 import com.example.bavaria.ui.roomContacts.productRoom.ItemsBill;
-import com.example.bavaria.ui.roomContacts.productRoom.Products;
 import com.example.bavaria.ui.slideshow.OnClic;
-import com.google.gson.Gson;
+import com.example.bavaria.ui.utils.SharedPreferencesCom;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
@@ -54,11 +48,7 @@ import com.journeyapps.barcodescanner.BarcodeEncoder;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.CompletableObserver;
@@ -69,7 +59,6 @@ import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.core.SingleObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class HomeFragment extends Fragment implements OnClic {
 
@@ -78,92 +67,26 @@ public class HomeFragment extends Fragment implements OnClic {
     HomeViewModel homeViewModel;
     SharedPreferences sharedPreferenclanguageg;
     PrintBluetooth printBT = new PrintBluetooth();
-    ArrayList<Items> itemsList;
+    ArrayList<ItemsModel> itemsList;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        // itemsList.add(new Items(" 1- شامبيون  سعة 2 كجم ",200.0));
-        // itemsList.add(new Items(" 2- تيجرا  1 كجم",367.0));
-        // itemsList.add(new Items(" 3- خرطوشة ضغط داخلية 1 كجم",212.0));
-        // itemsList.add(new Items(" 4- اقتحام 25 اسطوانة ضغط خارجية",1092.0));
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-         // MainActivity m=new MainActivity();
-         // m.setOnClic(this);
 
-        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+
+        homeViewModel = new ViewModelProvider(getActivity()).get(HomeViewModel.class);
         binding.setLifecycleOwner(this);
-        // homeViewModel.setOnClic();
-        //  homeViewModel.getproductsDaoRoom(getContext());
-//
-        // homeViewModel.getProducts.observe(getViewLifecycleOwner(), new androidx.lifecycle.Observer<StateData<List<Products>>>() {
-        //     @Override
-        //     public void onChanged(StateData<List<Products>> listStateData) {
-        //         switch ( listStateData.getStatus()) {
-        //              case SUCCESS:
-        //               //   List<Book> bookList =
-        //                         // productsStateData.getData();
-        //                  Toast.makeText(getContext(), "SUCCESS", Toast.LENGTH_SHORT).show();
-        //                  //TODO: Do something with your book data
-        //                  break;
-        //              case ERROR:
-        Toast.makeText(getContext(), "ERROR", Toast.LENGTH_SHORT).show();
-//
-        //                  //   Throwable e = books.getError();
-        //                  //TODO: Do something with your error
-        //                  break;
-        //              case LOADING:
-        Toast.makeText(getContext(), " LOADING", Toast.LENGTH_SHORT).show();
-//
-        //                  //TODO: Do Loading stuff
-        //                  break;
-        //              case COMPLETE:
-        //                  Toast.makeText(getContext(), "COMPLETE", Toast.LENGTH_SHORT).show();
-//
-        //                  //TODO: Do complete stuff if necessary
-        //                  break;
-        //        }
-        //     }
-        // });
+        homeViewModel.getItemsOnline(getContext());
 
+        homeViewModel.qr.observe(getActivity(), new androidx.lifecycle.Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
+            }
+        });
 
-//        sharedPreferenclanguageg = getActivity().getSharedPreferences("NumberBill", MODE_PRIVATE);
-//        SharedPreferences.Editor editsg = sharedPreferenclanguageg.edit();
-
-//        //ToPost
-//       // editsg.putString("NumberOFBill","25.10");
-//       // editsg.apply();
-
-
-//        //toGet
-//        String Number = sharedPreferenclanguageg.getString("NumberOFBill", "1");
-//        int newNumber=Integer.valueOf(Number)+1;
-
-//        editsg.putString("NumberOFBill",String.valueOf(newNumber));
-//        editsg.apply();
-        //  getRoom();
-        //  binding.button3.setOnClickListener(new View.OnClickListener() {
-        //      @Override
-        //      public void onClick(View view) {
-        //          getRoom();
-        //     //  sharedPreferenclanguageg = getActivity().getSharedPreferences("NumberBill", MODE_PRIVATE);
-        //     //  SharedPreferences.Editor editsg = sharedPreferenclanguageg.edit();
-
-        //     //  //ToPost
-        //     //  // editsg.putString("NumberOFBill","25.10");
-        //     //  // editsg.apply();
-
-
-        //     //  //toGet
-        //     //  String Number = sharedPreferenclanguageg.getString("NumberOFBill", "1");
-        //     //  Toast.makeText(getContext(), Number, Toast.LENGTH_SHORT).show();
-        //     //  int newNumber = Integer.valueOf(Number) + 1;
-
-        //     //  editsg.putString("NumberOFBill", String.valueOf(newNumber));
-        //     //  editsg.apply();
-        //      }
-        //  });
 
         itemsList = new ArrayList<>();
         adabter = new AdabterInvoice(getContext());
@@ -182,7 +105,7 @@ public class HomeFragment extends Fragment implements OnClic {
 //            }
 //        });
         // binding.textView21.setMovementMethod(LinkMovementMethod.getInstance());
-        int state=0;
+        int state = 0;
         binding.button2.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
@@ -192,7 +115,7 @@ public class HomeFragment extends Fragment implements OnClic {
 
                     binding.progressBar2.setVisibility(View.GONE);
                     Toast.makeText(getActivity(), "الفاتوره فارغه", Toast.LENGTH_SHORT).show();
-                } else if ( state==0){
+                } else if (state == 0) {
 
                     //To Create number Ricet Bill
                     String numberRicet = homeViewModel.getNumberBill(getContext());
@@ -208,20 +131,23 @@ public class HomeFragment extends Fragment implements OnClic {
                     Double Tax = 0.0;
                     Double totalPrice = 0.0;
                     int itemId = 0;
-                    for (Items i : itemsList) {
+                    for (ItemsModel i : itemsList) {
                         //To Create List to UUID
-                        itemData.add(homeViewModel.getItems(1.0, i.getprice(), i.getprice(), i.getTitle()));
+  itemData.add(homeViewModel.getItems(1.0, Double.valueOf( i. getPrice()), Double.valueOf( i. getPrice()), i.getTitle()));
 
                         //To Create List to Room
-                        ItemsBillRoom.add(homeViewModel.setItemsRoom(i.getTitle(), i.getprice(), numberRicet, String.valueOf(itemId)));
+                        ItemsBillRoom.add(homeViewModel.setItemsRoom(i.getTitle(), Double.valueOf( i. getPrice()), numberRicet, String.valueOf(itemId)));
 
                         //To Create List to Room Backup
-                        ItemsBillRoomBackup.add(homeViewModel. setItemsRoomBackup(i.getTitle(), i.getprice(), numberRicet, String.valueOf(itemId)));
+                        ItemsBillRoomBackup.add(homeViewModel.setItemsRoomBackup(i.getTitle(), Double.valueOf( i. getPrice()), numberRicet, String.valueOf(itemId)));
 
-                        Tax += i.getTax();
-                        price += i.getprice();
-                        totalPrice += i.getTotal();
-
+                       // Tax += i.getTax();
+                       // price += i.getprice();
+                       // totalPrice += i.getTotal();
+//
+                        price +=Double.valueOf( i. getPrice());
+                        Tax = (price*14.0)/100;
+                        totalPrice = price+Tax;
                         itemId++;
 
                         // Log.d("onSuccess", price+"");
@@ -231,9 +157,6 @@ public class HomeFragment extends Fragment implements OnClic {
                     Log.d("onSuccess", price + "");
                     Log.d("onSuccess", Tax + "");
                     Log.d("onSuccess", totalPrice + "");
-
-
-
 
 
                     //To Create UUID
@@ -262,10 +185,10 @@ public class HomeFragment extends Fragment implements OnClic {
                     // Log.d("onSuccess",g.toJson(r));
                     // Send(r);
                     //  printp(sss,"Printer001");
-                    printp(sss, "Bluetooth Printer");
+                    printp(sss, "Saturn1000 Print demo");
 
                     //To Create online Bill
-                }else if(state==1){
+                } else if (state == 1) {
                     //To Create number Ricet Bill
                     String numberRicet = homeViewModel.getNumberBill(getContext());
                     //To Create Date Time Bill
@@ -274,25 +197,32 @@ public class HomeFragment extends Fragment implements OnClic {
                     ArrayList<ItemDatum> itemData = new ArrayList<>();
                     ArrayList<ItemsBill> ItemsBillRoom = new ArrayList<>();
                     ArrayList<ItemsBackup> ItemsBillRoomBackup = new ArrayList<>();
+                    ArrayList<ItemsBillOnlin> ItemsBillRoomOnlin = new ArrayList<>();
 
 
                     Double price = 0.0;
                     Double Tax = 0.0;
                     Double totalPrice = 0.0;
                     int itemId = 0;
-                    for (Items i : itemsList) {
+                    for (ItemsModel i : itemsList) {
+
                         //To Create List to UUID
-                        itemData.add(homeViewModel.getItems(1.0, i.getprice(), i.getprice(), i.getTitle()));
+                        itemData.add(homeViewModel.getItems(1.0,Double.valueOf( i. getPrice()), Double.valueOf( i. getPrice()), i.getTitle()));
 
                         //To Create List to Room
-                        ItemsBillRoom.add(homeViewModel.setItemsRoom(i.getTitle(), i.getprice(), numberRicet, String.valueOf(itemId)));
+                        ItemsBillRoom.add(homeViewModel.setItemsRoom(i.getTitle(), Double.valueOf( i. getPrice()), numberRicet, String.valueOf(itemId)));
 
                         //To Create List to Room Backup
-                        ItemsBillRoomBackup.add(homeViewModel. setItemsRoomBackup(i.getTitle(), i.getprice(), numberRicet, String.valueOf(itemId)));
+                        ItemsBillRoomBackup.add(homeViewModel.setItemsRoomBackup(i.getTitle(),Double.valueOf( i. getPrice()), numberRicet, String.valueOf(itemId)));
 
-                        Tax += i.getTax();
-                        price += i.getprice();
-                        totalPrice += i.getTotal();
+                        ItemsBillRoomOnlin.add(homeViewModel.setItemsRoomOnline(i.getTitle(), Double.valueOf( i. getPrice()), numberRicet, String.valueOf(itemId)));
+
+                        price +=Double.valueOf( i. getPrice());
+                        Tax = (price*14.0)/100;
+                        totalPrice = price+Tax;
+                      // Tax += i.getTax();
+                      // price +=Double.valueOf( i. getPrice());
+                      // totalPrice += i.getTotal();
 
                         itemId++;
 
@@ -305,9 +235,6 @@ public class HomeFragment extends Fragment implements OnClic {
                     Log.d("onSuccess", totalPrice + "");
 
 
-
-
-
                     //To Create UUID
                     String uu = homeViewModel.CreateUUID(numberRicet, "", TimeRicet, itemData);
                     Log.d("onSuccess", uu);
@@ -315,28 +242,24 @@ public class HomeFragment extends Fragment implements OnClic {
 
 
                     //    String url ="https://preprod.invoicing.eta.gov.eg/receipts/search/a700243730510ebd8499d9d895ad7eb4ee4ba9d22b3bf155d81552f7e31dd93d";
-                    //To Create New Bill in Room db
 
-                    HeaderBill headerBill = new HeaderBill();
-                    headerBill.setUUID(uu);
-                    headerBill.setBillNumber(numberRicet);
-                    headerBill.setInvoiceDate(TimeRicet);
-                    headerBill.setTax(Tax);
-                    headerBill.setNetPrice(price);
-                    headerBill.setTotalPrice(totalPrice);
-                    headerBill.setLink(sss);
 
+                    HeaderBackup HeaderBackup = homeViewModel.getHeaderBackup(uu, numberRicet, TimeRicet, Tax, price, totalPrice, sss);
+                    HeaderBillOnline HeaderOnline = homeViewModel.getHeaderOnline(uu, numberRicet, TimeRicet, Tax, price, totalPrice, sss);
                     //To Insert New Bill in Room db
-                    homeViewModel.headBill(headerBill, ItemsBillRoom, getActivity());
+                    //   homeViewModel.headBill(headerBill, ItemsBillRoom, getActivity());
+                    homeViewModel.headBillRoomBackup(HeaderBackup, ItemsBillRoomBackup, getActivity());
 
-                  //  homeViewModel.headBillRoomBackup()
-                     Root r = homeViewModel.sentApi(uu, itemData, TimeRicet, numberRicet);
-                    Send(r);
+                    //  homeViewModel.headBillRoomBackup()
+                    Root createRoot = homeViewModel.sentApi(uu, itemData, TimeRicet, numberRicet);
+                    homeViewModel.Send(createRoot, HeaderOnline, ItemsBillRoomOnlin, getActivity());
+
 
                     // Log.d("onSuccess",g.toJson(r));
 
                     //  printp(sss,"Printer001");
-                    printp(sss, "Bluetooth Printer");
+                    printp(sss, "Saturn1000");
+
                 }
             }
         });
@@ -375,6 +298,7 @@ public class HomeFragment extends Fragment implements OnClic {
             }
         });
 
+      // homeViewModel.getItems("3");
 
         binding.cardView5.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -383,9 +307,9 @@ public class HomeFragment extends Fragment implements OnClic {
 
             }
         });
-        homeViewModel.getItemsList().observe(getViewLifecycleOwner(), new androidx.lifecycle.Observer<Items>() {
+        homeViewModel.getItemsList().observe(getViewLifecycleOwner(), new androidx.lifecycle.Observer<ItemsModel>() {
             @Override
-            public void onChanged(Items items) {
+            public void onChanged(ItemsModel items) {
                 if (items != null) {
                     itemsList.add(items);
                     adabter.setList(itemsList);
@@ -515,12 +439,22 @@ public class HomeFragment extends Fragment implements OnClic {
 
             @Override
             public void onSuccess(@NonNull BillReturn billReturn) {
+                if (billReturn.getStatus() == "submitted") {
+
+                } else {
+
+                }
+                binding.progressBar2.setVisibility(View.GONE);
+
                 for (String p : billReturn.getQrCode()) {
-                    Log.d("onSuccess", p);
+                    Log.d("onSuccess1", p);
                 }
                 for (String p : billReturn.getErrorMessage()) {
-                    Log.d("onSuccess", p);
+                    Log.d("onSuccess1", p);
                 }
+                Log.d("onSuccess1", billReturn.getStatus() + "Status");
+                Log.d("onSuccess1", billReturn.getSubmitionID() + "SubmitionID");
+                Log.d("onSuccess1", billReturn.getSubmitted() + "Submitted");
                 //   PrintBluetooth.printer_id ="Printer001";
                 //   // PrintBluetooth.printer_id ="InnerPrinter";
                 //   java.util.Date today = new java.util.Date();
@@ -586,6 +520,7 @@ public class HomeFragment extends Fragment implements OnClic {
             @Override
             public void onError(@NonNull Throwable e) {
                 Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                binding.progressBar2.setVisibility(View.GONE);
 
                 Log.d("onSuccess", e.getMessage());
 
@@ -901,8 +836,8 @@ public class HomeFragment extends Fragment implements OnClic {
             //   printBT.printQrCode(textAsBitmap(setpill(),520,28));
 
             //  printBT.printQrCode(textAsBitmap(s,520, 30));
-            //  printBT.printQrCode(textAsBitmap(ss,520, 22));
-            printBT.printQrCode(textAsBitmap(s, 370, 27));
+             printBT.printQrCode(textAsBitmap(ss,520, 22));
+           // printBT.printQrCode(textAsBitmap(s, 370, 27));
             // printBT.printQrCode(textAsBitmap(ss,370, 22));
             printBT.printQrCode(print(qr));
 
@@ -1092,6 +1027,42 @@ public class HomeFragment extends Fragment implements OnClic {
 
     //      return r;
 //  }
+  // public void printe(){
+  //     String TAG = "Saturn1000 Print demo";
+
+  //     CtPrint print = new CtPrint();
+
+  //     String print_font;
+  //     int print_x = 0;
+  //     int print_y = 36;
+  //     int Currently_high = 20;
+  //     int ret = 0;
+  //     Bitmap bitmap = null;
+
+  //     print.initPage(200);
+  //     bitmap = print.encodeToBitmap("12ASDFSS34", print.QR_CODE, 150, 150);
+  //     print.drawImage(bitmap, 0, 0);
+  //     print.printPage();
+
+  //     ret = print.roll(10);
+  //     Log.d(TAG, String.format("Roll ret = %d", ret));
+
+  //     ret = print.status();
+  //     Log.d(TAG, String.format("status ret = %d", ret));
+
+  //     print.setHeatLevel(2);
+
+  //     print.initPage(100);
+
+  //     print_font = "PRINT TESTING";
+  //     print.drawText(0, print_y + Currently_high, print_font, print_y, 1, true, (float) 0, false, false);
+  //     Currently_high += print_y;
+
+  //     //Bitmap image = BitmapFactory.decodeFile("/data/" + "test.jpg");
+  //     //print.drawImage(image, 0, Currently_high);
+
+  //     print.printPage();
+  // }
     public String loopList() {
         java.util.Date today = new java.util.Date();
         SimpleDateFormat format_date = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
@@ -1114,7 +1085,7 @@ public class HomeFragment extends Fragment implements OnClic {
 
         StringBuffer sb = new StringBuffer();
         // ArrayList<Items> itemsList
-        for (Items s : itemsList) {
+        for (ItemsModel s : itemsList) {
             //  if (s.ItemName.length()>15){
             //    int startRest= s.ItemName.indexOf(" ",15);
             //    String restOfItemName=s.ItemName.substring(startRest);
@@ -1123,7 +1094,7 @@ public class HomeFragment extends Fragment implements OnClic {
             //    sb.append("  "+s.ItemName+"       "+s.contaty+"           "+s.balanc+"           "+"\n" +
             //            " "+restOfItemName+"\n" +"\n");
             //  }else {
-            sb.append("  " + s.getTitle() + "           " + s.getprice() + "           " + s.getTotal() + "\n");
+            sb.append("  " + s.getTitle() + "           " + s.getPrice() + "           " + "s.getTotal()" + "\n");
 
             //   }
             //  sb.append("  "+s.ItemName+"           "+s.contaty+"           "+s.balanc +"\n");

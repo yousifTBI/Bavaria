@@ -40,6 +40,14 @@ public class ItemDatum {
 
     public double total;
 
+    public ArrayList<CommercialDiscountDatum> commercialDiscountData;
+
+    public ArrayList<ItemDiscountDatum> itemDiscountData;
+
+    public int valueDifference;
+
+    public ArrayList<TaxableItem> taxableItems;
+
 
     public String getInternalCode() {
         return internalCode;
@@ -65,13 +73,6 @@ public class ItemDatum {
         this.total = total;
     }
 
-    public ArrayList<CommercialDiscountDatum> commercialDiscountData;
-
-    public ArrayList<ItemDiscountDatum> itemDiscountData;
-
-    public int valueDifference;
-
-    public ArrayList<TaxableItem> taxableItems;
 
 
     public ItemDatum(String internalCode, String description,
