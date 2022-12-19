@@ -7,28 +7,28 @@
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/untitled_1_06"
-            android:title="المنتجات " />
-        <item
-            android:id="@+id/clientsId"
-            android:icon="@drawable/untitled_1_07"
-            android:title="العملاء " />
-        <item
-            android:id="@+id/sellsID"
-            android:icon="@drawable/untitled_1_01"
-            android:title="المبيعات " />
+            android:title="شاشه البيع " />
+<!--        <item-->
+<!--            android:id="@+id/clientsId"-->
+<!--            android:icon="@drawable/untitled_1_07"-->
+<!--            android:title="العملاء " />-->
+<!--        <item-->
+<!--            android:id="@+id/sellsID"-->
+<!--            android:icon="@drawable/untitled_1_01"-->
+<!--            android:title="المبيعات " />-->
         <item
             android:id="@+id/sendsellsFragment"
             android:icon="@drawable/untitled_1_03"
-            android:title=" ارسال الايصال" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/untitled_1_02"
-            android:title="ارجاع المبيعات " />
+            android:title=" المنتجات" />
+<!--        <item-->
+<!--            android:id="@+id/nav_slideshow"-->
+<!--            android:icon="@drawable/untitled_1_02"-->
+<!--            android:title="ارجاع المبيعات " />-->
 
-        <item
-            android:id="@+id/sellsFragment"
-            android:icon="@drawable/untitled_1_04"
-            android:title="حالة الايصال" />
+<!--        <item-->
+<!--            android:id="@+id/sellsFragment"-->
+<!--            android:icon="@drawable/untitled_1_04"-->
+<!--            android:title="حالة الايصال" />-->
 
         <item
             android:id="@+id/receiptstatus"
@@ -42,11 +42,11 @@
             android:title="ملف الشركة " />
 
 
-    <item
-            android:id="@+id/usersFragment"
-            android:icon="@drawable/untitled_1_07"
-            android:title="المستخدمين"
-        />
+<!--    <item-->
+<!--            android:id="@+id/usersFragment"-->
+<!--            android:icon="@drawable/untitled_1_07"-->
+<!--            android:title="المستخدمين"-->
+<!--        />-->
 
 
      <item

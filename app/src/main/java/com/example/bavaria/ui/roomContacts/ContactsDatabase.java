@@ -30,7 +30,7 @@ import com.example.bavaria.ui.roomContacts.productRoom.ProductsDao;
 
        }, version = 2)
 public abstract class ContactsDatabase  extends RoomDatabase {
-    private static ContactsDatabase Instance;
+    private static  volatile ContactsDatabase Instance;
     public abstract ContactsDao contactsDao();
     public abstract HeaderBillDao headerBillDao();
     public abstract typeBillDao typeBillDao1();
@@ -48,7 +48,7 @@ public abstract class ContactsDatabase  extends RoomDatabase {
 
     public static synchronized ContactsDatabase getGetInstance(Context context){
         if (Instance==null){
-            Instance= Room.databaseBuilder(context,ContactsDatabase.class,"contactsNumer")
+            Instance= Room.databaseBuilder(context.getApplicationContext(),ContactsDatabase.class,"contactsNumer")
                     .fallbackToDestructiveMigration()
                     .build();
         }

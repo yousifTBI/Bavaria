@@ -54,4 +54,29 @@ public class ItemsModel implements Searchable {
     public String getUnitType() {
         return UnitType;
     }
+
+
+    public void setBarcode(String barcode) {
+        Barcode = barcode;
+    }
+
+    public void setDescription(String description) {
+        Description = description;
+    }
+
+    public void setItemType(String itemType) {
+        ItemType = itemType;
+    }
+
+    public void setItemCode(int itemCode) {
+        ItemCode = itemCode;
+    }
+
+    public void setUnitType(String unitType) {
+        UnitType = unitType;
+    }
+
+    public void setPrice(double price) {
+        Price = price;
+    }
 }

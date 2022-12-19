@@ -15,7 +15,7 @@ import com.example.bavaria.ui.roomContacts.productRoom.ItemsBill;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdabterItems  extends RecyclerView.Adapter<AdabterItems .viewholderItems>{
+public class AdabterItems extends RecyclerView.Adapter<AdabterItems.viewholderItems> {
     List<ItemsBill> list = new ArrayList<>();
     Context context;
 
@@ -33,19 +33,19 @@ public class AdabterItems  extends RecyclerView.Adapter<AdabterItems .viewholder
 
     @NonNull
     @Override
-    public AdabterItems .viewholderItems onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public AdabterItems.viewholderItems onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.bill_row, parent, false);
-        AdabterItems .viewholderItems viewholder = new AdabterItems .viewholderItems(view);
+        AdabterItems.viewholderItems viewholder = new AdabterItems.viewholderItems(view);
         return viewholder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AdabterItems .viewholderItems holder, int position) {
+    public void onBindViewHolder(@NonNull AdabterItems.viewholderItems holder, int position) {
 
         holder.name_v.setText(list.get(position).getPName());
         holder.price_v.setText(list.get(position).getIDBill());
-        holder.contaty_v.setText(list.get(position).getUnitPrice()+"");
-       // holder.total_v.setText(list.get(position).getTotal().toString());
+        holder.contaty_v.setText(list.get(position).getUnitPrice() + "");
+        // holder.total_v.setText(list.get(position).getTotal().toString());
 
 
     }
@@ -56,14 +56,15 @@ public class AdabterItems  extends RecyclerView.Adapter<AdabterItems .viewholder
     }
 
     public class viewholderItems extends RecyclerView.ViewHolder {
-        TextView name_v,total_v,price_v;
+        TextView name_v, total_v, price_v;
         TextView contaty_v;
+
         public viewholderItems(@NonNull View itemView) {
             super(itemView);
-            name_v   =itemView.findViewById(R.id.name_v);
-            total_v  =itemView.findViewById(R.id.total_v);
-            price_v   =itemView.findViewById(R.id.price_v);
-            contaty_v =itemView.findViewById(R.id.contaty_v);
+            name_v = itemView.findViewById(R.id.name_v);
+            total_v = itemView.findViewById(R.id.total_v);
+            price_v = itemView.findViewById(R.id.price_v);
+            contaty_v = itemView.findViewById(R.id.contaty_v);
 
         }
     }

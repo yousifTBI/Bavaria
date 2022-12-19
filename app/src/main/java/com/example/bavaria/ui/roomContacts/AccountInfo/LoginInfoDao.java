@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.example.bavaria.ui.roomContacts.ContactsRoom;
+import com.example.bavaria.ui.roomContacts.onlineProduct.ItemsModel;
 
 import java.util.List;
 
@@ -17,6 +18,9 @@ public interface LoginInfoDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     Completable insertContacts(LoginModel user);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    Completable insertAllOrders(List<LoginModel> order);
 
     @Query("select*from LoginModel")
     Single<List<LoginModel>> getContacts();

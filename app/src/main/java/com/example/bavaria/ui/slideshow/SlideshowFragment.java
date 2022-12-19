@@ -58,7 +58,7 @@ public class SlideshowFragment extends Fragment implements OnClic {
         //     bind  ing.getRoot();
         //  getRoom();
         // getRoom();
-      //  getRoom();
+        getRoom();
         binding.setLifecycleOwner(this);
         getRoot();
          slideshowViewModel.getHeadersBill(getActivity());
@@ -263,7 +263,7 @@ public class SlideshowFragment extends Fragment implements OnClic {
                                                            gson.toJson(r);
                                                            Log.d("onSuccess", "---1" + gson.toJson(r));
                                                            //  room.add(r);
-                                                           // Send(r);
+                                                          // Send(r);
 
                                                        }
 
@@ -339,6 +339,7 @@ public class SlideshowFragment extends Fragment implements OnClic {
                 for (String p : billReturn.getErrorMessage()) {
                     Log.d("onSuccess", p);
                 }
+                Log.d("onSuccess", billReturn.getSubmitionID());
                 //   PrintBluetooth.printer_id ="Printer001";
                 //   // PrintBluetooth.printer_id ="InnerPrinter";
                 //   java.util.Date today = new java.util.Date();

@@ -23,7 +23,6 @@ public class ItemDatum {
 
     public String description;
 
-
     public String itemType;
 
     public String itemCode;

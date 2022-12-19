@@ -88,9 +88,7 @@ public class HomeFragment extends Fragment implements OnClic {
         homeViewModel = new ViewModelProvider(getActivity()).get(HomeViewModel.class);
         binding.setLifecycleOwner(this);
         homeViewModel.getItemsOnline(getContext());
-        HashMap<String,String>ss=new HashMap<>();
 
-        ss.put("a","1524");
         LoginFun("1524");
 
         homeViewModel.qr.observe(getActivity(), new androidx.lifecycle.Observer<String>() {
@@ -146,21 +144,21 @@ public class HomeFragment extends Fragment implements OnClic {
                     int itemId = 0;
                     for (ItemsModel i : itemsList) {
                         //To Create List to UUID
-  itemData.add(homeViewModel.getItems(1.0, Double.valueOf( i. getPrice()), Double.valueOf( i. getPrice()), i.getTitle()));
+                        itemData.add(homeViewModel.getItems(1.0, Double.valueOf(i.getPrice()), Double.valueOf(i.getPrice()), i.getTitle()));
 
                         //To Create List to Room
-                        ItemsBillRoom.add(homeViewModel.setItemsRoom(i.getTitle(), Double.valueOf( i. getPrice()), numberRicet, String.valueOf(itemId)));
+                        ItemsBillRoom.add(homeViewModel.setItemsRoom(i.getTitle(), Double.valueOf(i.getPrice()), numberRicet, String.valueOf(itemId)));
 
                         //To Create List to Room Backup
-                        ItemsBillRoomBackup.add(homeViewModel.setItemsRoomBackup(i.getTitle(), Double.valueOf( i. getPrice()), numberRicet, String.valueOf(itemId)));
+                        ItemsBillRoomBackup.add(homeViewModel.setItemsRoomBackup(i.getTitle(), Double.valueOf(i.getPrice()), numberRicet, String.valueOf(itemId)));
 
-                       // Tax += i.getTax();
-                       // price += i.getprice();
-                       // totalPrice += i.getTotal();
+                        // Tax += i.getTax();
+                        // price += i.getprice();
+                        // totalPrice += i.getTotal();
 //
-                        price +=Double.valueOf( i. getPrice());
-                        Tax = (price*14.0)/100;
-                        totalPrice = price+Tax;
+                        price += Double.valueOf(i.getPrice());
+                        Tax = (price * 14.0) / 100;
+                        totalPrice = price + Tax;
                         itemId++;
 
                         // Log.d("onSuccess", price+"");
@@ -220,22 +218,22 @@ public class HomeFragment extends Fragment implements OnClic {
                     for (ItemsModel i : itemsList) {
 
                         //To Create List to UUID
-                        itemData.add(homeViewModel.getItems(1.0,Double.valueOf( i. getPrice()), Double.valueOf( i. getPrice()), i.getTitle()));
+                        itemData.add(homeViewModel.getItems(1.0, Double.valueOf(i.getPrice()), Double.valueOf(i.getPrice()), i.getTitle()));
 
                         //To Create List to Room
-                        ItemsBillRoom.add(homeViewModel.setItemsRoom(i.getTitle(), Double.valueOf( i. getPrice()), numberRicet, String.valueOf(itemId)));
+                        ItemsBillRoom.add(homeViewModel.setItemsRoom(i.getTitle(), Double.valueOf(i.getPrice()), numberRicet, String.valueOf(itemId)));
 
                         //To Create List to Room Backup
-                        ItemsBillRoomBackup.add(homeViewModel.setItemsRoomBackup(i.getTitle(),Double.valueOf( i. getPrice()), numberRicet, String.valueOf(itemId)));
+                        ItemsBillRoomBackup.add(homeViewModel.setItemsRoomBackup(i.getTitle(), Double.valueOf(i.getPrice()), numberRicet, String.valueOf(itemId)));
 
-                        ItemsBillRoomOnlin.add(homeViewModel.setItemsRoomOnline(i.getTitle(), Double.valueOf( i. getPrice()), numberRicet, String.valueOf(itemId)));
+                        ItemsBillRoomOnlin.add(homeViewModel.setItemsRoomOnline(i.getTitle(), Double.valueOf(i.getPrice()), numberRicet, String.valueOf(itemId)));
 
-                        price +=Double.valueOf( i. getPrice());
-                        Tax = (price*14.0)/100;
-                        totalPrice = price+Tax;
-                      // Tax += i.getTax();
-                      // price +=Double.valueOf( i. getPrice());
-                      // totalPrice += i.getTotal();
+                        price += Double.valueOf(i.getPrice());
+                        Tax = (price * 14.0) / 100;
+                        totalPrice = price + Tax;
+                        // Tax += i.getTax();
+                        // price +=Double.valueOf( i. getPrice());
+                        // totalPrice += i.getTotal();
 
                         itemId++;
 
@@ -311,7 +309,7 @@ public class HomeFragment extends Fragment implements OnClic {
             }
         });
 
-      // homeViewModel.getItems("3");
+        // homeViewModel.getItems("3");
 
         binding.cardView5.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -849,8 +847,8 @@ public class HomeFragment extends Fragment implements OnClic {
             //   printBT.printQrCode(textAsBitmap(setpill(),520,28));
 
             //  printBT.printQrCode(textAsBitmap(s,520, 30));
-             printBT.printQrCode(textAsBitmap(ss,520, 22));
-           // printBT.printQrCode(textAsBitmap(s, 370, 27));
+            printBT.printQrCode(textAsBitmap(ss, 520, 22));
+            // printBT.printQrCode(textAsBitmap(s, 370, 27));
             // printBT.printQrCode(textAsBitmap(ss,370, 22));
             printBT.printQrCode(print(qr));
 
@@ -1040,42 +1038,42 @@ public class HomeFragment extends Fragment implements OnClic {
 
     //      return r;
 //  }
-  // public void printe(){
-  //     String TAG = "Saturn1000 Print demo";
+    // public void printe(){
+    //     String TAG = "Saturn1000 Print demo";
 
-  //     CtPrint print = new CtPrint();
+    //     CtPrint print = new CtPrint();
 
-  //     String print_font;
-  //     int print_x = 0;
-  //     int print_y = 36;
-  //     int Currently_high = 20;
-  //     int ret = 0;
-  //     Bitmap bitmap = null;
+    //     String print_font;
+    //     int print_x = 0;
+    //     int print_y = 36;
+    //     int Currently_high = 20;
+    //     int ret = 0;
+    //     Bitmap bitmap = null;
 
-  //     print.initPage(200);
-  //     bitmap = print.encodeToBitmap("12ASDFSS34", print.QR_CODE, 150, 150);
-  //     print.drawImage(bitmap, 0, 0);
-  //     print.printPage();
+    //     print.initPage(200);
+    //     bitmap = print.encodeToBitmap("12ASDFSS34", print.QR_CODE, 150, 150);
+    //     print.drawImage(bitmap, 0, 0);
+    //     print.printPage();
 
-  //     ret = print.roll(10);
-  //     Log.d(TAG, String.format("Roll ret = %d", ret));
+    //     ret = print.roll(10);
+    //     Log.d(TAG, String.format("Roll ret = %d", ret));
 
-  //     ret = print.status();
-  //     Log.d(TAG, String.format("status ret = %d", ret));
+    //     ret = print.status();
+    //     Log.d(TAG, String.format("status ret = %d", ret));
 
-  //     print.setHeatLevel(2);
+    //     print.setHeatLevel(2);
 
-  //     print.initPage(100);
+    //     print.initPage(100);
 
-  //     print_font = "PRINT TESTING";
-  //     print.drawText(0, print_y + Currently_high, print_font, print_y, 1, true, (float) 0, false, false);
-  //     Currently_high += print_y;
+    //     print_font = "PRINT TESTING";
+    //     print.drawText(0, print_y + Currently_high, print_font, print_y, 1, true, (float) 0, false, false);
+    //     Currently_high += print_y;
 
-  //     //Bitmap image = BitmapFactory.decodeFile("/data/" + "test.jpg");
-  //     //print.drawImage(image, 0, Currently_high);
+    //     //Bitmap image = BitmapFactory.decodeFile("/data/" + "test.jpg");
+    //     //print.drawImage(image, 0, Currently_high);
 
-  //     print.printPage();
-  // }
+    //     print.printPage();
+    // }
     public String loopList() {
         java.util.Date today = new java.util.Date();
         SimpleDateFormat format_date = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
@@ -1217,7 +1215,7 @@ public class HomeFragment extends Fragment implements OnClic {
         Toast.makeText(getActivity(), QR, Toast.LENGTH_SHORT).show();
     }
 
-    public void LoginFun(String s ){
+    public void LoginFun(String s) {
         Log.d("Login", "cf");
 
         Observable observable = RetrofitRefranc.getInstance()
@@ -1225,7 +1223,7 @@ public class HomeFragment extends Fragment implements OnClic {
                 .LoginAPI(s)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
-        Observer<Task3<LoginModel>> observer=new Observer<Task3<LoginModel>>() {
+        Observer<Task3<LoginModel>> observer = new Observer<Task3<LoginModel>>() {
             @Override
             public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
 
@@ -1233,14 +1231,14 @@ public class HomeFragment extends Fragment implements OnClic {
 
             @Override
             public void onNext(@io.reactivex.rxjava3.annotations.NonNull Task3<LoginModel> loginModelTask3) {
-                Log.d("Loginchhf", loginModelTask3.Message+"cf");
+                Log.d("Loginchhf", loginModelTask3.Message + "cf");
 
 
             }
 
             @Override
             public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
-                Log.d("Loginchhf", e.getMessage()+"chhf");
+                Log.d("Loginchhf", e.getMessage() + "chhf");
             }
 
             @Override
@@ -1250,6 +1248,7 @@ public class HomeFragment extends Fragment implements OnClic {
         };
         observable.subscribe(observer);
     }
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -1267,18 +1266,20 @@ public class HomeFragment extends Fragment implements OnClic {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         //handle menu item clicks
-        int id = item.getItemId();
+        //  int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
-            //do your function here
-            Toast.makeText(getActivity(), "Settings", Toast.LENGTH_SHORT).show();
-
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                homeViewModel.getItems("3", getContext());
+                homeViewModel.getItemsOnline(getContext());
+                break;
+            case R.id.action_settings2:
+                homeViewModel.LoginFun("1524", getContext());
+                break;
         }
 
         return super.onOptionsItemSelected(item);
     }
-
-
 
 
 }

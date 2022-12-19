@@ -4,11 +4,11 @@
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
-        android:title=" بيع و تحديث المنتجات الاونلاين "
+        android:title=" تحديث المنتجات الاونلاين "
         app:showAsAction="never" />
     <item
         android:id="@+id/action_settings2"
         android:orderInCategory="100"
-        android:title="بيع بالمنتجات المحليه "
+        android:title="تحديث معلومات الشركه  "
         app:showAsAction="never" />
 </menu>

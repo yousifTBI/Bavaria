@@ -19,6 +19,8 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.bavaria.network.RetrofitRefranc;
 import com.example.bavaria.network.StateData;
+import com.example.bavaria.pojo.models.Task3;
+import com.example.bavaria.ui.roomContacts.AccountInfo.LoginModel;
 import com.example.bavaria.ui.roomContacts.onlineProduct.ItemsModel;
 import com.example.bavaria.pojo.TaskAPI;
 import com.example.bavaria.pojo.classes.Beneficiary;
@@ -46,6 +48,7 @@ import com.example.bavaria.ui.roomContacts.onlineBill.ItemsBillOnlin;
 import com.example.bavaria.ui.roomContacts.productRoom.ItemsBill;
 import com.example.bavaria.ui.roomContacts.productRoom.Products;
 import com.example.bavaria.ui.slideshow.OnClic;
+import com.example.bavaria.ui.utils.SharedPreferencesCom;
 import com.google.gson.Gson;
 
 import java.io.UnsupportedEncodingException;
@@ -72,9 +75,9 @@ import ir.mirrajabi.searchdialog.core.BaseSearchDialogCompat;
 import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 
-public class HomeViewModel extends ViewModel  {
+public class HomeViewModel extends ViewModel {
 
-    MutableLiveData<String>qr=new  MutableLiveData<String>() ;
+    MutableLiveData<String> qr = new MutableLiveData<String>();
 
     public MutableLiveData<String> getQr() {
         return qr;
@@ -94,9 +97,9 @@ public class HomeViewModel extends ViewModel  {
         this.onClic = onClic;
     }
 
-    ArrayList<ItemDatum> itemData=new ArrayList<>();
-    MutableLiveData <ItemsModel> itemsList=new MutableLiveData<>();
-    MutableLiveData <List<ItemsModel>> itemsList1=new MutableLiveData<>();
+    ArrayList<ItemDatum> itemData = new ArrayList<>();
+    MutableLiveData<ItemsModel> itemsList = new MutableLiveData<>();
+    MutableLiveData<List<ItemsModel>> itemsList1 = new MutableLiveData<>();
 
     public MutableLiveData<ItemsModel> getItemsList() {
         return itemsList;
@@ -122,7 +125,7 @@ public class HomeViewModel extends ViewModel  {
 
     }
 
-    public void Send(Root r,  HeaderBillOnline HeaderOnline,ArrayList<ItemsBillOnlin> postitem, Context context) {
+    public void Send(Root r, HeaderBillOnline HeaderOnline, ArrayList<ItemsBillOnlin> postitem, Context context) {
         //  Gson g=new Gson();
         //  g.toJson(r);
         //  Log.d("onSuccess", g.toJson(r));
@@ -137,10 +140,10 @@ public class HomeViewModel extends ViewModel  {
 
             @Override
             public void onSuccess(@NonNull BillReturn billReturn) {
-                if (billReturn.getStatus()=="submitted"){
+                if (billReturn.getStatus() == "submitted") {
 
-                }else {
-                  headBillRoomOnline(HeaderOnline,postitem,context);
+                } else {
+                    headBillRoomOnline(HeaderOnline, postitem, context);
                 }
                 //binding.progressBar2.setVisibility(View.GONE);
 
@@ -150,15 +153,15 @@ public class HomeViewModel extends ViewModel  {
                 for (String p : billReturn.getErrorMessage()) {
                     Log.d("onSuccess1", p);
                 }
-                Log.d("onSuccess1",billReturn.getStatus()+"Status");
-                Log.d("onSuccess1",billReturn.getSubmitionID()+"SubmitionID");
-                Log.d("onSuccess1",billReturn.getSubmitted()+"Submitted");
+                Log.d("onSuccess1", billReturn.getStatus() + "Status");
+                Log.d("onSuccess1", billReturn.getSubmitionID() + "SubmitionID");
+                Log.d("onSuccess1", billReturn.getSubmitted() + "Submitted");
 
             }
 
             @Override
             public void onError(@NonNull Throwable e) {
-                headBillRoomOnline(HeaderOnline,postitem,context);
+                headBillRoomOnline(HeaderOnline, postitem, context);
 
                 Log.d("onSuccess", e.getMessage());
 
@@ -167,39 +170,39 @@ public class HomeViewModel extends ViewModel  {
         ss.subscribe(singleObserver);
     }
 
-  ArrayList<ItemsModel> itemsModels1=new ArrayList<>();
+    ArrayList<ItemsModel> itemsModels1 = new ArrayList<>();
 
     void provideSimpleDialog(Context context) {
-       SimpleSearchDialogCompat dialog = new SimpleSearchDialogCompat(context, "Search...",
-               "What are you looking for...?", null, itemsModels1,
-               new SearchResultListener<ItemsModel>() {
-                   @Override
-                   public void onSelected(BaseSearchDialogCompat dialog, ItemsModel item, int position) {
-                // Toast.makeText(context, item.getTax()+"ء", Toast.LENGTH_SHORT).show();
+        SimpleSearchDialogCompat dialog = new SimpleSearchDialogCompat(context, "Search...",
+                "What are you looking for...?", null, itemsModels1,
+                new SearchResultListener<ItemsModel>() {
+                    @Override
+                    public void onSelected(BaseSearchDialogCompat dialog, ItemsModel item, int position) {
+                        // Toast.makeText(context, item.getTax()+"ء", Toast.LENGTH_SHORT).show();
                         itemsList.setValue(item);
-                     //  onClic.getQR("d");
-                      // itemsList1.setValue(new L);
-                               //.add(item);
-                     // binding.textView220.setText(item.getCurrencyName());
-                     // binding.textView23.setText(item.getValue());
-                     // binding.cashEditText1.setText("0");
-                     // binding.cashEditText2.setText("0.0");
-                       //   binding.textView22.setText(item.getCurrencyName()+"    ");
-                       dialog.dismiss();
-                   }
+                        //  onClic.getQR("d");
+                        // itemsList1.setValue(new L);
+                        //.add(item);
+                        // binding.textView220.setText(item.getCurrencyName());
+                        // binding.textView23.setText(item.getValue());
+                        // binding.cashEditText1.setText("0");
+                        // binding.cashEditText2.setText("0.0");
+                        //   binding.textView22.setText(item.getCurrencyName()+"    ");
+                        dialog.dismiss();
+                    }
 
-               }
-       );
-       dialog.show();
-       //dialog.getSearchBox().setTypeface(Typeface.SERIF);
-   }
+                }
+        );
+        dialog.show();
+        //dialog.getSearchBox().setTypeface(Typeface.SERIF);
+    }
 
     private ArrayList<Items> createSampleData() {
-        ArrayList<Items> list=new ArrayList<>();
-        list.add(new Items("خرطوشة ضغط داخلية",200.0));
-        list.add(new Items("ضغط مخزون",367.0));
-        list.add(new Items("شامبيون",212.0));
-        list.add(new Items("تيجـرا أوبتيمـا",1092.0));
+        ArrayList<Items> list = new ArrayList<>();
+        list.add(new Items("خرطوشة ضغط داخلية", 200.0));
+        list.add(new Items("ضغط مخزون", 367.0));
+        list.add(new Items("شامبيون", 212.0));
+        list.add(new Items("تيجـرا أوبتيمـا", 1092.0));
 
         return list;
 
@@ -209,24 +212,8 @@ public class HomeViewModel extends ViewModel  {
         return mText;
     }
 
-    public ItemsBill setItemsRoom(String nameItem,Double price,String ID ,String itemId){
-        ItemsBill bill=new ItemsBill();
-        bill.setPName(nameItem);
-        bill.setItemID(itemId);
-        bill.setUnitPrice(price);
-        bill.setIDBill(ID);
-        return bill;
-    }
-    public ItemsBackup setItemsRoomBackup(String nameItem,Double price,String ID ,String itemId){
-        ItemsBackup bill=new ItemsBackup();
-        bill.setPName(nameItem);
-        bill.setItemID(itemId);
-        bill.setUnitPrice(price);
-        bill.setIDBill(ID);
-        return bill;
-    }
-    public ItemsBillOnlin setItemsRoomOnline(String nameItem,Double price,String ID ,String itemId){
-        ItemsBillOnlin bill=new ItemsBillOnlin();
+    public ItemsBill setItemsRoom(String nameItem, Double price, String ID, String itemId) {
+        ItemsBill bill = new ItemsBill();
         bill.setPName(nameItem);
         bill.setItemID(itemId);
         bill.setUnitPrice(price);
@@ -234,32 +221,50 @@ public class HomeViewModel extends ViewModel  {
         return bill;
     }
 
-    public void getItems(String ComID,Context context){
-        Log.d("log","l");
+    public ItemsBackup setItemsRoomBackup(String nameItem, Double price, String ID, String itemId) {
+        ItemsBackup bill = new ItemsBackup();
+        bill.setPName(nameItem);
+        bill.setItemID(itemId);
+        bill.setUnitPrice(price);
+        bill.setIDBill(ID);
+        return bill;
+    }
+
+    public ItemsBillOnlin setItemsRoomOnline(String nameItem, Double price, String ID, String itemId) {
+        ItemsBillOnlin bill = new ItemsBillOnlin();
+        bill.setPName(nameItem);
+        bill.setItemID(itemId);
+        bill.setUnitPrice(price);
+        bill.setIDBill(ID);
+        return bill;
+    }
+
+    public void getItems(String ComID, Context context) {
+        Log.d("log", "l");
 
         Observable observable = RetrofitRefranc.getInstance()
                 .getApiCalls()
                 .GetItemsAPI(ComID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
-        Observer<TaskAPI<ItemsModel>> observer= new Observer<TaskAPI<ItemsModel>>() {
+        Observer<TaskAPI<ItemsModel>> observer = new Observer<TaskAPI<ItemsModel>>() {
             @Override
             public void onSubscribe(@NonNull Disposable d) {
-                Log.d("log","l");
+                Log.d("log", "l");
 
             }
 
             @Override
             public void onNext(@NonNull TaskAPI<ItemsModel> itemsModelTask4) {
 
-                setItemsOnline( itemsModelTask4.getData(),context);
-                Log.d("log",itemsModelTask4.State+"l");
+                setItemsOnline(itemsModelTask4.getData(), context);
+                Log.d("log", itemsModelTask4.State + "l");
 
             }
 
             @Override
             public void onError(@NonNull Throwable e) {
-                Log.d("log",e.getMessage());
+                Log.d("log", e.getMessage());
 
             }
 
@@ -267,19 +272,19 @@ public class HomeViewModel extends ViewModel  {
             public void onComplete() {
 
             }
-        } ;
+        };
         observable.subscribe(observer);
     }
 
     public ItemDatum getItems(Double Quantity, double unitPrice,
-                              double totalSale,String PName
+                              double totalSale, String PName
 
-                              ) {
+    ) {
         DecimalFormat numberFormat = new DecimalFormat("#.00");
 
 
-        Double totalSales=(totalSale*14.0)/100.0;
-        Double total= totalSale+totalSales;
+        Double totalSales = (totalSale * 14.0) / 100.0;
+        Double total = totalSale + totalSales;
 
         ArrayList<CommercialDiscountDatum> commercialDiscountData = new ArrayList<>();
         commercialDiscountData.add(new CommercialDiscountDatum());
@@ -288,59 +293,60 @@ public class HomeViewModel extends ViewModel  {
         itemDiscountData.add(new ItemDiscountDatum());
 
         ArrayList<TaxableItem> taxableItems = new ArrayList<>();
-      // Double.valueOf(numberFormat.format(Quantity ))
-      // Double.valueOf(numberFormat.format(unitPrice))
-      // Double.valueOf(numberFormat.format(totalSale))
-      // Double.valueOf(numberFormat.format(totalSale))
-      // Double.valueOf(numberFormat.format(total    ))
+        // Double.valueOf(numberFormat.format(Quantity ))
+        // Double.valueOf(numberFormat.format(unitPrice))
+        // Double.valueOf(numberFormat.format(totalSale))
+        // Double.valueOf(numberFormat.format(totalSale))
+        // Double.valueOf(numberFormat.format(total    ))
 
         taxableItems.add(new TaxableItem(
                 //totalSales
                 Double.valueOf(numberFormat.format(totalSales))
-                ,14.0));
+                , 14.0));
 
         ItemDatum z = new ItemDatum("29130",
                 PName,
                 "GS1",
                 "99999999",
                 "EA",
-                Double.valueOf(numberFormat.format(Quantity )),
+                Double.valueOf(numberFormat.format(Quantity)),
                 Double.valueOf(numberFormat.format(unitPrice)),
                 Double.valueOf(numberFormat.format(totalSale)),
                 Double.valueOf(numberFormat.format(totalSale)),
-                Double.valueOf(numberFormat.format(total    ))
+                Double.valueOf(numberFormat.format(total))
                 , commercialDiscountData, itemDiscountData, 0, taxableItems);
 
         // ArrayList<ItemDatum> itemData=new ArrayList<>();
         // itemData.add(z);
         // itemData.add(z);
-         itemData.add(z);
+        itemData.add(z);
 //
         return z;
     }
-    public Root sentApi(String UUID,ArrayList<ItemDatum> list ,String date,String NumberBill){
+
+    public Root sentApi(String UUID, ArrayList<ItemDatum> list, String date, String NumberBill) {
         //   Date df = new Date();
         DecimalFormat numberFormat = new DecimalFormat("#.00");
 
         Double TotalSale = 0.0;
         Double Total = 0.0;
-        for ( ItemDatum itemData:list) {
-            TotalSale+=     itemData.getTotalSale();
-            Total+=itemData.getTotal();
+        for (ItemDatum itemData : list) {
+            TotalSale += itemData.getTotalSale();
+            Total += itemData.getTotal();
 
         }
         //itemData
 
-        Double TaxTotal=Total-TotalSale;
+        Double TaxTotal = Total - TotalSale;
 
-      //  numberFormat.format(number)
-       // String UUID="";
+        //  numberFormat.format(number)
+        // String UUID="";
 
-      // Date c = Calendar.getInstance().getTime();
-      // SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault());
-      // String formattedDate = df.format(c);
+        // Date c = Calendar.getInstance().getTime();
+        // SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault());
+        // String formattedDate = df.format(c);
         //   Date df = new Date("yyyy-MM-dd'T'HH:mm:ss'Z'");
-        Header header=new Header(
+        Header header = new Header(
                 date,
                 //df,
                 NumberBill,
@@ -350,10 +356,11 @@ public class HomeViewModel extends ViewModel  {
 
                 ""
         );
-        DocumentType d=new DocumentType();
+        DocumentType d = new DocumentType();
 
 
-        BranchAddress b=new BranchAddress( "EG",
+        BranchAddress b = new BranchAddress(
+                "EG",
                 "Giza",
                 "6 Oct",
                 "Hyaber",
@@ -363,7 +370,9 @@ public class HomeViewModel extends ViewModel  {
                 "",
                 "",
                 "");
-        Seller sa=new Seller(     "382107586",
+
+
+        Seller sa = new Seller("382107586",
                 "Domino's Pizza Hyper One Branch",
                 "2",
                 b,
@@ -372,43 +381,62 @@ public class HomeViewModel extends ViewModel  {
                 "1071"
         );
 
+    //    Seller seller=   SharedPreferencesCom.getInstance().getSharedValuesSeller();
+    //    BranchAddress branchAddress=  SharedPreferencesCom.getInstance().getSharedValuesBranchAddress();
+    //    BranchAddress branch = new BranchAddress(branchAddress.getCountry(),
+    //            branchAddress.getGovernate(),
+    //            branchAddress.getRegionCity(),
+    //            branchAddress.getStreet(),
+    //            branchAddress.getBuildingNumber(),
+    //            "",
+    //            "",
+    //            "",
+    //            "",
+    //            "");
+    //    Seller sa = new Seller(seller.getRin(),
+    //            seller.getCompanyTradeName(),
+    //            seller.getBranchCode(),
+    //            branch,
+    //            seller.getDeviceSerialNumber(),
+    //            seller.getSyndicateLicenseNumber(),
+    //            seller.getActivityCode()
+    //    );
 
-
-        Buyer BU= new Buyer(  "p",
+        Buyer BU = new Buyer("p",
                 "",
                 "",
                 "",
                 "0");
 
 
-        ArrayList<ExtraReceiptDiscountDatum> extraReceiptDiscountData=new ArrayList<>();
+        ArrayList<ExtraReceiptDiscountDatum> extraReceiptDiscountData = new ArrayList<>();
 
         extraReceiptDiscountData.add(new ExtraReceiptDiscountDatum());
 
-        ArrayList<TaxTotal> taxTotals=new ArrayList<>();
+        ArrayList<TaxTotal> taxTotals = new ArrayList<>();
 
 
-        taxTotals.add(new  TaxTotal(  Double.valueOf(numberFormat.format(TaxTotal))
+        taxTotals.add(new TaxTotal(Double.valueOf(numberFormat.format(TaxTotal))
 
-           //     TaxTotal
+                //     TaxTotal
         ));
 
 
-        Contractor contractor   =new Contractor( );
-        Beneficiary beneficiary=new Beneficiary( );
+        Contractor contractor = new Contractor();
+        Beneficiary beneficiary = new Beneficiary();
 
-        Root r=new Root(header,d,sa,BU, list,
-              //  TotalSale
-              Double.valueOf(numberFormat.format(TotalSale))
+        Root r = new Root(header, d, sa, BU, list,
+                //  TotalSale
+                Double.valueOf(numberFormat.format(TotalSale))
                 ,
                 0.0,
                 0.0,
                 extraReceiptDiscountData,
-               // TotalSale
+                // TotalSale
                 Double.valueOf(numberFormat.format(TotalSale))
                 ,
                 0,
-               // Total
+                // Total
                 Double.valueOf(numberFormat.format(Total))
                 ,
                 taxTotals,
@@ -417,40 +445,41 @@ public class HomeViewModel extends ViewModel  {
                 contractor,
                 beneficiary);
 
-       try {
+        try {
 
-          UUID=  computeHash(r.getString());
-           Log.d("onSuccess",UUID);
-           Log.d("onSuccess","2"+r.getString());
+            UUID = computeHash(r.getString());
+            Log.d("onSuccess", UUID);
+            Log.d("onSuccess", "2" + r.getString());
 
-       } catch (NoSuchAlgorithmException e) {
-           e.printStackTrace();
-       } catch (UnsupportedEncodingException e) {
-           e.printStackTrace();
-       }
-         return  r;
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return r;
     }
-    public String CreateUUID(String BillNumber,String LastUUID,String date,ArrayList<ItemDatum> list){
+
+    public String CreateUUID(String BillNumber, String LastUUID, String date, ArrayList<ItemDatum> list) {
         //   Date df = new Date();
         DecimalFormat numberFormat = new DecimalFormat("#.00");
 
         Double TotalSale = 0.0;
         Double Total = 0.0;
-        for ( ItemDatum itemData:list) {
-            TotalSale+=     itemData.getTotalSale();
-            Total+=itemData.getTotal();
+        for (ItemDatum itemData : list) {
+            TotalSale += itemData.getTotalSale();
+            Total += itemData.getTotal();
 
         }
         //itemData
-        Double TaxTotal=Total-TotalSale;
+        Double TaxTotal = Total - TotalSale;
 
-        String UUID="";
+        String UUID = "";
 
-     //  Date c = Calendar.getInstance().getTime();
-     //  SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault());
-     //  String formattedDate = df.format(c);
-     //  //   Date df = new Date("yyyy-MM-dd'T'HH:mm:ss'Z'");
-        Header header=new Header(
+        //  Date c = Calendar.getInstance().getTime();
+        //  SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault());
+        //  String formattedDate = df.format(c);
+        //  //   Date df = new Date("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        Header header = new Header(
                 date,
                 //df,
                 BillNumber,
@@ -460,66 +489,84 @@ public class HomeViewModel extends ViewModel  {
 
                 ""
         );
-        DocumentType d=new DocumentType();
+        DocumentType d = new DocumentType();
+
+     //   Seller seller=   SharedPreferencesCom.getInstance().getSharedValuesSeller();
+     //   BranchAddress branchAddress=  SharedPreferencesCom.getInstance().getSharedValuesBranchAddress();
+     //   BranchAddress branch = new BranchAddress(branchAddress.getCountry(),
+     //           branchAddress.getGovernate(),
+     //           branchAddress.getRegionCity(),
+     //           branchAddress.getStreet(),
+     //           branchAddress.getBuildingNumber(),
+     //           "",
+     //           "",
+     //           "",
+     //           "",
+     //           "");
+     //   Seller sa = new Seller(seller.getRin(),
+     //           seller.getCompanyTradeName(),
+     //           seller.getBranchCode(),
+     //           branch,
+     //           seller.getDeviceSerialNumber(),
+     //           seller.getSyndicateLicenseNumber(),
+     //           seller.getActivityCode()
+     //   );
+
+      BranchAddress branch = new BranchAddress("EG",
+              "Giza",
+              "6 Oct",
+              "Hyaber",
+              "1",
+              "",
+              "",
+              "",
+              "",
+              "");
+       Seller sa = new Seller("382107586",
+               "Domino's Pizza Hyper One Branch",
+               "2",
+               branch,
+               "447788",
+               "",
+               "1071"
+       );
 
 
-        BranchAddress b=new BranchAddress( "EG",
-                "Giza",
-                "6 Oct",
-                "Hyaber",
-                "1",
-
-                "",
-                "",
-                "",
-                "",
-                "");
-        Seller sa=new Seller(     "382107586",
-                "Domino's Pizza Hyper One Branch",
-                "2",
-                b,
-                "447788",
-                "",
-                "1071"
-        );
-
-
-
-        Buyer BU= new Buyer(  "p",
+        Buyer BU = new Buyer("p",
                 "",
                 "",
                 "",
                 "0");
 
 
-        ArrayList<ExtraReceiptDiscountDatum> extraReceiptDiscountData=new ArrayList<>();
+        ArrayList<ExtraReceiptDiscountDatum> extraReceiptDiscountData = new ArrayList<>();
 
         extraReceiptDiscountData.add(new ExtraReceiptDiscountDatum());
 
-        ArrayList<TaxTotal> taxTotals=new ArrayList<>();
+        ArrayList<TaxTotal> taxTotals = new ArrayList<>();
 
-        taxTotals.add(new  TaxTotal(
+        taxTotals.add(new TaxTotal(
                 Double.valueOf(numberFormat.format(TaxTotal))
-              //  TaxTotal
+                //  TaxTotal
         ));
 
 
-        Contractor contractor   =new Contractor( );
-        Beneficiary beneficiary=new Beneficiary( );
+        Contractor contractor = new Contractor();
+        Beneficiary beneficiary = new Beneficiary();
 
-        Root r=new Root(header,d,sa,BU, list,
+        Root r = new Root(header, d, sa, BU, list,
 //                TotalSale
-              Double.valueOf(  numberFormat.format( TotalSale))
+                Double.valueOf(numberFormat.format(TotalSale))
                 ,
                 0.0,
                 0.0,
                 extraReceiptDiscountData,
                 //TotalSale
-                Double.valueOf(  numberFormat.format( TotalSale))
+                Double.valueOf(numberFormat.format(TotalSale))
                 ,
                 0,
 //                Total
-                Double.valueOf(  numberFormat.format(  Total))
+                Double.valueOf(numberFormat.format(Total))
 
                 ,
                 taxTotals,
@@ -530,20 +577,21 @@ public class HomeViewModel extends ViewModel  {
 
         try {
 
-            Gson g=new Gson();
-           g.toJson(r);
-            Log.d("onSuccess","1"+r.getString());
-            Log.d("onSuccess","1"+g.toJson(r));
+            Gson g = new Gson();
+            g.toJson(r);
+            Log.d("onSuccess", "1" + r.getString());
+            Log.d("onSuccess", "1" + g.toJson(r));
 
-            UUID=  computeHash(r.getString());
+            UUID = computeHash(r.getString());
 
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        return  UUID;
+        return UUID;
     }
+
     public String computeHash(String input) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
         digest.reset();
@@ -558,105 +606,106 @@ public class HomeViewModel extends ViewModel  {
 
         return sb.toString();
     }
-    public String getNumberBill(Context context){
-        SharedPreferences   sharedPreferenclanguageg = context.getSharedPreferences("NumberBill", MODE_PRIVATE);
+
+    public String getNumberBill(Context context) {
+        SharedPreferences sharedPreferenclanguageg = context.getSharedPreferences("NumberBill", MODE_PRIVATE);
         SharedPreferences.Editor editsg = sharedPreferenclanguageg.edit();
 
         //toGet
         String Number = sharedPreferenclanguageg.getString("NumberOFBill", "900");
-     //   Toast.makeText(context, Number, Toast.LENGTH_SHORT).show();
-        int newNumber=Integer.valueOf(Number)+1;
+        //   Toast.makeText(context, Number, Toast.LENGTH_SHORT).show();
+        int newNumber = Integer.valueOf(Number) + 1;
         //ToPost
-        editsg.putString("NumberOFBill",String.valueOf(newNumber));
+        editsg.putString("NumberOFBill", String.valueOf(newNumber));
         editsg.apply();
         return String.valueOf(newNumber);
 
     }
+
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public String getTimeBill(){
+    public String getTimeBill() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
         LocalDateTime datetime = LocalDateTime.now();
         //  System.out.println("Before subtraction of hours from date: "+datetime.format(formatter));
 
-        datetime=datetime.minusHours(2);
-        String aftersubtraction=datetime.format(formatter);
+        datetime = datetime.minusHours(2);
+        String aftersubtraction = datetime.format(formatter);
         return aftersubtraction;
     }
 
- //  public MutableLiveData<List<ItemsBill>> liveData=new MutableLiveData<>();
+    //  public MutableLiveData<List<ItemsBill>> liveData=new MutableLiveData<>();
 
- //  public ArrayList<ItemsBill> getItems(String id,Context context) {
- //      ArrayList<ItemsBill> itemData = new ArrayList<>();
- //      ContactsDatabase contactsDatabase = ContactsDatabase.getGetInstance(context);
- //      contactsDatabase.ItemsBillDao().getlistItems(id)
- //              //getlistItems("123")
- //              .subscribeOn(computation())
- //              .observeOn(AndroidSchedulers.mainThread())
- //              .subscribe(new SingleObserver<List<ItemsBill>>() {
- //                  @Override
- //                  public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
+    //  public ArrayList<ItemsBill> getItems(String id,Context context) {
+    //      ArrayList<ItemsBill> itemData = new ArrayList<>();
+    //      ContactsDatabase contactsDatabase = ContactsDatabase.getGetInstance(context);
+    //      contactsDatabase.ItemsBillDao().getlistItems(id)
+    //              //getlistItems("123")
+    //              .subscribeOn(computation())
+    //              .observeOn(AndroidSchedulers.mainThread())
+    //              .subscribe(new SingleObserver<List<ItemsBill>>() {
+    //                  @Override
+    //                  public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
 
- //                  }
+    //                  }
 
- //                  @Override
- //                  public void onSuccess(@io.reactivex.rxjava3.annotations.NonNull List<ItemsBill> itemsBills) {
- //                      liveData.setValue(itemsBills);
- //                    //for (ItemsBill i : itemsBills) {
- //                    //    Log.d("onSuccess",i.getIDBill()+"tesor");
- //                    //    Log.d("onSuccess",i.getPName()+"tesor");
- //                    //   // itemData.add(homeViewModel.getItems(1.0, i.getUnitPrice(), i.getUnitPrice(), i.getPName()));
- //                    //    Log.d("onSuccess","yousif");
- //                    //}
- //                   //   itemData=itemsBills;
- //                  }
+    //                  @Override
+    //                  public void onSuccess(@io.reactivex.rxjava3.annotations.NonNull List<ItemsBill> itemsBills) {
+    //                      liveData.setValue(itemsBills);
+    //                    //for (ItemsBill i : itemsBills) {
+    //                    //    Log.d("onSuccess",i.getIDBill()+"tesor");
+    //                    //    Log.d("onSuccess",i.getPName()+"tesor");
+    //                    //   // itemData.add(homeViewModel.getItems(1.0, i.getUnitPrice(), i.getUnitPrice(), i.getPName()));
+    //                    //    Log.d("onSuccess","yousif");
+    //                    //}
+    //                   //   itemData=itemsBills;
+    //                  }
 
- //                  @Override
- //                  public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+    //                  @Override
+    //                  public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
 
- //                  }
- //              });
+    //                  }
+    //              });
 
- //      // }
- //      return itemData;
- //  }
-
-
- //  public MutableLiveData<StateData<String>>getLiveData1=new MutableLiveData<>();
-
- //  public void addItem(Context context, Products i){
+    //      // }
+    //      return itemData;
+    //  }
 
 
- //      ContactsDatabase postsDataBass =  ContactsDatabase.getGetInstance(context);
- //      //  postsDataBass.contactsDao().insertContacts()
- //      postsDataBass.productsDao().insertContacts(i)
- //              //   postsDataBass.contactsDao().insertContacts(post)
+    //  public MutableLiveData<StateData<String>>getLiveData1=new MutableLiveData<>();
+
+    //  public void addItem(Context context, Products i){
 
 
- //              .subscribeOn(computation())
+    //      ContactsDatabase postsDataBass =  ContactsDatabase.getGetInstance(context);
+    //      //  postsDataBass.contactsDao().insertContacts()
+    //      postsDataBass.productsDao().insertContacts(i)
+    //              //   postsDataBass.contactsDao().insertContacts(post)
 
- //              .subscribe(new CompletableObserver() {
- //                  @Override
- //                  public void onSubscribe(@NonNull Disposable d) {
- //                      getLiveData1.setValue( new StateData().loading());
 
- //                  }
+    //              .subscribeOn(computation())
 
- //                  @Override
- //                  public void onComplete() {
- //                      Log.d("yousiiiif","complete1");
- //                      getLiveData1.setValue( new StateData().success("Complete"));
+    //              .subscribe(new CompletableObserver() {
+    //                  @Override
+    //                  public void onSubscribe(@NonNull Disposable d) {
+    //                      getLiveData1.setValue( new StateData().loading());
 
- //                  }
- //                  @Override
- //                  public void onError(@NonNull Throwable e) {
- //                 //     Log.d("yousiiiif",e.getMessage().toString());
- //                      getLiveData1.setValue( new StateData().error(e));
- //                  }
- //              });
+    //                  }
 
- //  }
+    //                  @Override
+    //                  public void onComplete() {
+    //                      Log.d("yousiiiif","complete1");
+    //                      getLiveData1.setValue( new StateData().success("Complete"));
 
+    //                  }
+    //                  @Override
+    //                  public void onError(@NonNull Throwable e) {
+    //                 //     Log.d("yousiiiif",e.getMessage().toString());
+    //                      getLiveData1.setValue( new StateData().error(e));
+    //                  }
+    //              });
+
+    //  }
 
 
     public HeaderBackup getHeaderBackup(String uuID,
@@ -667,7 +716,7 @@ public class HomeViewModel extends ViewModel  {
                                         Double totalPrice,
                                         String link
 
-                                        ){
+    ) {
         HeaderBackup headerBill = new HeaderBackup();
         headerBill.setUUID(uuID);
         headerBill.setBillNumber(numberRicet);
@@ -680,14 +729,14 @@ public class HomeViewModel extends ViewModel  {
     }
 
     public HeaderBillOnline getHeaderOnline(String uuID,
-                                        String numberRicet,
-                                        String TimeRicet,
-                                        Double Tax,
-                                        Double price,
-                                        Double totalPrice,
-                                        String link
+                                            String numberRicet,
+                                            String TimeRicet,
+                                            Double Tax,
+                                            Double price,
+                                            Double totalPrice,
+                                            String link
 
-    ){
+    ) {
         HeaderBillOnline headerBill = new HeaderBillOnline();
         headerBill.setUUID(uuID);
         headerBill.setBillNumber(numberRicet);
@@ -698,10 +747,11 @@ public class HomeViewModel extends ViewModel  {
         headerBill.setLink(link);
         return headerBill;
     }
-    public MutableLiveData<StateData<String>>setheadBill=new MutableLiveData<>();
+
+    public MutableLiveData<StateData<String>> setheadBill = new MutableLiveData<>();
 
 
-    public void headBill(HeaderBill post, ArrayList<ItemsBill> postitem,Context context) {
+    public void headBill(HeaderBill post, ArrayList<ItemsBill> postitem, Context context) {
 
 
         ContactsDatabase postsDataBass = ContactsDatabase.getGetInstance(context);
@@ -715,7 +765,7 @@ public class HomeViewModel extends ViewModel  {
                 .subscribe(new CompletableObserver() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        setheadBill.postValue( new StateData().loading());
+                        setheadBill.postValue(new StateData().loading());
 
                     }
 
@@ -744,7 +794,7 @@ public class HomeViewModel extends ViewModel  {
 
                             @Override
                             public void onNext(@io.reactivex.rxjava3.annotations.NonNull ItemsBill itemsBill) {
-                                setBill(itemsBill,context);
+                                setBill(itemsBill, context);
                                 // Log.d("onSuccess",itemsBill.getPName()+"testOonly");
                             }
 
@@ -768,7 +818,8 @@ public class HomeViewModel extends ViewModel  {
                 });
 
     }
-    public MutableLiveData<StateData<String>>setheadBillRoomBackup=new MutableLiveData<>();
+
+    public MutableLiveData<StateData<String>> setheadBillRoomBackup = new MutableLiveData<>();
 
     public void headBillRoomBackup(HeaderBackup post, ArrayList<ItemsBackup> postitem, Context context) {
 
@@ -778,9 +829,10 @@ public class HomeViewModel extends ViewModel  {
                 .subscribe(new CompletableObserver() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        setheadBillRoomBackup.postValue( new StateData().loading());
+                        setheadBillRoomBackup.postValue(new StateData().loading());
 
                     }
+
                     @Override
                     public void onComplete() {
 
@@ -806,7 +858,7 @@ public class HomeViewModel extends ViewModel  {
 
                             @Override
                             public void onNext(@io.reactivex.rxjava3.annotations.NonNull ItemsBackup itemsBackup) {
-                                setBillRoomBackup(itemsBackup,context);
+                                setBillRoomBackup(itemsBackup, context);
                             }
 
                             @Override
@@ -818,7 +870,7 @@ public class HomeViewModel extends ViewModel  {
                             public void onComplete() {
 
                             }
-                        } ;
+                        };
                         ob.subscribe(obs);
                     }
 
@@ -829,7 +881,28 @@ public class HomeViewModel extends ViewModel  {
 
     }
 
-    public void setItemsOnline(List<ItemsModel> itemsOnline,Context context){
+    public void setOneItemOnline(ItemsModel itemsOnline, Context context) {
+        ContactsDatabase postsDataBass = ContactsDatabase.getGetInstance(context);
+        postsDataBass.itemOnlineDao().insertContacts( itemsOnline)
+                .subscribeOn(computation()).subscribe(new CompletableObserver() {
+                    @Override
+                    public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                        Log.d("log", "sssssss");
+                    }
+
+                    @Override
+                    public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+                        Log.d("log", e.getMessage());
+                    }
+                });
+    }
+    public void setItemsOnline(List<ItemsModel> itemsOnline, Context context) {
         ContactsDatabase postsDataBass = ContactsDatabase.getGetInstance(context);
         postsDataBass.itemOnlineDao().insertAllOrders(itemsOnline)
                 .subscribeOn(computation()).subscribe(new CompletableObserver() {
@@ -841,16 +914,97 @@ public class HomeViewModel extends ViewModel  {
                     @Override
                     public void onComplete() {
 
-                        Log.d("log","sssssss");
+                        Log.d("log", "sssssss");
                     }
 
                     @Override
                     public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
-                        Log.d("log",e.getMessage());
+                        Log.d("log", e.getMessage());
                     }
                 });
     }
-    public void getItemsOnline(Context context){
+
+    public void LoginFun(String androidID, Context context) {
+        Observable observable = RetrofitRefranc.getInstance()
+                .getApiCalls()
+                .LoginAPI(androidID)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+        Observer<Task3<LoginModel>> observer = new Observer<Task3<LoginModel>>() {
+            @Override
+            public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(@io.reactivex.rxjava3.annotations.NonNull Task3<LoginModel> loginModelTask3) {
+
+
+
+                SharedPreferencesCom.init(context);
+                String rin = String.valueOf(loginModelTask3.getItem().getTax_id());
+                String companyTradeName = loginModelTask3.getItem().getName();
+                String branchCode = String.valueOf(loginModelTask3.getItem().getBranchID());
+                String deviceSerialNumber = loginModelTask3.getItem().getPosserial();
+                String syndicateLicenseNumber = loginModelTask3.getItem().getLicenseExpiryDate();
+                String activityCode = loginModelTask3.getItem().getTaxpayerActivityCode();
+                SharedPreferencesCom.getInstance().setSharedValuesSeller(rin, companyTradeName, branchCode
+                        ,deviceSerialNumber,syndicateLicenseNumber, activityCode);
+
+                String country=loginModelTask3.getItem().getCountry();
+                String governate=loginModelTask3.getItem().getGovernate();
+                String regionCity=loginModelTask3.getItem().getRegionCity();
+                String street=loginModelTask3.getItem().getStreet();
+                String buildingNumber=loginModelTask3.getItem().getBuildingNumber();
+                SharedPreferencesCom.getInstance().setSharedValuesBranchAddress( country ,governate,regionCity,street,
+                        buildingNumber);
+                SharedPreferencesCom.getInstance(). setSharedDocumentType(loginModelTask3.getItem().getTypeVersion());
+
+                SharedPreferencesCom.getInstance().setSharedItemFlag(String.valueOf(loginModelTask3.getItem().getItemFlag()));
+                SharedPreferencesCom.getInstance().setSharedPriceFlag(String.valueOf(loginModelTask3.getItem().getPriceFlag()));
+
+                setInfoTdp(loginModelTask3.getData(), context);
+                Log.d("Loginchhf", String.valueOf(loginModelTask3.getItem().getTax_id()));
+            }
+
+            @Override
+            public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+                Log.d("Loginchhf", e.getMessage() + "chhf");
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        };
+
+        observable.subscribe(observer);
+    }
+
+
+    public void setInfoTdp(List<LoginModel> order, Context context) {
+        ContactsDatabase postsDataBass = ContactsDatabase.getGetInstance(context);
+        postsDataBass.loginInfoDao().insertAllOrders(order)
+                .subscribeOn(computation()).subscribe(new CompletableObserver() {
+                    @Override
+                    public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                        Log.d("setInfoTdp", "onComplete");
+                    }
+
+                    @Override
+                    public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+                        Log.d("onComplete", e.getMessage());
+                    }
+                });
+    }
+
+    public void getItemsOnline(Context context) {
         ContactsDatabase postsDataBass = ContactsDatabase.getGetInstance(context);
         postsDataBass.itemOnlineDao().getContacts()
                 .subscribeOn(computation()).subscribe(new SingleObserver<List<ItemsModel>>() {
@@ -861,7 +1015,7 @@ public class HomeViewModel extends ViewModel  {
 
                     @Override
                     public void onSuccess(@io.reactivex.rxjava3.annotations.NonNull List<ItemsModel> itemsModels) {
-                        itemsModels1= (ArrayList<ItemsModel>) itemsModels;
+                        itemsModels1 = (ArrayList<ItemsModel>) itemsModels;
                     }
 
                     @Override
@@ -870,7 +1024,8 @@ public class HomeViewModel extends ViewModel  {
                     }
                 });
     }
-    public void setBillRoomBackup(ItemsBackup post,Context context) {
+
+    public void setBillRoomBackup(ItemsBackup post, Context context) {
 
         //  postsDataBass.contactsDao().insertContacts()
         //.ItemsBillDao().insertContacts(post)
@@ -886,16 +1041,17 @@ public class HomeViewModel extends ViewModel  {
 
                     @Override
                     public void onComplete() {
-                        setheadBillRoomBackup.postValue( new StateData().complete());
+                        setheadBillRoomBackup.postValue(new StateData().complete());
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Log.d("onSuccess",e.getMessage());
+                        Log.d("onSuccess", e.getMessage());
                     }
                 });
     }
-    public void setBill(ItemsBill post,Context context) {
+
+    public void setBill(ItemsBill post, Context context) {
 
 
         ContactsDatabase postsDataBass = ContactsDatabase.getGetInstance(context);
@@ -914,19 +1070,19 @@ public class HomeViewModel extends ViewModel  {
                     @Override
                     public void onComplete() {
 
-                        setheadBill.postValue( new StateData().complete());
+                        setheadBill.postValue(new StateData().complete());
                         ///      Log.d("onSuccess","11111111111");
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Log.d("onSuccess",e.getMessage());
+                        Log.d("onSuccess", e.getMessage());
                     }
                 });
 
     }
 
-    public MutableLiveData<StateData<List<Products>>>getProducts=new MutableLiveData<>();
+    public MutableLiveData<StateData<List<Products>>> getProducts = new MutableLiveData<>();
 
     public void getproductsDaoRoom(Context context) {
         ContactsDatabase contactsDatabase = ContactsDatabase.getGetInstance(context);
@@ -935,23 +1091,23 @@ public class HomeViewModel extends ViewModel  {
                 .subscribeOn(computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<List<Products>>() {
-                    @Override
-                    public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
-                        getProducts.setValue( new StateData().loading());
-                    }
+                               @Override
+                               public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
+                                   getProducts.setValue(new StateData().loading());
+                               }
 
-                    @Override
-                    public void onSuccess(@io.reactivex.rxjava3.annotations.NonNull List<Products> products) {
+                               @Override
+                               public void onSuccess(@io.reactivex.rxjava3.annotations.NonNull List<Products> products) {
 
-                        getProducts.setValue(new StateData().success(products));
-                    }
+                                   getProducts.setValue(new StateData().success(products));
+                               }
 
-                    @Override
-                    public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
-                        getProducts.setValue( new StateData().error(e));
+                               @Override
+                               public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+                                   getProducts.setValue(new StateData().error(e));
 
-                    }
-                }
+                               }
+                           }
                 );
     }
     // Date c = Calendar.getInstance().getTime();
@@ -963,15 +1119,16 @@ public class HomeViewModel extends ViewModel  {
     public void headBillRoomOnline(HeaderBillOnline post, ArrayList<ItemsBillOnlin> postitem, Context context) {
 
         ContactsDatabase postsDataBass = ContactsDatabase.getGetInstance(context);
-       // postsDataBass.HeaderBackupDao().insertHeaderBill(post)
+        // postsDataBass.HeaderBackupDao().insertHeaderBill(post)
         postsDataBass.headerBillOnlineDao().insertHeaderBill(post)
                 .subscribeOn(computation())
                 .subscribe(new CompletableObserver() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        setheadBillRoomBackup.postValue( new StateData().loading());
+                        setheadBillRoomBackup.postValue(new StateData().loading());
 
                     }
+
                     @Override
                     public void onComplete() {
 
@@ -1013,6 +1170,7 @@ public class HomeViewModel extends ViewModel  {
                         };
                         ob.subscribe(obs);
                     }
+
                     @Override
                     public void onError(@NonNull Throwable e) {
                     }
@@ -1020,11 +1178,11 @@ public class HomeViewModel extends ViewModel  {
 
     }
 
-    public void setBillRoomOnline(ItemsBillOnlin post,Context context) {
+    public void setBillRoomOnline(ItemsBillOnlin post, Context context) {
 
         ContactsDatabase postsDataBass = ContactsDatabase.getGetInstance(context);
-       // postsDataBass.ItemBackupDao().insertContacts(post)
-        postsDataBass.itemsBillOnlineDao().insertContacts( post)
+        // postsDataBass.ItemBackupDao().insertContacts(post)
+        postsDataBass.itemsBillOnlineDao().insertContacts(post)
                 .subscribeOn(computation())
                 .subscribe(new CompletableObserver() {
                     @Override
@@ -1034,12 +1192,12 @@ public class HomeViewModel extends ViewModel  {
 
                     @Override
                     public void onComplete() {
-                       // setheadBillRoomBackup.postValue( new StateData().complete());
+                        // setheadBillRoomBackup.postValue( new StateData().complete());
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Log.d("onSuccess",e.getMessage());
+                        Log.d("onSuccess", e.getMessage());
                     }
                 });
     }
