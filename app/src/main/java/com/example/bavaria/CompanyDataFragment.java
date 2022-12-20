@@ -37,11 +37,11 @@ public class CompanyDataFragment extends Fragment {
         branchAddress.getRegionCity();
         branchAddress.getStreet();
         branchAddress.getBuildingNumber();
-        binding.textView2.setText("   "+seller.getCompanyTradeName());
-        binding.editText1.setText("   "+seller.getRin());
-        binding.editText3.setText("   "+seller.getBranchCode());
-        binding.editText2.setText("   "+seller.getActivityCode());
-        binding.editText4.setText("   "+branchAddress.getBuildingNumber());
+        binding.com.setText("   "+seller.getCompanyTradeName());
+        binding.numOfRecord.setText("   "+seller.getRin());
+        binding.branchcode.setText("   "+seller.getBranchCode());
+        binding.BuildingNumber.setText("   "+branchAddress.getBuildingNumber());
+//        binding.editText2.setText("   "+seller.getActivityCode());
 
 
      //  seller.getRin(),
