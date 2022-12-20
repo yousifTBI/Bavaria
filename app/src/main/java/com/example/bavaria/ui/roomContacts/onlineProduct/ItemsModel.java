@@ -68,12 +68,48 @@ public class ItemsModel implements Searchable {
     }
 
 
+    public int getRecord_ID() {
+        return Record_ID;
+    }
+
+    public void setRecord_ID(int record_ID) {
+        Record_ID = record_ID;
+    }
+
+    public String getItemName() {
+        return ItemName;
+    }
+
+    public void setItemName(String itemName) {
+        ItemName = itemName;
+    }
+
     public void setBarcode(String barcode) {
         Barcode = barcode;
     }
 
+    public String getDescription() {
+        return Description;
+    }
+
     public void setDescription(String description) {
         Description = description;
+    }
+
+    public String getEditor() {
+        return Editor;
+    }
+
+    public void setEditor(String editor) {
+        Editor = editor;
+    }
+
+    public String getDate() {
+        return Date;
+    }
+
+    public void setDate(String date) {
+        Date = date;
     }
 
     public void setItemType(String itemType) {

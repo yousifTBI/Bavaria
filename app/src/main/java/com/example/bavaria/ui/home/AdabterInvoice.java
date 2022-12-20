@@ -53,7 +53,7 @@ public class AdabterInvoice extends RecyclerView.Adapter<AdabterInvoice.viewhold
 
     @Override
     public void onBindViewHolder(@NonNull viewholderInvoice holder, int position) {
-       String x= list.get(position).getPrice().toString();
+     //  String x= list.get(position).getPrice().toString();
 
        //  Double d=(Double.valueOf(x)*14.0)/100;
        //  Double total= Double.valueOf(x)+d;
@@ -68,7 +68,7 @@ public class AdabterInvoice extends RecyclerView.Adapter<AdabterInvoice.viewhold
           @Override
           public void onClick(View view) {
 
-              onClic.updateQuantity(position);
+              onClic.updateQuantity(position,list.get(position),holder.getAdapterPosition());
           }
       });
 

@@ -36,7 +36,9 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bavaria.Bluetoothprint.PrintBluetooth;
 import com.example.bavaria.R;
@@ -60,6 +62,7 @@ import com.example.bavaria.ui.roomContacts.onlineProduct.ItemsModel;
 import com.example.bavaria.ui.roomContacts.productRoom.ItemsBill;
 import com.example.bavaria.ui.slideshow.OnClic;
 import com.example.bavaria.ui.utils.SharedPreferencesCom;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
@@ -88,6 +91,9 @@ import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.core.SingleObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import ir.mirrajabi.searchdialog.SimpleSearchDialogCompat;
+import ir.mirrajabi.searchdialog.core.BaseSearchDialogCompat;
+import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 public class HomeFragment extends Fragment implements OnClic {
 
@@ -136,6 +142,34 @@ public class HomeFragment extends Fragment implements OnClic {
 //            }
 //        });
         // binding.textView21.setMovementMethod(LinkMovementMethod.getInstance());
+
+       new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+           @Override
+           public boolean onMove(@androidx.annotation.NonNull RecyclerView recyclerView, @androidx.annotation.NonNull RecyclerView.ViewHolder viewHolder, @androidx.annotation.NonNull RecyclerView.ViewHolder target) {
+               //  Toast.makeText(ItemsActivity.this, "Swipe to delete", Toast.LENGTH_SHORT).show();
+               return false;
+           }
+
+           @Override
+           public void onSwiped(@androidx.annotation.NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+               Snackbar.make(binding.billRecycler, "Deleted item", Snackbar.LENGTH_SHORT).setAction("تم المسح", new View.OnClickListener() {
+                   @Override
+                   public void onClick(View view) {
+
+                   }
+               }).show();
+               itemsList.remove(viewHolder.getAdapterPosition());
+               adabter.notifyDataSetChanged();
+
+               adabter.notifyItemInserted(itemsList.size() - 1);
+               binding.billRecycler.scrollToPosition(itemsList.size());
+               binding.billRecycler.setAdapter(adabter);
+
+           }
+       }).attachToRecyclerView(binding.billRecycler);
+
+
+
         int state = 0;
         binding.button2.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
@@ -339,26 +373,50 @@ public class HomeFragment extends Fragment implements OnClic {
         binding.cardView5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                homeViewModel.provideSimpleDialog(getContext());
+               // homeViewModel.provideSimpleDialog(getContext());
+
+                SimpleSearchDialogCompat dialog = new SimpleSearchDialogCompat(getActivity(), "Search...",
+                        "What are you looking for...?", null,homeViewModel.itemsModels1 ,
+                        new SearchResultListener<ItemsModel>() {
+                            @Override
+                            public void onSelected(BaseSearchDialogCompat dialog, ItemsModel item, int position) {
+                                // Toast.makeText(context, item.getTax()+"ء", Toast.LENGTH_SHORT).show();
+                                itemsList.add(item);
+                                        //.setValue(item);
+                                //  onClic.getQR("d");
+                                // itemsList1.setValue(new L);
+                                //.add(item);
+                                // binding.textView220.setText(item.getCurrencyName());
+                                // binding.textView23.setText(item.getValue());
+                                // binding.cashEditText1.setText("0");
+                                // binding.cashEditText2.setText("0.0");
+                                //   binding.textView22.setText(item.getCurrencyName()+"    ");
+                                adabter.notifyDataSetChanged();
+                                dialog.dismiss();
+                            }
+
+                        }
+                );
+                dialog.show();
 
             }
         });
-        homeViewModel.getItemsList().observe(getViewLifecycleOwner(), new androidx.lifecycle.Observer<ItemsModel>() {
-            @Override
-            public void onChanged(ItemsModel items) {
-                if (items != null) {
-                    itemsList.add(items);
-                    adabter.setList(itemsList);
+    //   homeViewModel.getItemsList().observe(getViewLifecycleOwner(), new androidx.lifecycle.Observer<ItemsModel>() {
+    //       @Override
+    //       public void onChanged(ItemsModel items) {
+    //           if (items != null) {
+    //               itemsList.add(items);
+    //               adabter.setList(itemsList);
 
-                    // Toast.makeText(getContext(),  items.getTotal()+"", Toast.LENGTH_SHORT).show();
-                    // adabter.notify();
-                    //     homeViewModel.setItemsList1(itemsList);
-                    adabter.notifyDataSetChanged();
-                }
+    //               // Toast.makeText(getContext(),  items.getTotal()+"", Toast.LENGTH_SHORT).show();
+    //               // adabter.notify();
+    //               //     homeViewModel.setItemsList1(itemsList);
+    //               adabter.notifyDataSetChanged();
+    //           }
 
 
-            }
-        });
+    //       }
+    //   });
 
 
         homeViewModel.getItems(1.0, 50, 50, "فلامنكو");
@@ -1222,8 +1280,14 @@ public class HomeFragment extends Fragment implements OnClic {
 
     }
 
+
+    // @Override
+  // public void updateQuantity(int postionList, ItemsModel item) {
+  //
+  // }
+
     @Override
-    public void updateQuantity(int postionList) {
+    public void updateQuantity(int postionList, ItemsModel item,int AdabterPos) {
         ArrayList<Integer>arrayList=new ArrayList<>();
 
         // set value in array list
@@ -1294,7 +1358,7 @@ public class HomeFragment extends Fragment implements OnClic {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                adabter.setList(itemsList);
+            //    adabter.setList(itemsList);
 
                 // Toast.makeText(getContext(),  items.getTotal()+"", Toast.LENGTH_SHORT).show();
                 // adabter.notify();
@@ -1311,14 +1375,22 @@ public class HomeFragment extends Fragment implements OnClic {
                 //   billRecycler.scrollToPosition(list.size());
                 //   billRecycler.setAdapter(adabter);
               //  holder.   contaty_v.setText(adapterlist.getItem(position)+"");
-                 itemsList.get( postionList).setQuantity(Integer.valueOf(String.valueOf(adapterlist.getItem(position))));
-                Toast.makeText(getContext(), String.valueOf(adapterlist.getItem(position)), Toast.LENGTH_SHORT).show();
+            //    item.setQuantity( Integer.valueOf(adapterlist.getItem(position)));
+                itemsList.remove(postionList);
+               ItemsModel i= new ItemsModel();
+               i.setQuantity(Integer.valueOf(adapterlist.getItem(position)));
+                i.setDescription( item.getDescription());
+                i.setPrice( Double.valueOf(item.getPrice()));
+                 itemsList.add(i);
+                         //.setQuantity(Integer.valueOf(String.valueOf(adapterlist.getItem(position))));
+               // Toast.makeText(getContext(), String.valueOf(adapterlist.getItem(position)), Toast.LENGTH_SHORT).show();
 
-                adabter.setList(itemsList);
+               // adabter.setList(itemsList);
                // holder.total_v.setText(list.get(position).getBalanc()+"");
                // list.get(position).setContaty(Double.valueOf(String.valueOf(charSequence)));
                // clic.cliceCuantaty(position,list.get(position).getBalanc());
-                adabter.notifyDataSetChanged();
+           //   adabter.notifyDataSetChanged();
+                adabter.notifyItemChanged(postionList);
 
                 dialog.dismiss();
             }
