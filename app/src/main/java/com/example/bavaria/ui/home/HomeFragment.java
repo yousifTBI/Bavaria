@@ -1,6 +1,7 @@
 package com.example.bavaria.ui.home;
 
 import static com.example.bavaria.print.Print_c.textAsBitmap;
+import static java.lang.System.in;
 import static java.lang.System.lineSeparator;
 import static io.reactivex.rxjava3.schedulers.Schedulers.computation;
 import static io.reactivex.rxjava3.schedulers.Schedulers.io;
@@ -8,10 +9,12 @@ import static io.reactivex.rxjava3.schedulers.Schedulers.io;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.util.Printer;
 import android.view.LayoutInflater;
@@ -66,6 +69,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Scanner;
 
 import CTOS.CtPrint;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -1120,7 +1124,8 @@ public class HomeFragment extends Fragment implements OnClic {
             //    sb.append("  "+s.ItemName+"       "+s.contaty+"           "+s.balanc+"           "+"\n" +
             //            " "+restOfItemName+"\n" +"\n");
             //  }else {
-            sb.append("  " + s.getTitle() + "           " + s.getPrice() + "           " + "s.getTotal()" + "\n");
+            sb.append("" + s.getTitle() + " " );
+                  //  " " + s.getPrice() + "  " + "s.getTotal()" + "\n");
 
             //   }
             //  sb.append("  "+s.ItemName+"           "+s.contaty+"           "+s.balanc +"\n");
@@ -1132,19 +1137,19 @@ public class HomeFragment extends Fragment implements OnClic {
         sb.append("_________________________________");
         sb.append("\n");
         sb.append("\n");
-        sb.append(" Total Items  " + "                                   " + "Totals.getText()");
+        sb.append(" Total Items  " + "                          " + "Totals.getText()");
         sb.append("\n");
-        sb.append(" Discount     " + "                                    " + "0.0");
+        sb.append(" Discount     " + "                           " + "0.0");
         sb.append("\n");
-        sb.append(" Cash Discount  " + "                             " + "0.0");
+        sb.append(" Cash Discount  " + "                    " + "0.0");
         sb.append("\n");
         sb.append("_________________________________");
         sb.append("\n");
-        sb.append(" Total Due  " + "                                       " + "Totals.getText()");
+        sb.append(" Total Due  " + "                                " + "Totals.getText()");
         sb.append("\n");
-        sb.append(" Cash Paid    " + "                                    " + "0.0");
+        sb.append(" Cash Paid    " + "                             " + "0.0");
         sb.append("\n");
-        sb.append(" Credit Cards  " + "                                  " + "0.0");
+        sb.append(" Credit Cards  " + "                           " + "0.0");
         sb.append("\n");
         sb.append("_________________________________");
         sb.append("\n");
@@ -1205,19 +1210,7 @@ public class HomeFragment extends Fragment implements OnClic {
         return msg;
     }
 
-    public Bitmap print(String url) throws WriterException {
-        MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
-        BitMatrix bitMatrix;
 
-        bitMatrix = multiFormatWriter.encode(url,
-                BarcodeFormat.QR_CODE,
-                250,
-                250);
-
-        BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
-        Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
-        return bitmap;
-    }
 
     @Override
     public void getPos(int postion) {
@@ -1307,20 +1300,20 @@ public class HomeFragment extends Fragment implements OnClic {
         int print_y = 36;
         int Currently_high = 20;
         int ret = 0;
-        // Bitmap bitmap = null;
+          Bitmap bitmap = null;
 
-        //  print.initPage(200);
-        // bitmap = print.encodeToBitmap(qr, print.QR_CODE, 150, 150);
-        //  print.drawImage(bitmap, 0, 0);
-        //  print.printPage();
+           print.initPage(200);
+          bitmap = print.encodeToBitmap(qr, print.QR_CODE, 150, 150);
+           print.drawImage(bitmap, 0, 0);
+           print.printPage();
 
-        // ret = print.roll(10);
-        // Log.d(TAG, String.format("Roll ret = %d", ret));
+          ret = print.roll(10);
+          Log.d(TAG, String.format("Roll ret = %d", ret));
 
-        // ret = print.status();
-        // Log.d(TAG, String.format("status ret = %d", ret));
+          ret = print.status();
+          Log.d(TAG, String.format("status ret = %d", ret));
 
-        //   print.drawText(20,20,"shdkjshd"+"\n"+"kjds",87);
+            print.drawText(20,20,"shdkjshd"+"\n"+"kjds",87);
         print.setHeatLevel(3);
 
         print.initPage(100);
@@ -1375,46 +1368,51 @@ public class HomeFragment extends Fragment implements OnClic {
 
     public void ssss() {
         String print_font;
-        int print_x = 0;
+        int print_x = 45;
         int print_y = 36;
         int Currently_high = 20;
         int ret = 0;
         CtPrint print = new CtPrint();
 
-        print.initPage(200);
-        JSONObject json_obj = new JSONObject();
-        try {
-            json_obj.getJSONObject("jhjh"+"kkkkk"+"kjhjhjhjhjhjhj");
-            print.drawText(0, print_y + Currently_high, json_obj.toString(), print_y / 2, print_y, 1, 0xFF000000, true, (float) 0, false,
-                    false, Typeface.create("sans-serif-thin", Typeface.NORMAL));
+        print.initPage(900);
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        JSONArray json_arr = new JSONArray();
 
-        Bitmap bitmap = null;
         // Typeface font;
         // AssetManager assetManager = getAssets();
         // font = Typeface.createFromAsset(assetManager, String.format("fonts/%s", "bokutachi.otf"));
 
 
         String separator = System.lineSeparator();
+        String z="asjhajd"+"\n"+"skjhs";
 
 
 
-        print_font = "PRINT "   +separator   +" TESTING";
-        print.drawText(0, print_y + Currently_high, print_font, print_y, 1, 0xFF000000, true, (float) 0, false,
-                false, Typeface.create("sans-serif-thin", Typeface.NORMAL));
-        Currently_high += print_y;
-        print.drawText(0, print_y + Currently_high, print_font, print_y / 2, print_y, 1, 0xFF000000, true, (float) 0, false,
-                false, Typeface.create("sans-serif-thin", Typeface.NORMAL));
-        Currently_high += print_y;
-        print.drawText(0, print_y + Currently_high, print_font, print_y * 2, print_y, 1, 0xFF000000, true, (float) 0, false,
-                false, Typeface.create("sans-serif-thin", Typeface.NORMAL));
-        String json_printname = "";
-        String json_printip = "";
-        String json_printport = "";
+        StringBuilder sb=new StringBuilder("Hello ");
+        sb.append("Java                          ");//now original string is changed
+
+        sb.append("\n");
+        sb.append("Java");
+        print_font = "PRINT "   +separator   +"\n"+" TESTING" +"\n"+" TESTING" +"\n"+" TESTING" +"\n"+" TESTING";
+
+            print.drawImage(textAsBitmap(setpill(),600,25),4,30);
+        print.printPage();
+        Bitmap bitmap = null;
+
+        bitmap = print.encodeToBitmap("12ASDFSS34", print.QR_CODE, 150, 150);
+        print.drawImage(bitmap, 0, 0);
+        print.printPage();
+
+     //   print.drawText(0, print_y + Currently_high, String.valueOf(sb), print_y, 4, 0xFF000000, true, (float) 0, true,
+     //           false, Typeface.create("sans-serif-thin", Typeface.BOLD));
+     //   Currently_high += print_y;
+     //   print.drawText(0, print_y + Currently_high, print_font, print_y / 2, print_y, 5, 0xFF000000, true, (float) 0, false,
+     //           false, Typeface.create("sans-serif-thin", Typeface.NORMAL));
+     //   Currently_high += print_y;
+     //   print.drawText(0, print_y + Currently_high, print_font, print_y * 2, print_y, 6, 0xFF000000, true, (float) 0, false,
+     //           false, Typeface.create("sans-serif-thin", Typeface.NORMAL));
+     //   String json_printname = "";
+     //   String json_printip = "";
+     //   String json_printport = "";
     // try {
     //     Root r=new Root();
 
@@ -1437,9 +1435,32 @@ public class HomeFragment extends Fragment implements OnClic {
 
 
 
-        print.printPage();
+
+      //  print.printPage();
 
     }
+    public Bitmap print(String url) throws WriterException {
+        MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+        BitMatrix bitMatrix;
 
+        bitMatrix = multiFormatWriter.encode(url,
+                BarcodeFormat.CODE_128,
+                250,
+                250);
 
+        BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+        Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
+        return bitmap;
+    }
+    public Bitmap StringToBitMap(String encodedString){
+        try{
+            byte [] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        }
+        catch(Exception e){
+            e.getMessage();
+            return null;
+        }
+    }
 }
