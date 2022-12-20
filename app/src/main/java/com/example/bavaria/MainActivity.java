@@ -192,9 +192,9 @@ public class MainActivity extends AppCompatActivity {
                             itemsModel.setUnitType( customerAutoTV2.getText().toString());
 
 
-                            homeViewModel.setOneItemOnline(itemsModel,getApplicationContext());
+                            homeViewModel.setOneItemOnline(itemsModel,MainActivity.this);
 
-                            addItem(products);
+                          //  addItem(products);
 
                             Toast.makeText(MainActivity.this, customerAutoTV.getText(), Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
@@ -264,8 +264,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onComplete() {
                         //  Log.d("yousiiiif","complete1");
-                        Toast.makeText(MainActivity.this, "Complete", Toast.LENGTH_SHORT).show();
-                        Toast.makeText(MainActivity.this, "Complete", Toast.LENGTH_SHORT).show();
+                      //  Toast.makeText(MainActivity.this, "Complete", Toast.LENGTH_SHORT).show();
+                      //  Toast.makeText(MainActivity.this, "Complete", Toast.LENGTH_SHORT).show();
 
 
                     }
