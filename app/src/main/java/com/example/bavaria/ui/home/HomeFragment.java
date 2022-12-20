@@ -6,12 +6,15 @@ import static java.lang.System.lineSeparator;
 import static io.reactivex.rxjava3.schedulers.Schedulers.computation;
 import static io.reactivex.rxjava3.schedulers.Schedulers.io;
 
+import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Base64;
@@ -23,6 +26,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -102,7 +108,7 @@ public class HomeFragment extends Fragment implements OnClic {
         homeViewModel = new ViewModelProvider(getActivity()).get(HomeViewModel.class);
         binding.setLifecycleOwner(this);
         homeViewModel.getItemsOnline(getContext());
-
+     //   adabter.setOnClic(this);
         LoginFun("1524");
 
         homeViewModel.qr.observe(getActivity(), new androidx.lifecycle.Observer<String>() {
@@ -116,7 +122,7 @@ public class HomeFragment extends Fragment implements OnClic {
         itemsList = new ArrayList<>();
         adabter = new AdabterInvoice(getContext());
         adabter.setList(itemsList);
-
+        adabter.setOnClic(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         binding.billRecycler.setLayoutManager(linearLayoutManager);
         binding.billRecycler.setAdapter(adabter);
@@ -1124,8 +1130,8 @@ public class HomeFragment extends Fragment implements OnClic {
             //    sb.append("  "+s.ItemName+"       "+s.contaty+"           "+s.balanc+"           "+"\n" +
             //            " "+restOfItemName+"\n" +"\n");
             //  }else {
-            sb.append("" + s.getTitle() + " " );
-                  //  " " + s.getPrice() + "  " + "s.getTotal()" + "\n");
+            sb.append("" + s.getTitle() + " ");
+            //  " " + s.getPrice() + "  " + "s.getTotal()" + "\n");
 
             //   }
             //  sb.append("  "+s.ItemName+"           "+s.contaty+"           "+s.balanc +"\n");
@@ -1211,17 +1217,110 @@ public class HomeFragment extends Fragment implements OnClic {
     }
 
 
-
     @Override
     public void getPos(int postion) {
 
     }
 
     @Override
-    public void getQR(String QR) {
+    public void updateQuantity(int postionList) {
+        ArrayList<Integer>arrayList=new ArrayList<>();
 
-        Toast.makeText(getActivity(), QR, Toast.LENGTH_SHORT).show();
+        // set value in array list
+        arrayList.add(1);
+        arrayList.add(2);
+        arrayList.add(3);
+        arrayList.add(4);
+        arrayList.add(5);
+        arrayList.add(6);
+        arrayList.add(7);
+        arrayList.add(8);
+        arrayList.add(9);
+        arrayList.add(10);
+        arrayList.add(11);
+        arrayList.add(12);
+        arrayList.add(13);
+        arrayList.add(14);
+        arrayList.add(15);
+
+        // Initialize dialog
+        Dialog dialog=new Dialog(getContext());
+
+        // set custom dialog
+        dialog.setContentView(R.layout.dialog_searchable_spinner);
+
+        // set custom height and width
+        dialog.getWindow().setLayout(600,800);
+
+        // set transparent background
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        // show dialog
+        dialog.show();
+
+        // Initialize and assign variable
+        // EditText editText=dialog.findViewById(R.id.edit_text);
+        ListView listView=dialog.findViewById(R.id.list_view);
+
+        // Initialize array adapter
+        ArrayAdapter<Integer> adapterlist=new ArrayAdapter<Integer>(getContext(), android.R.layout.simple_list_item_1,arrayList);
+
+        // set adapter
+        listView.setAdapter(adapterlist);
+
+        // editText.addTextChangedListener(new TextWatcher() {
+        //     @Override
+        //     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        //         //  Toast.makeText(ItemsActivity.this, s+"s34", Toast.LENGTH_SHORT).show();
+
+        //     }
+
+        //     @Override
+        //     public void onTextChanged(CharSequence s, int start, int before, int count) {
+        //         adapterlist.getFilter().filter(s);
+        //         //  adapterlist.filterList()
+
+        //         Toast.makeText(MainActivity.this, s, Toast.LENGTH_SHORT).show();
+        //     }
+
+        //     @Override
+        //     public void afterTextChanged(Editable s) {
+        //         //  Toast.makeText(ItemsActivity.this, s+"ss", Toast.LENGTH_SHORT).show();
+
+        //     }
+        // });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                adabter.setList(itemsList);
+
+                // Toast.makeText(getContext(),  items.getTotal()+"", Toast.LENGTH_SHORT).show();
+                // adabter.notify();
+                //     homeViewModel.setItemsList1(itemsList);
+                adabter.notifyDataSetChanged();
+                // when item selected from list
+                // set selected item on textView
+                //   textview.setText(adapterlist.getItem(position).getItemName());
+                //   // Toast.makeText(ItemsActivity.this,adapter.getItem(position).Record_ID, Toast.LENGTH_SHORT).show();
+                //   list.add(new ItemsModel(adapterlist.getItem(position).getSelling_Price(),adapterlist.getItem(position).getItemName(),adapterlist.getItem(position).getBarcode()));
+                //   // Dismiss dialog
+                //   //  adabter.setList(list);
+                //   adabter.notifyItemInserted(list.size()-1);
+                //   billRecycler.scrollToPosition(list.size());
+                //   billRecycler.setAdapter(adabter);
+              //  holder.   contaty_v.setText(adapterlist.getItem(position)+"");
+               // itemsList.get(position).
+               // holder.total_v.setText(list.get(position).getBalanc()+"");
+               // list.get(position).setContaty(Double.valueOf(String.valueOf(charSequence)));
+               // clic.cliceCuantaty(position,list.get(position).getBalanc());
+                dialog.dismiss();
+            }
+        });
     }
+
+
 
     public void LoginFun(String s) {
         Log.d("Login", "cf");
@@ -1300,20 +1399,20 @@ public class HomeFragment extends Fragment implements OnClic {
         int print_y = 36;
         int Currently_high = 20;
         int ret = 0;
-          Bitmap bitmap = null;
+        Bitmap bitmap = null;
 
-           print.initPage(200);
-          bitmap = print.encodeToBitmap(qr, print.QR_CODE, 150, 150);
-           print.drawImage(bitmap, 0, 0);
-           print.printPage();
+        print.initPage(200);
+        bitmap = print.encodeToBitmap(qr, print.QR_CODE, 150, 150);
+        print.drawImage(bitmap, 0, 0);
+        print.printPage();
 
-          ret = print.roll(10);
-          Log.d(TAG, String.format("Roll ret = %d", ret));
+        ret = print.roll(10);
+        Log.d(TAG, String.format("Roll ret = %d", ret));
 
-          ret = print.status();
-          Log.d(TAG, String.format("status ret = %d", ret));
+        ret = print.status();
+        Log.d(TAG, String.format("status ret = %d", ret));
 
-            print.drawText(20,20,"shdkjshd"+"\n"+"kjds",87);
+        print.drawText(20, 20, "shdkjshd" + "\n" + "kjds", 87);
         print.setHeatLevel(3);
 
         print.initPage(100);
@@ -1374,71 +1473,66 @@ public class HomeFragment extends Fragment implements OnClic {
         int ret = 0;
         CtPrint print = new CtPrint();
 
+
+
+
         print.initPage(900);
-
-
-        // Typeface font;
-        // AssetManager assetManager = getAssets();
-        // font = Typeface.createFromAsset(assetManager, String.format("fonts/%s", "bokutachi.otf"));
-
-
-        String separator = System.lineSeparator();
-        String z="asjhajd"+"\n"+"skjhs";
-
-
-
-        StringBuilder sb=new StringBuilder("Hello ");
-        sb.append("Java                          ");//now original string is changed
-
-        sb.append("\n");
-        sb.append("Java");
-        print_font = "PRINT "   +separator   +"\n"+" TESTING" +"\n"+" TESTING" +"\n"+" TESTING" +"\n"+" TESTING";
-
-            print.drawImage(textAsBitmap(setpill(),600,25),4,30);
+        print.drawImage(textAsBitmap(setpill(), 600, 25), 4, 30);
         print.printPage();
         Bitmap bitmap = null;
 
+
+        print.initPage(200);
         bitmap = print.encodeToBitmap("12ASDFSS34", print.QR_CODE, 150, 150);
         print.drawImage(bitmap, 0, 0);
         print.printPage();
 
-     //   print.drawText(0, print_y + Currently_high, String.valueOf(sb), print_y, 4, 0xFF000000, true, (float) 0, true,
-     //           false, Typeface.create("sans-serif-thin", Typeface.BOLD));
-     //   Currently_high += print_y;
-     //   print.drawText(0, print_y + Currently_high, print_font, print_y / 2, print_y, 5, 0xFF000000, true, (float) 0, false,
-     //           false, Typeface.create("sans-serif-thin", Typeface.NORMAL));
-     //   Currently_high += print_y;
-     //   print.drawText(0, print_y + Currently_high, print_font, print_y * 2, print_y, 6, 0xFF000000, true, (float) 0, false,
-     //           false, Typeface.create("sans-serif-thin", Typeface.NORMAL));
-     //   String json_printname = "";
-     //   String json_printip = "";
-     //   String json_printport = "";
-    // try {
-    //     Root r=new Root();
+        ret = print.roll(10);
+        // Log.d(TAG, String.format("Roll ret = %d", ret));
 
-    //     json_obj = json_arr.getJSONObject(0);
-    //     json_printname = json_obj.getString("PrinterName");
-    //     json_printip = json_obj.getString("PrinterIP");
-    //     json_printport = json_obj.getString("PrinterPort");
-    //   print.  printerSearch() throws Exception
-    //     print.printerSelect(json_obj);
-    // } catch (JSONException e) {
-    //     e.printStackTrace();
-    // }
-    // try{
-    //     print.printerSelect(json_obj);
-    // }catch(Exception e){
-    //     Log.d(TAG, e.getMessage());
-    //     textView1.setText(e.getMessage());
-    // }
-      //  public int lineEx();
+        ret = print.status();
+        //   Log.d(TAG, String.format("status ret = %d", ret));
+
+        print.setHeatLevel(2);
+
+        //  print.initPage(100);
+
+        //   print.drawText(0, print_y + Currently_high, String.valueOf(sb), print_y, 4, 0xFF000000, true, (float) 0, true,
+        //           false, Typeface.create("sans-serif-thin", Typeface.BOLD));
+        //   Currently_high += print_y;
+        //   print.drawText(0, print_y + Currently_high, print_font, print_y / 2, print_y, 5, 0xFF000000, true, (float) 0, false,
+        //           false, Typeface.create("sans-serif-thin", Typeface.NORMAL));
+        //   Currently_high += print_y;
+        //   print.drawText(0, print_y + Currently_high, print_font, print_y * 2, print_y, 6, 0xFF000000, true, (float) 0, false,
+        //           false, Typeface.create("sans-serif-thin", Typeface.NORMAL));
+        //   String json_printname = "";
+        //   String json_printip = "";
+        //   String json_printport = "";
+        // try {
+        //     Root r=new Root();
+
+        //     json_obj = json_arr.getJSONObject(0);
+        //     json_printname = json_obj.getString("PrinterName");
+        //     json_printip = json_obj.getString("PrinterIP");
+        //     json_printport = json_obj.getString("PrinterPort");
+        //   print.  printerSearch() throws Exception
+        //     print.printerSelect(json_obj);
+        // } catch (JSONException e) {
+        //     e.printStackTrace();
+        // }
+        // try{
+        //     print.printerSelect(json_obj);
+        // }catch(Exception e){
+        //     Log.d(TAG, e.getMessage());
+        //     textView1.setText(e.getMessage());
+        // }
+        //  public int lineEx();
 
 
-
-
-      //  print.printPage();
+        //  print.printPage();
 
     }
+
     public Bitmap print(String url) throws WriterException {
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
         BitMatrix bitMatrix;
@@ -1452,13 +1546,13 @@ public class HomeFragment extends Fragment implements OnClic {
         Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
         return bitmap;
     }
-    public Bitmap StringToBitMap(String encodedString){
-        try{
-            byte [] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
+
+    public Bitmap StringToBitMap(String encodedString) {
+        try {
+            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
             Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
             return bitmap;
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             e.getMessage();
             return null;
         }

@@ -41,7 +41,7 @@ import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.core.SingleObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
 
-public class SlideshowFragment extends Fragment implements OnClic {
+public class SlideshowFragment extends Fragment  {
 
     public FragmentSlideshowBinding binding;
     HomeViewModel homeViewModel;
@@ -63,7 +63,7 @@ public class SlideshowFragment extends Fragment implements OnClic {
         getRoot();
          slideshowViewModel.getHeadersBill(getActivity());
         AdabterBill adabter = new AdabterBill(getActivity());
-        adabter.setOnClic(this);
+      //  adabter.setOnClic(this);
 
 //        Runtime rt = Runtime.getRuntime();
 //        long maxMemory = rt.maxMemory();
@@ -584,13 +584,5 @@ public class SlideshowFragment extends Fragment implements OnClic {
     }
 
 
-    @Override
-    public void getPos(int postion) {
 
-    }
-
-    @Override
-    public void getQR(String QR) {
-
-    }
 }

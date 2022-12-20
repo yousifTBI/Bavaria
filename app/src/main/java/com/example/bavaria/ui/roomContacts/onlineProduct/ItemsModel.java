@@ -25,10 +25,22 @@ public class ItemsModel implements Searchable {
     String ItemType;
     @ColumnInfo(name = "ItemCode")
     int ItemCode;
+
     @ColumnInfo(name = "UnitType")
     String UnitType;
     @ColumnInfo(name = "Price")
     double Price;
+
+    @ColumnInfo(name = "Quantity")
+    int Quantity=1;
+
+    public int getQuantity() {
+        return Quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        Quantity = quantity;
+    }
 
     @Override
     public String getTitle() {

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.bavaria.R;
 import com.example.bavaria.pojo.models.Items;
 import com.example.bavaria.ui.roomContacts.onlineProduct.ItemsModel;
+import com.example.bavaria.ui.slideshow.OnClic;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,15 @@ import java.util.List;
 public class AdabterInvoice extends RecyclerView.Adapter<AdabterInvoice.viewholderInvoice>{
       List<ItemsModel> list=new ArrayList<>();
      Context context;
+     OnClic onClic;
+
+    public OnClic getOnClic() {
+        return onClic;
+    }
+
+    public void setOnClic(OnClic onClic) {
+        this.onClic = onClic;
+    }
 
     public List<ItemsModel> getList() {
         return list;
@@ -49,8 +59,15 @@ public class AdabterInvoice extends RecyclerView.Adapter<AdabterInvoice.viewhold
          Double total= Double.valueOf(x)+d;
         holder.name_v.setText(list.get(position).getTitle());
        holder.price_v.setText(list.get(position).getPrice().toString());
-        holder.contaty_v.setText( d+"");
+        holder.contaty_v.setText( "1");
       holder.total_v.setText(total+"");
+      holder.contaty_v.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+
+              onClic.updateQuantity(position);
+          }
+      });
 
 
     }
