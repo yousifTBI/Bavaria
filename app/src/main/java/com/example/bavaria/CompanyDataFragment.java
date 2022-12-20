@@ -41,6 +41,8 @@ public class CompanyDataFragment extends Fragment {
         binding.numOfRecord.setText("   "+seller.getRin());
         binding.branchcode.setText("   "+seller.getBranchCode());
         binding.BuildingNumber.setText("   "+branchAddress.getBuildingNumber());
+     //   Toast.makeText(getActivity(), branchAddress.getBuildingNumber(), Toast.LENGTH_SHORT).show();
+
 //        binding.editText2.setText("   "+seller.getActivityCode());
 
 

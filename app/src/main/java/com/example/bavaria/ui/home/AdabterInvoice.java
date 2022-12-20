@@ -55,12 +55,15 @@ public class AdabterInvoice extends RecyclerView.Adapter<AdabterInvoice.viewhold
     public void onBindViewHolder(@NonNull viewholderInvoice holder, int position) {
        String x= list.get(position).getPrice().toString();
 
-         Double d=(Double.valueOf(x)*14.0)/100;
-         Double total= Double.valueOf(x)+d;
+       //  Double d=(Double.valueOf(x)*14.0)/100;
+       //  Double total= Double.valueOf(x)+d;
         holder.name_v.setText(list.get(position).getTitle());
-       holder.price_v.setText(list.get(position).getPrice().toString());
-        holder.contaty_v.setText( "1");
-      holder.total_v.setText(total+"");
+      holder.price_v.setText(list.get(position).getPrice().toString());
+
+        holder.contaty_v.setText( list.get(position).getQuantity()+"");
+         Double total= Double.valueOf(list.get(position).getPrice().toString())*Double.valueOf(list.get(position).getQuantity());
+
+        holder.total_v.setText(total+"");
       holder.contaty_v.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View view) {

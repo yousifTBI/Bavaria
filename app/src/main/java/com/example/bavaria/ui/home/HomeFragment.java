@@ -1299,7 +1299,7 @@ public class HomeFragment extends Fragment implements OnClic {
                 // Toast.makeText(getContext(),  items.getTotal()+"", Toast.LENGTH_SHORT).show();
                 // adabter.notify();
                 //     homeViewModel.setItemsList1(itemsList);
-                adabter.notifyDataSetChanged();
+
                 // when item selected from list
                 // set selected item on textView
                 //   textview.setText(adapterlist.getItem(position).getItemName());
@@ -1311,10 +1311,15 @@ public class HomeFragment extends Fragment implements OnClic {
                 //   billRecycler.scrollToPosition(list.size());
                 //   billRecycler.setAdapter(adabter);
               //  holder.   contaty_v.setText(adapterlist.getItem(position)+"");
-               // itemsList.get(position).
+                 itemsList.get( postionList).setQuantity(Integer.valueOf(String.valueOf(adapterlist.getItem(position))));
+                Toast.makeText(getContext(), String.valueOf(adapterlist.getItem(position)), Toast.LENGTH_SHORT).show();
+
+                adabter.setList(itemsList);
                // holder.total_v.setText(list.get(position).getBalanc()+"");
                // list.get(position).setContaty(Double.valueOf(String.valueOf(charSequence)));
                // clic.cliceCuantaty(position,list.get(position).getBalanc());
+                adabter.notifyDataSetChanged();
+
                 dialog.dismiss();
             }
         });
