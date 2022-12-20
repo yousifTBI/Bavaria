@@ -1,14 +1,19 @@
 package com.example.bavaria.ui.home;
 
 import static com.example.bavaria.print.Print_c.textAsBitmap;
+import static java.lang.System.lineSeparator;
 import static io.reactivex.rxjava3.schedulers.Schedulers.computation;
 import static io.reactivex.rxjava3.schedulers.Schedulers.io;
 
 import android.content.SharedPreferences;
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Printer;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -52,12 +57,17 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import CTOS.CtPrint;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.CompletableObserver;
 import io.reactivex.rxjava3.core.Observable;
@@ -128,6 +138,8 @@ public class HomeFragment extends Fragment implements OnClic {
                     Toast.makeText(getActivity(), "الفاتوره فارغه", Toast.LENGTH_SHORT).show();
                 } else if (state == 0) {
 
+                    String bill = setpill();
+
                     //To Create number Ricet Bill
                     String numberRicet = homeViewModel.getNumberBill(getContext());
                     //To Create Date Time Bill
@@ -173,7 +185,7 @@ public class HomeFragment extends Fragment implements OnClic {
                     //To Create UUID
                     String uu = homeViewModel.CreateUUID(numberRicet, "", TimeRicet, itemData);
                     Log.d("onSuccess", uu);
-                    String sss = " https://preprod.invoicing.eta.gov.eg/receipts/search/" + uu;
+                    String QR = " https://preprod.invoicing.eta.gov.eg/receipts/search/" + uu;
 
 
                     //    String url ="https://preprod.invoicing.eta.gov.eg/receipts/search/a700243730510ebd8499d9d895ad7eb4ee4ba9d22b3bf155d81552f7e31dd93d";
@@ -186,7 +198,7 @@ public class HomeFragment extends Fragment implements OnClic {
                     headerBill.setTax(Tax);
                     headerBill.setNetPrice(price);
                     headerBill.setTotalPrice(totalPrice);
-                    headerBill.setLink(sss);
+                    headerBill.setLink(QR);
 
                     //To Insert New Bill in Room db
                     homeViewModel.headBill(headerBill, ItemsBillRoom, getActivity());
@@ -195,8 +207,11 @@ public class HomeFragment extends Fragment implements OnClic {
 
                     // Log.d("onSuccess",g.toJson(r));
                     // Send(r);
-                    //  printp(sss,"Printer001");
-                    printp(sss, "Saturn1000 Print demo");
+                    //     printp(QR,"android.binder.printer");
+                    // String bill = setpill();
+                    ssss();
+                    // setPrintBT(bill, QR);
+                    // printp(QR, "android.binder.printer");
 
                     //To Create online Bill
                 } else if (state == 1) {
@@ -1279,6 +1294,151 @@ public class HomeFragment extends Fragment implements OnClic {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void setPrintBT(String bill, String qr) {
+
+        String TAG = "Saturn1000 Print demo";
+
+        CtPrint print = new CtPrint();
+
+        String print_font;
+        int print_x = 0;
+        int print_y = 36;
+        int Currently_high = 20;
+        int ret = 0;
+        // Bitmap bitmap = null;
+
+        //  print.initPage(200);
+        // bitmap = print.encodeToBitmap(qr, print.QR_CODE, 150, 150);
+        //  print.drawImage(bitmap, 0, 0);
+        //  print.printPage();
+
+        // ret = print.roll(10);
+        // Log.d(TAG, String.format("Roll ret = %d", ret));
+
+        // ret = print.status();
+        // Log.d(TAG, String.format("status ret = %d", ret));
+
+        //   print.drawText(20,20,"shdkjshd"+"\n"+"kjds",87);
+        print.setHeatLevel(3);
+
+        print.initPage(100);
+        //  print.printPage();
+        print.drawText(20, 20, "shdkjshd" + "\n" + "kjds", 23);
+        //  print.printPage();
+
+
+        print_font = "PRINT TESTING";
+        StringBuffer s = new StringBuffer();
+        s.append("dfkjd");
+        s.append("%n");
+        s.append("\n");
+
+        s.append("dhjdhdj");
+        String line1 = "sdsd";
+
+        String line2 = "sd";
+        String line3 = "\n";
+
+        String rhyme = line1 + "" + line2 + line3 + "lskj";
+        // rhyme = line1 + " " + line2;
+        print.drawText(0, print_y + Currently_high, rhyme, print_y, 4, true, (float) 0, false, false);
+        //    print.drawText(0, print_y + Currently_high, String.valueOf(s), print_y, 1, true, (float) 0, false, false);
+        //    print.drawText(0, print_y + Currently_high, String.valueOf(s), print_y, 1, true, (float) 0, false, false);
+        // Bitmap c=new BitmapDrawable().getBitmap().asShared();
+
+        //  Typeface typeface = getResources().getColor()
+        //   print. drawImage(textAsBitmap(String.valueOf(bill), 300, 50),43,53);
+        //  Currently_high += print_y;
+        //  print.drawText(0, 36,  "Uno BAVARIA",35, 45, 20,R.color.black,true, 20, true, true, false,Typeface.create("sans-serif-thin", Typeface.NORMAL));
+        // { /* compiled code */ }
+        //    print.setTypeface(Typeface.create("sans-serif-thin", Typeface.NORMAL));
+
+
+        //    print. drawText(2,30,"Uno Android Cashier",55);
+        //    print. drawText(2,30,bill,55);
+        //    print. drawText(2,30,bill,55);
+        //    print. drawText(2,30,bill,55);
+        //    print. drawText(2,30,bill,55);
+        //    String n4 = "__________  BILL DETAILS _________";
+//
+        //    String n1 = "                 Uno Android Cashier";
+        //    String n2 = "                             Cairo";
+        //    String n3 = "                      CANDY SHOP";
+        //    String msg2 =
+        //    //Bitmap image = BitmapFactory.decodeFile("/data/" + "test.jpg");
+        //    //print.drawImage(image, 0, Currently_high);
+
+        print.printPage();
+    }
+
+    public void ssss() {
+        String print_font;
+        int print_x = 0;
+        int print_y = 36;
+        int Currently_high = 20;
+        int ret = 0;
+        CtPrint print = new CtPrint();
+
+        print.initPage(200);
+        JSONObject json_obj = new JSONObject();
+        try {
+            json_obj.getJSONObject("jhjh"+"kkkkk"+"kjhjhjhjhjhjhj");
+            print.drawText(0, print_y + Currently_high, json_obj.toString(), print_y / 2, print_y, 1, 0xFF000000, true, (float) 0, false,
+                    false, Typeface.create("sans-serif-thin", Typeface.NORMAL));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JSONArray json_arr = new JSONArray();
+
+        Bitmap bitmap = null;
+        // Typeface font;
+        // AssetManager assetManager = getAssets();
+        // font = Typeface.createFromAsset(assetManager, String.format("fonts/%s", "bokutachi.otf"));
+
+
+        String separator = System.lineSeparator();
+
+
+
+        print_font = "PRINT "   +separator   +" TESTING";
+        print.drawText(0, print_y + Currently_high, print_font, print_y, 1, 0xFF000000, true, (float) 0, false,
+                false, Typeface.create("sans-serif-thin", Typeface.NORMAL));
+        Currently_high += print_y;
+        print.drawText(0, print_y + Currently_high, print_font, print_y / 2, print_y, 1, 0xFF000000, true, (float) 0, false,
+                false, Typeface.create("sans-serif-thin", Typeface.NORMAL));
+        Currently_high += print_y;
+        print.drawText(0, print_y + Currently_high, print_font, print_y * 2, print_y, 1, 0xFF000000, true, (float) 0, false,
+                false, Typeface.create("sans-serif-thin", Typeface.NORMAL));
+        String json_printname = "";
+        String json_printip = "";
+        String json_printport = "";
+    // try {
+    //     Root r=new Root();
+
+    //     json_obj = json_arr.getJSONObject(0);
+    //     json_printname = json_obj.getString("PrinterName");
+    //     json_printip = json_obj.getString("PrinterIP");
+    //     json_printport = json_obj.getString("PrinterPort");
+    //   print.  printerSearch() throws Exception
+    //     print.printerSelect(json_obj);
+    // } catch (JSONException e) {
+    //     e.printStackTrace();
+    // }
+    // try{
+    //     print.printerSelect(json_obj);
+    // }catch(Exception e){
+    //     Log.d(TAG, e.getMessage());
+    //     textView1.setText(e.getMessage());
+    // }
+      //  public int lineEx();
+
+
+
+        print.printPage();
+
     }
 
 
