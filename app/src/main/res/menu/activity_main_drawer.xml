@@ -41,6 +41,11 @@
             android:icon="@drawable/untitled_1_06"
             android:title="ملف الشركة " />
 
+<item
+            android:id="@+id/addProductFragment"
+            android:icon="@drawable/untitled_1_06"
+            android:title="تعديل منتج " />
+
 
 <!--    <item-->
 <!--            android:id="@+id/usersFragment"-->

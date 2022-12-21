@@ -48,6 +48,7 @@ import com.example.bavaria.network.RetrofitRefranc;
 import com.example.bavaria.network.StateData;
 import com.example.bavaria.pojo.classes.ItemDatum;
 import com.example.bavaria.pojo.classes.Root;
+import com.example.bavaria.pojo.models.AddItemModel;
 import com.example.bavaria.pojo.models.BillReturn;
 import com.example.bavaria.pojo.models.Items;
 import com.example.bavaria.pojo.models.Task3;
@@ -115,6 +116,10 @@ public class HomeFragment extends Fragment implements OnClic {
         binding.setLifecycleOwner(this);
         homeViewModel.getItemsOnline(getContext());
      //   adabter.setOnClic(this);
+
+//        AddItemModel addItemModel=new AddItemModel();
+//        homeViewModel.AddItem(addItemModel,getContext());
+
         LoginFun("1524");
 
         homeViewModel.qr.observe(getActivity(), new androidx.lifecycle.Observer<String>() {
@@ -253,7 +258,7 @@ public class HomeFragment extends Fragment implements OnClic {
                     // Send(r);
                     //     printp(QR,"android.binder.printer");
                     // String bill = setpill();
-                    ssss();
+                    CastlesPrinter(QR);
                     // setPrintBT(bill, QR);
                     // printp(QR, "android.binder.printer");
 
@@ -1179,16 +1184,28 @@ public class HomeFragment extends Fragment implements OnClic {
 
         StringBuffer sb = new StringBuffer();
         // ArrayList<Items> itemsList
+        int cunt=0;
+        double totprice=0.0;
+        int totquantity=0;
         for (ItemsModel s : itemsList) {
             //  if (s.ItemName.length()>15){
             //    int startRest= s.ItemName.indexOf(" ",15);
             //    String restOfItemName=s.ItemName.substring(startRest);
             //    s.ItemName=s.ItemName.substring(0,startRest);
 //
-            //    sb.append("  "+s.ItemName+"       "+s.contaty+"           "+s.balanc+"           "+"\n" +
+          //      sb.append("  "+s.ItemName+"       "+s.contaty+"           "+s.balanc+"           "+"\n" +
             //            " "+restOfItemName+"\n" +"\n");
             //  }else {
-            sb.append("" + s.getTitle() + " ");
+            sb.append("   " + s.getPrice() + "");
+            sb.append("         " + s.getQuantity() + "    ");
+            sb.append("        n" + s.getTitle() +"");
+            sb.append("\n");
+           // sb.append(""+s.getQuantity()+"");
+
+            cunt++;
+            totprice+= Double.valueOf( s.getPrice());
+            totquantity+= s.getQuantity();
+
             //  " " + s.getPrice() + "  " + "s.getTotal()" + "\n");
 
             //   }
@@ -1196,34 +1213,34 @@ public class HomeFragment extends Fragment implements OnClic {
 
 
         }
+   sb.append("\n");
+    sb.append("_________________________________");
+    sb.append("\n");
+    sb.append("\n");
+    sb.append(" Total Items  " + "                      " +  cunt);
+    sb.append("\n");
+    sb.append(" Discount     " + "                      " + "0.0");
+    sb.append("\n");
+    sb.append(" Cash Discount  " + "                " + "0.0");
+    sb.append("\n");
+    sb.append("_________________________________");
 
-        //sb.append("\n");
-        sb.append("_________________________________");
-        sb.append("\n");
-        sb.append("\n");
-        sb.append(" Total Items  " + "                          " + "Totals.getText()");
-        sb.append("\n");
-        sb.append(" Discount     " + "                           " + "0.0");
-        sb.append("\n");
-        sb.append(" Cash Discount  " + "                    " + "0.0");
-        sb.append("\n");
-        sb.append("_________________________________");
-        sb.append("\n");
-        sb.append(" Total Due  " + "                                " + "Totals.getText()");
-        sb.append("\n");
-        sb.append(" Cash Paid    " + "                             " + "0.0");
-        sb.append("\n");
-        sb.append(" Credit Cards  " + "                           " + "0.0");
-        sb.append("\n");
-        sb.append("_________________________________");
-        sb.append("\n");
-        sb.append("                      Administrator");
-        sb.append("\n");
-        sb.append("        " + print_date);
-        sb.append("\n");
-        sb.append("        " + "                        pos 1");
-        sb.append("\n");
-        sb.append("_________________________________");
+    sb.append("\n");
+    sb.append(" Total Item Price  " + "     " + totprice);
+    sb.append("\n");
+    sb.append(" Total Quantity    " + "      " + totquantity);
+    sb.append("\n");
+    sb.append(" Credit Cards  " + "                 " + "0.0");
+    sb.append("\n");
+    sb.append("_________________________________");
+    sb.append("\n");
+    sb.append("                      Administrator");
+    sb.append("\n");
+    sb.append("        " + print_date);
+    sb.append("\n");
+    sb.append("        " + "                        pos 1");
+    sb.append("\n");
+    sb.append("_________________________________");
 
         String n4 = "__________  BILL DETAILS _________";
 
@@ -1233,7 +1250,9 @@ public class HomeFragment extends Fragment implements OnClic {
         String msg2 =
                 //n0+"\n"+"\n"+ "\n" +
                 n1 + "\n" + n2 + "\n" + n3 + "\n" + "\n";
-        String msg = msg2 + n4 + "\n" + "\n" + sb;
+        String msg =
+                msg2 + n4 + "\n" + "\n" +
+                sb;
 
 
         return msg;
@@ -1542,7 +1561,7 @@ public class HomeFragment extends Fragment implements OnClic {
         print.printPage();
     }
 
-    public void ssss() {
+    public void CastlesPrinter(String QR) {
         String print_font;
         int print_x = 45;
         int print_y = 36;
@@ -1553,14 +1572,14 @@ public class HomeFragment extends Fragment implements OnClic {
 
 
 
-        print.initPage(900);
-        print.drawImage(textAsBitmap(setpill(), 600, 25), 4, 30);
+        print.initPage(700);
+        print.drawImage(textAsBitmap(setpill(), 600, 27), 4, 30);
         print.printPage();
         Bitmap bitmap = null;
 
 
-        print.initPage(200);
-        bitmap = print.encodeToBitmap("12ASDFSS34", print.QR_CODE, 150, 150);
+        print.initPage(370);
+        bitmap = print.encodeToBitmap(QR, print.QR_CODE, 350, 320);
         print.drawImage(bitmap, 0, 0);
         print.printPage();
 

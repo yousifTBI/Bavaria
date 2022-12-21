@@ -36,6 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_margin="32dp"
+                android:cursorVisible="false"
                 app:layout_constraintBottom_toTopOf="@+id/numOfRecordId"
                 app:layout_constraintStart_toStartOf="parent">
 
@@ -43,7 +44,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint=" اسم الشركة"
-                    android:id="@+id/com"/>
+                    android:id="@+id/com"
+                    android:cursorVisible="false"/>
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -53,6 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_margin="32dp"
+                android:cursorVisible="false"
                 app:layout_constraintBottom_toTopOf="@+id/companyCodeId"
                 app:layout_constraintStart_toStartOf="parent">
 
@@ -60,7 +63,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint=" رقم التسجيل الضريبي"
-                    android:id="@+id/numOfRecord"/>
+                    android:id="@+id/numOfRecord"
+                    android:cursorVisible="false"/>
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -70,14 +74,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_margin="32dp"
-
+                android:cursorVisible="false"
                 app:layout_constraintBottom_toTopOf="@+id/branchId"
                 app:layout_constraintStart_toStartOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint=" كود الشركة" />
+                    android:hint=" كود الشركة"
+                    android:cursorVisible="false"/>
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -105,7 +110,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_margin="32dp"
-
+                android:cursorVisible="false"
                 app:layout_constraintBottom_toTopOf="@+id/fieldId"
                 app:layout_constraintStart_toStartOf="parent">
 
@@ -113,7 +118,8 @@
                     android:id="@+id/streat"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="الشارع " />
+                    android:hint="الشارع "
+                    android:cursorVisible="false"/>
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -123,7 +129,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_margin="32dp"
-
+                android:cursorVisible="false"
                 app:layout_constraintBottom_toTopOf="@+id/cityId"
                 app:layout_constraintStart_toStartOf="parent">
 
@@ -131,7 +137,8 @@
                     android:id="@+id/BuildingNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint=" رقم المبني" />
+                    android:hint=" رقم المبني"
+                    android:cursorVisible="false"/>
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -141,13 +148,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_margin="32dp"
+                android:cursorVisible="false"
                 app:layout_constraintBottom_toTopOf="@+id/clientID"
                 app:layout_constraintStart_toStartOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint=" المحافظة" />
+                    android:hint=" المحافظة"
+                    android:cursorVisible="false"/>
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -157,6 +166,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_margin="32dp"
+                android:cursorVisible="false"
                 app:layout_constraintBottom_toTopOf="@+id/keyID"
                 app:layout_constraintStart_toStartOf="parent">
 
@@ -164,7 +174,8 @@
                     android:id="@+id/postalcode"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="معرف العميل" />
+                    android:hint="معرف العميل"
+                    android:cursorVisible="false"/>
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -175,6 +186,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_margin="32dp"
+                android:cursorVisible="false"
                 app:layout_constraintBottom_toTopOf="@+id/button"
                 app:layout_constraintStart_toStartOf="parent">
 
@@ -182,7 +194,8 @@
                     android:id="@+id/billDiscountEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint=" مفتاح سري" />
+                    android:hint=" مفتاح سري"
+                    android:cursorVisible="false"/>
             </com.google.android.material.textfield.TextInputLayout>
 
 
