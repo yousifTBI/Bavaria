@@ -1,8 +1,10 @@
 package com.example.bavaria.network;
 
 
+import com.example.bavaria.pojo.models.AddItemModel;
 import com.example.bavaria.pojo.models.BranchModel;
 import com.example.bavaria.pojo.models.CompanyModel;
+import com.example.bavaria.pojo.models.EditItemModel;
 import com.example.bavaria.pojo.models.RequestModel;
 import com.example.bavaria.pojo.models.Task;
 import com.example.bavaria.pojo.models.Task2;
@@ -44,6 +46,21 @@ public interface ApisCalls {
     @Headers("Content-Type: application/json")
     @POST("api/Account/Login")
     Observable<Task3<LoginModel>> LoginAPI(@Body String s);
+
+
+
+    @Headers("Content-Type: application/json")
+    @POST("api/Account/AddItem")
+    Observable<Task<AddItemModel>>AddItemAPI(@Body AddItemModel add);
+
+
+
+    @Headers("Content-Type: application/json")
+    @POST("api/Account/EditItem")
+    Observable<Task<EditItemModel>>EditItemAPI(@Body EditItemModel add);
+
+
+
 
 
 //    @Headers("Content-Type: application/json")

@@ -4,6 +4,7 @@ import static io.reactivex.rxjava3.schedulers.Schedulers.computation;
 
 import android.app.Dialog;
 import android.content.ClipData;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -28,6 +29,9 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.bavaria.databinding.ActivityMainBinding;
+import com.example.bavaria.pojo.models.AddItemModel;
+import com.example.bavaria.pojo.models.EditItemModel;
+import com.example.bavaria.ui.home.HomeFragment;
 import com.example.bavaria.ui.home.HomeViewModel;
 import com.example.bavaria.ui.roomContacts.ContactsDatabase;
 import com.example.bavaria.ui.roomContacts.ContactsRoom;
@@ -77,6 +81,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         homeViewModel = new ViewModelProvider(MainActivity.this).get(HomeViewModel.class);
 
+//       EditItemModel editItemModel=new EditItemModel(3,"12345",20.0,"1524");
+//
+//       homeViewModel.EditItem(editItemModel);
+
+
 
         SharedPreferencesCom.init(getApplicationContext());
         Toast.makeText(this, "here", Toast.LENGTH_SHORT).show();
@@ -87,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.receiptstatus, R.id.sendsellsFragment, R.id.companyDataFragment, R.id.usersFragment, R.id.logoutFragment,
-                R.id.sellsID, R.id.logoutFragment, R.id.clientsId, R.id.sellsFragment)
+                R.id.sellsID, R.id.logoutFragment, R.id.clientsId, R.id.sellsFragment ,R.id.addProductFragment)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
@@ -184,10 +193,9 @@ public class MainActivity extends AppCompatActivity {
                                             customerAutoTV2.getText().toString() +
                                             itemCode.getText().toString() +
                                             priceID.getText().toString() +
-                                            customerAutoTV.getText().toString() + ""
-
-
-                            );
+                                            customerAutoTV.getText().toString() + "");
+                        int state =1;
+                            if (state==1){
                             ItemsModel itemsModel = new ItemsModel();
                             itemsModel.setBarcode(itemCode.getText().toString());
                             itemsModel.setPrice(Double.parseDouble(priceID.getText().toString()));
@@ -197,8 +205,26 @@ public class MainActivity extends AppCompatActivity {
 
 
                             homeViewModel.setOneItemOnline(itemsModel,MainActivity.this);
-
+                            }
                           //  addItem(products);
+
+                             else if (state ==0){
+
+                                AddItemModel addItemModel = new AddItemModel();
+                                addItemModel.setBarcode(itemCode.getText().toString());
+                                addItemModel.setPrice(Double.parseDouble(priceID.getText().toString()));
+                                addItemModel.setDescription(nameProduct.getText().toString());
+                                addItemModel.setItemName(nameProduct.getText().toString());
+                                addItemModel.setAndroidID("1524");
+                                addItemModel.setEditor("");
+                                addItemModel.setItemType( customerAutoTV.getText().toString());
+                              //  addItemModel.setUnitType( customerAutoTV2.getText().toString());
+                                //customerTextView item typ
+                                addItemModel.setItemCode(itemCode.getText().toString());
+                                //unit typ
+                                products.setItemType(customerAutoTV.getText().toString());
+                                homeViewModel.AddItem(addItemModel);
+                            }
 
                             Toast.makeText(MainActivity.this, customerAutoTV.getText(), Toast.LENGTH_SHORT).show();
                             dialog.dismiss();

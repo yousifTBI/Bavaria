@@ -19,6 +19,9 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.bavaria.network.RetrofitRefranc;
 import com.example.bavaria.network.StateData;
+import com.example.bavaria.pojo.models.AddItemModel;
+import com.example.bavaria.pojo.models.EditItemModel;
+import com.example.bavaria.pojo.models.Task;
 import com.example.bavaria.pojo.models.Task3;
 import com.example.bavaria.ui.roomContacts.AccountInfo.LoginModel;
 import com.example.bavaria.ui.roomContacts.onlineProduct.ItemsModel;
@@ -381,26 +384,26 @@ public class HomeViewModel extends ViewModel {
                 "1071"
         );
 
-    //    Seller seller=   SharedPreferencesCom.getInstance().getSharedValuesSeller();
-    //    BranchAddress branchAddress=  SharedPreferencesCom.getInstance().getSharedValuesBranchAddress();
-    //    BranchAddress branch = new BranchAddress(branchAddress.getCountry(),
-    //            branchAddress.getGovernate(),
-    //            branchAddress.getRegionCity(),
-    //            branchAddress.getStreet(),
-    //            branchAddress.getBuildingNumber(),
-    //            "",
-    //            "",
-    //            "",
-    //            "",
-    //            "");
-    //    Seller sa = new Seller(seller.getRin(),
-    //            seller.getCompanyTradeName(),
-    //            seller.getBranchCode(),
-    //            branch,
-    //            seller.getDeviceSerialNumber(),
-    //            seller.getSyndicateLicenseNumber(),
-    //            seller.getActivityCode()
-    //    );
+        //    Seller seller=   SharedPreferencesCom.getInstance().getSharedValuesSeller();
+        //    BranchAddress branchAddress=  SharedPreferencesCom.getInstance().getSharedValuesBranchAddress();
+        //    BranchAddress branch = new BranchAddress(branchAddress.getCountry(),
+        //            branchAddress.getGovernate(),
+        //            branchAddress.getRegionCity(),
+        //            branchAddress.getStreet(),
+        //            branchAddress.getBuildingNumber(),
+        //            "",
+        //            "",
+        //            "",
+        //            "",
+        //            "");
+        //    Seller sa = new Seller(seller.getRin(),
+        //            seller.getCompanyTradeName(),
+        //            seller.getBranchCode(),
+        //            branch,
+        //            seller.getDeviceSerialNumber(),
+        //            seller.getSyndicateLicenseNumber(),
+        //            seller.getActivityCode()
+        //    );
 
         Buyer BU = new Buyer("p",
                 "",
@@ -491,45 +494,45 @@ public class HomeViewModel extends ViewModel {
         );
         DocumentType d = new DocumentType();
 
-     //   Seller seller=   SharedPreferencesCom.getInstance().getSharedValuesSeller();
-     //   BranchAddress branchAddress=  SharedPreferencesCom.getInstance().getSharedValuesBranchAddress();
-     //   BranchAddress branch = new BranchAddress(branchAddress.getCountry(),
-     //           branchAddress.getGovernate(),
-     //           branchAddress.getRegionCity(),
-     //           branchAddress.getStreet(),
-     //           branchAddress.getBuildingNumber(),
-     //           "",
-     //           "",
-     //           "",
-     //           "",
-     //           "");
-     //   Seller sa = new Seller(seller.getRin(),
-     //           seller.getCompanyTradeName(),
-     //           seller.getBranchCode(),
-     //           branch,
-     //           seller.getDeviceSerialNumber(),
-     //           seller.getSyndicateLicenseNumber(),
-     //           seller.getActivityCode()
-     //   );
+        //   Seller seller=   SharedPreferencesCom.getInstance().getSharedValuesSeller();
+        //   BranchAddress branchAddress=  SharedPreferencesCom.getInstance().getSharedValuesBranchAddress();
+        //   BranchAddress branch = new BranchAddress(branchAddress.getCountry(),
+        //           branchAddress.getGovernate(),
+        //           branchAddress.getRegionCity(),
+        //           branchAddress.getStreet(),
+        //           branchAddress.getBuildingNumber(),
+        //           "",
+        //           "",
+        //           "",
+        //           "",
+        //           "");
+        //   Seller sa = new Seller(seller.getRin(),
+        //           seller.getCompanyTradeName(),
+        //           seller.getBranchCode(),
+        //           branch,
+        //           seller.getDeviceSerialNumber(),
+        //           seller.getSyndicateLicenseNumber(),
+        //           seller.getActivityCode()
+        //   );
 
-      BranchAddress branch = new BranchAddress("EG",
-              "Giza",
-              "6 Oct",
-              "Hyaber",
-              "1",
-              "",
-              "",
-              "",
-              "",
-              "");
-       Seller sa = new Seller("382107586",
-               "Domino's Pizza Hyper One Branch",
-               "2",
-               branch,
-               "447788",
-               "",
-               "1071"
-       );
+        BranchAddress branch = new BranchAddress("EG",
+                "Giza",
+                "6 Oct",
+                "Hyaber",
+                "1",
+                "",
+                "",
+                "",
+                "",
+                "");
+        Seller sa = new Seller("382107586",
+                "Domino's Pizza Hyper One Branch",
+                "2",
+                branch,
+                "447788",
+                "",
+                "1071"
+        );
 
 
         Buyer BU = new Buyer("p",
@@ -883,7 +886,7 @@ public class HomeViewModel extends ViewModel {
 
     public void setOneItemOnline(ItemsModel itemsOnline, Context context) {
         ContactsDatabase postsDataBass = ContactsDatabase.getGetInstance(context);
-        postsDataBass.itemOnlineDao().insertContacts( itemsOnline)
+        postsDataBass.itemOnlineDao().insertContacts(itemsOnline)
                 .subscribeOn(computation()).subscribe(new CompletableObserver() {
                     @Override
                     public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
@@ -902,6 +905,7 @@ public class HomeViewModel extends ViewModel {
                     }
                 });
     }
+
     public void setItemsOnline(List<ItemsModel> itemsOnline, Context context) {
         ContactsDatabase postsDataBass = ContactsDatabase.getGetInstance(context);
         postsDataBass.itemOnlineDao().insertAllOrders(itemsOnline)
@@ -940,7 +944,6 @@ public class HomeViewModel extends ViewModel {
             public void onNext(@io.reactivex.rxjava3.annotations.NonNull Task3<LoginModel> loginModelTask3) {
 
 
-
                 SharedPreferencesCom.init(context);
                 String rin = String.valueOf(loginModelTask3.getItem().getTax_id());
                 String companyTradeName = loginModelTask3.getItem().getName();
@@ -949,16 +952,16 @@ public class HomeViewModel extends ViewModel {
                 String syndicateLicenseNumber = loginModelTask3.getItem().getLicenseExpiryDate();
                 String activityCode = loginModelTask3.getItem().getTaxpayerActivityCode();
                 SharedPreferencesCom.getInstance().setSharedValuesSeller(rin, companyTradeName, branchCode
-                        ,deviceSerialNumber,syndicateLicenseNumber, activityCode);
+                        , deviceSerialNumber, syndicateLicenseNumber, activityCode);
 
-                String country=loginModelTask3.getItem().getCountry();
-                String governate=loginModelTask3.getItem().getGovernate();
-                String regionCity=loginModelTask3.getItem().getRegionCity();
-                String street=loginModelTask3.getItem().getStreet();
-                String buildingNumber=loginModelTask3.getItem().getBuildingNumber();
-                SharedPreferencesCom.getInstance().setSharedValuesBranchAddress( country ,governate,regionCity,street,
+                String country = loginModelTask3.getItem().getCountry();
+                String governate = loginModelTask3.getItem().getGovernate();
+                String regionCity = loginModelTask3.getItem().getRegionCity();
+                String street = loginModelTask3.getItem().getStreet();
+                String buildingNumber = loginModelTask3.getItem().getBuildingNumber();
+                SharedPreferencesCom.getInstance().setSharedValuesBranchAddress(country, governate, regionCity, street,
                         buildingNumber);
-                SharedPreferencesCom.getInstance(). setSharedDocumentType(loginModelTask3.getItem().getTypeVersion());
+                SharedPreferencesCom.getInstance().setSharedDocumentType(loginModelTask3.getItem().getTypeVersion());
 
                 SharedPreferencesCom.getInstance().setSharedItemFlag(String.valueOf(loginModelTask3.getItem().getItemFlag()));
                 SharedPreferencesCom.getInstance().setSharedPriceFlag(String.valueOf(loginModelTask3.getItem().getPriceFlag()));
@@ -1203,4 +1206,72 @@ public class HomeViewModel extends ViewModel {
     }
 
 
+    public void AddItem(AddItemModel add) {
+        Observable observable = RetrofitRefranc.getInstance()
+                .getApiCalls()
+                .AddItemAPI(add)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+        Observer<Task<AddItemModel>> observer = new Observer<Task<AddItemModel>>() {
+            @Override
+            public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
+
+               // Log.d("log",add.getDescription().toString());
+
+            }
+
+            @Override
+            public void onNext(@io.reactivex.rxjava3.annotations.NonNull Task<AddItemModel> addItemModelTask) {
+            Log.d("log",addItemModelTask.Message);
+            }
+
+            @Override
+            public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+                Log.d("log",e.getMessage());
+
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        };
+
+        observable.subscribe(observer);
+
+    }
+
+    public void EditItem(EditItemModel add) {
+        Observable observable = RetrofitRefranc.getInstance()
+                .getApiCalls()
+                .EditItemAPI(add)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+        Observer<Task<EditItemModel>> observer = new Observer<Task<EditItemModel>>() {
+            @Override
+            public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(@io.reactivex.rxjava3.annotations.NonNull Task<EditItemModel> editItemModelTask) {
+                Log.d("log",editItemModelTask.Message);
+            }
+
+            @Override
+            public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+                Log.d("log",e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        };
+
+        observable.subscribe(observer);
+
+
+    }
 }
