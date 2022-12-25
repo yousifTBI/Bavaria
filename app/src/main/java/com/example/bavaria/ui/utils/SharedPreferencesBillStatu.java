@@ -7,7 +7,7 @@ import android.content.SharedPreferences;
 
 public class SharedPreferencesBillStatu {
 
-    private static SharedPreferencesCom Instance;
+    private static SharedPreferencesBillStatu Instance;
     private SharedPreferences sharedPreferencesLogIn;
     private SharedPreferences.Editor edits;
 
@@ -15,31 +15,33 @@ public class SharedPreferencesBillStatu {
     }
 
     public static void init(Context context) {
-        Instance = new SharedPreferencesCom(context);
+        Instance = new SharedPreferencesBillStatu(context);
 
     }
 
-    public static SharedPreferencesCom getInstance() {
+    public static SharedPreferencesBillStatu getInstance() {
         if (null == Instance)
-            Instance = new SharedPreferencesCom();
+            Instance = new SharedPreferencesBillStatu();
         return Instance;
     }
 
     public SharedPreferencesBillStatu (Context context) {
-        sharedPreferencesLogIn = context.getSharedPreferences("LogIn", MODE_PRIVATE);
+
+        sharedPreferencesLogIn = context.getSharedPreferences("NumberBill", MODE_PRIVATE);
         edits = sharedPreferencesLogIn.edit();
+
     }
 
-    public void setSharedValues(String s) {
-        edits.putString("NumberOFBill", s);
-        edits.putString("NumberOFBill", s);
 
+    public String getNumberOFBill() {
+        String Number = sharedPreferencesLogIn.getString("NumberOFBill", "0");
+        //   Toast.makeText(context, Number, Toast.LENGTH_SHORT).show();
+        int newNumber = Integer.valueOf(Number) + 1;
+        //ToPost
+        edits.putString("NumberOFBill", String.valueOf(newNumber));
         edits.apply();
-    }
+        return String.valueOf(newNumber);
 
-    public String getSharedValues() {
-        String Number = sharedPreferencesLogIn.getString("NumberOFBill", "900");
-
-        return Number;
+       // return Number;
     }
 }

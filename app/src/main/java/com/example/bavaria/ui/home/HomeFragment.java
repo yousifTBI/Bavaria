@@ -51,6 +51,7 @@ import com.example.bavaria.pojo.classes.Root;
 import com.example.bavaria.pojo.models.BillReturn;
 import com.example.bavaria.pojo.models.Items;
 import com.example.bavaria.pojo.models.Task3;
+import com.example.bavaria.pojo.testModels.ItemsModels;
 import com.example.bavaria.ui.roomContacts.AccountInfo.LoginModel;
 import com.example.bavaria.ui.roomContacts.ContactsDatabase;
 import com.example.bavaria.ui.roomContacts.HeaderBill;
@@ -61,6 +62,7 @@ import com.example.bavaria.ui.roomContacts.onlineBill.ItemsBillOnlin;
 import com.example.bavaria.ui.roomContacts.onlineProduct.ItemsModel;
 import com.example.bavaria.ui.roomContacts.productRoom.ItemsBill;
 import com.example.bavaria.ui.slideshow.OnClic;
+import com.example.bavaria.ui.utils.SharedPreferencesBillStatu;
 import com.example.bavaria.ui.utils.SharedPreferencesCom;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.zxing.BarcodeFormat;
@@ -114,7 +116,7 @@ public class HomeFragment extends Fragment implements OnClic {
         homeViewModel = new ViewModelProvider(getActivity()).get(HomeViewModel.class);
         binding.setLifecycleOwner(this);
         homeViewModel.getItemsOnline(getContext());
-     //   adabter.setOnClic(this);
+        //   adabter.setOnClic(this);
         LoginFun("1524");
 
         homeViewModel.qr.observe(getActivity(), new androidx.lifecycle.Observer<String>() {
@@ -127,8 +129,10 @@ public class HomeFragment extends Fragment implements OnClic {
 
         itemsList = new ArrayList<>();
         adabter = new AdabterInvoice(getContext());
-        adabter.setList(itemsList);
-        adabter.setOnClic(this);
+        List<ItemsModels> models = new ArrayList<>();
+        //  adabter.setList(itemsList);
+        adabter.setList(models);
+        //  adabter.setOnClic(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         binding.billRecycler.setLayoutManager(linearLayoutManager);
         binding.billRecycler.setAdapter(adabter);
@@ -143,32 +147,32 @@ public class HomeFragment extends Fragment implements OnClic {
 //        });
         // binding.textView21.setMovementMethod(LinkMovementMethod.getInstance());
 
-   //  new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
-   //      @Override
-   //      public boolean onMove(@androidx.annotation.NonNull RecyclerView recyclerView, @androidx.annotation.NonNull RecyclerView.ViewHolder viewHolder, @androidx.annotation.NonNull RecyclerView.ViewHolder target) {
-   //          //  Toast.makeText(ItemsActivity.this, "Swipe to delete", Toast.LENGTH_SHORT).show();
-   //          return false;
-   //      }
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@androidx.annotation.NonNull RecyclerView recyclerView, @androidx.annotation.NonNull RecyclerView.ViewHolder viewHolder, @androidx.annotation.NonNull RecyclerView.ViewHolder target) {
+                //  Toast.makeText(ItemsActivity.this, "Swipe to delete", Toast.LENGTH_SHORT).show();
+                return false;
+            }
 
-   //      @Override
-   //      public void onSwiped(@androidx.annotation.NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-   //          Snackbar.make(binding.billRecycler, "Deleted item", Snackbar.LENGTH_SHORT).setAction("تم المسح", new View.OnClickListener() {
-   //              @Override
-   //              public void onClick(View view) {
+            @Override
+            public void onSwiped(@androidx.annotation.NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                Snackbar.make(binding.billRecycler, "Deleted item", Snackbar.LENGTH_SHORT).setAction("تم المسح", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
 
-   //              }
-   //          }).show();
-   //          itemsList.remove(viewHolder.getAdapterPosition());
-   //          adabter.notifyDataSetChanged();
+                    }
+                }).show();
+                models.remove(viewHolder.getAdapterPosition());
+                adabter.notifyDataSetChanged();
 
-   //          adabter.notifyItemInserted(itemsList.size() - 1);
-   //          binding.billRecycler.scrollToPosition(itemsList.size());
-   //          binding.billRecycler.setAdapter(adabter);
+                adabter.notifyItemInserted( models.size() - 1);
+                binding.billRecycler.scrollToPosition( models.size());
+                binding.billRecycler.setAdapter(adabter);
 
-   //      }
-   //  }).attachToRecyclerView(binding.billRecycler);
+            }
+        }).attachToRecyclerView(binding.billRecycler);
 
-
+        SharedPreferencesBillStatu.init(getContext());
 
         int state = 0;
         binding.button2.setOnClickListener(new View.OnClickListener() {
@@ -180,12 +184,16 @@ public class HomeFragment extends Fragment implements OnClic {
 
                     binding.progressBar2.setVisibility(View.GONE);
                     Toast.makeText(getActivity(), "الفاتوره فارغه", Toast.LENGTH_SHORT).show();
+
                 } else if (state == 0) {
 
                     String bill = setpill();
 
                     //To Create number Ricet Bill
-                    String numberRicet = homeViewModel.getNumberBill(getContext());
+                 //   String numberRicet = homeViewModel.getNumberBill(getContext());
+                    String numberRicet =  SharedPreferencesBillStatu.getInstance().getNumberOFBill();
+
+
                     //To Create Date Time Bill
                     String TimeRicet = homeViewModel.getTimeBill();
 
@@ -198,15 +206,15 @@ public class HomeFragment extends Fragment implements OnClic {
                     Double Tax = 0.0;
                     Double totalPrice = 0.0;
                     int itemId = 0;
-                    for (ItemsModel i : itemsList) {
+                    for (ItemsModels i : models) {
                         //To Create List to UUID
-                        itemData.add(homeViewModel.getItems(1.0, Double.valueOf(i.getPrice()), Double.valueOf(i.getPrice()), i.getTitle()));
+                        itemData.add(homeViewModel.getItems(1.0, Double.valueOf(i.getPrice()), Double.valueOf(i.getPrice()), i.getDescription()));
 
                         //To Create List to Room
-                        ItemsBillRoom.add(homeViewModel.setItemsRoom(i.getTitle(), Double.valueOf(i.getPrice()), numberRicet, String.valueOf(itemId)));
+                        ItemsBillRoom.add(homeViewModel.setItemsRoom(i.getDescription(), Double.valueOf(i.getPrice()), numberRicet, String.valueOf(itemId)));
 
                         //To Create List to Room Backup
-                        ItemsBillRoomBackup.add(homeViewModel.setItemsRoomBackup(i.getTitle(), Double.valueOf(i.getPrice()), numberRicet, String.valueOf(itemId)));
+                        ItemsBillRoomBackup.add(homeViewModel.setItemsRoomBackup(i.getDescription(), Double.valueOf(i.getPrice()), numberRicet, String.valueOf(itemId)));
 
                         // Tax += i.getTax();
                         // price += i.getprice();
@@ -253,11 +261,12 @@ public class HomeFragment extends Fragment implements OnClic {
                     // Send(r);
                     //     printp(QR,"android.binder.printer");
                     // String bill = setpill();
-                //    ssss();
+                    //    ssss();
                     // setPrintBT(bill, QR);
                     // printp(QR, "android.binder.printer");
 
                     //To Create online Bill
+                    models.clear();
                 } else if (state == 1) {
                     //To Create number Ricet Bill
                     String numberRicet = homeViewModel.getNumberBill(getContext());
@@ -328,7 +337,7 @@ public class HomeFragment extends Fragment implements OnClic {
                     // Log.d("onSuccess",g.toJson(r));
 
                     //  printp(sss,"Printer001");
-                 //   printp(sss, "Saturn1000");
+                    //   printp(sss, "Saturn1000");
 
                 }
             }
@@ -373,15 +382,26 @@ public class HomeFragment extends Fragment implements OnClic {
         binding.cardView5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // homeViewModel.provideSimpleDialog(getContext());
+                // homeViewModel.provideSimpleDialog(getContext());
 
                 SimpleSearchDialogCompat dialog = new SimpleSearchDialogCompat(getActivity(), "Search...",
-                        "What are you looking for...?", null,homeViewModel.itemsModels1 ,
+                        "What are you looking for...?", null,
+                        homeViewModel.itemsModels1
+
+                        ,
                         new SearchResultListener<ItemsModel>() {
                             @Override
                             public void onSelected(BaseSearchDialogCompat dialog, ItemsModel item, int position) {
                                 // Toast.makeText(context, item.getTax()+"ء", Toast.LENGTH_SHORT).show();
                                 itemsList.add(item);
+                                ItemsModels products = new ItemsModels();
+                                products.setDescription(item.getDescription());
+                                products.setItemName(item.getDescription());
+                                products.setItemType(item.getItemType());
+                                products.setBarcode(item.getBarcode());
+                                products.setPrice(Double.parseDouble(item.getPrice()));
+
+                                models.add(products);
 
                                 adabter.notifyDataSetChanged();
                                 dialog.dismiss();
@@ -393,22 +413,22 @@ public class HomeFragment extends Fragment implements OnClic {
 
             }
         });
-    //   homeViewModel.getItemsList().observe(getViewLifecycleOwner(), new androidx.lifecycle.Observer<ItemsModel>() {
-    //       @Override
-    //       public void onChanged(ItemsModel items) {
-    //           if (items != null) {
-    //               itemsList.add(items);
-    //               adabter.setList(itemsList);
+        //   homeViewModel.getItemsList().observe(getViewLifecycleOwner(), new androidx.lifecycle.Observer<ItemsModel>() {
+        //       @Override
+        //       public void onChanged(ItemsModel items) {
+        //           if (items != null) {
+        //               itemsList.add(items);
+        //               adabter.setList(itemsList);
 
-    //               // Toast.makeText(getContext(),  items.getTotal()+"", Toast.LENGTH_SHORT).show();
-    //               // adabter.notify();
-    //               //     homeViewModel.setItemsList1(itemsList);
-    //               adabter.notifyDataSetChanged();
-    //           }
+        //               // Toast.makeText(getContext(),  items.getTotal()+"", Toast.LENGTH_SHORT).show();
+        //               // adabter.notify();
+        //               //     homeViewModel.setItemsList1(itemsList);
+        //               adabter.notifyDataSetChanged();
+        //           }
 
 
-    //       }
-    //   });
+        //       }
+        //   });
 
 
         homeViewModel.getItems(1.0, 50, 50, "فلامنكو");
@@ -1274,13 +1294,13 @@ public class HomeFragment extends Fragment implements OnClic {
 
 
     // @Override
-  // public void updateQuantity(int postionList, ItemsModel item) {
-  //
-  // }
+    // public void updateQuantity(int postionList, ItemsModel item) {
+    //
+    // }
 
     @Override
-    public void updateQuantity(int postionList, ItemsModel item,int AdabterPos) {
-        ArrayList<Integer>arrayList=new ArrayList<>();
+    public void updateQuantity(View v, int postionList, ItemsModel item, int AdabterPos) {
+        ArrayList<Integer> arrayList = new ArrayList<>();
 
         // set value in array list
         arrayList.add(1);
@@ -1300,13 +1320,13 @@ public class HomeFragment extends Fragment implements OnClic {
         arrayList.add(15);
 
         // Initialize dialog
-        Dialog dialog=new Dialog(getContext());
+        Dialog dialog = new Dialog(getContext());
 
         // set custom dialog
         dialog.setContentView(R.layout.dialog_searchable_spinner);
 
         // set custom height and width
-        dialog.getWindow().setLayout(600,800);
+        dialog.getWindow().setLayout(600, 800);
 
         // set transparent background
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -1316,10 +1336,10 @@ public class HomeFragment extends Fragment implements OnClic {
 
         // Initialize and assign variable
         // EditText editText=dialog.findViewById(R.id.edit_text);
-        ListView listView=dialog.findViewById(R.id.list_view);
+        ListView listView = dialog.findViewById(R.id.list_view);
 
         // Initialize array adapter
-        ArrayAdapter<Integer> adapterlist=new ArrayAdapter<Integer>(getContext(), android.R.layout.simple_list_item_1,arrayList);
+        ArrayAdapter<Integer> adapterlist = new ArrayAdapter<Integer>(getContext(), android.R.layout.simple_list_item_1, arrayList);
 
         // set adapter
         listView.setAdapter(adapterlist);
@@ -1350,7 +1370,7 @@ public class HomeFragment extends Fragment implements OnClic {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-            //    adabter.setList(itemsList);
+                //    adabter.setList(itemsList);
 
                 // Toast.makeText(getContext(),  items.getTotal()+"", Toast.LENGTH_SHORT).show();
                 // adabter.notify();
@@ -1366,29 +1386,28 @@ public class HomeFragment extends Fragment implements OnClic {
                 //   adabter.notifyItemInserted(list.size()-1);
                 //   billRecycler.scrollToPosition(list.size());
                 //   billRecycler.setAdapter(adabter);
-              //  holder.   contaty_v.setText(adapterlist.getItem(position)+"");
-            //    item.setQuantity( Integer.valueOf(adapterlist.getItem(position)));
+                //  holder.   contaty_v.setText(adapterlist.getItem(position)+"");
+                //    item.setQuantity( Integer.valueOf(adapterlist.getItem(position)));
                 itemsList.remove(postionList);
-               ItemsModel i= new ItemsModel();
-               i.setQuantity(Integer.valueOf(adapterlist.getItem(position)));
-                i.setDescription( item.getDescription());
-                i.setPrice( Double.valueOf(item.getPrice()));
-                 itemsList.add(i);
-                         //.setQuantity(Integer.valueOf(String.valueOf(adapterlist.getItem(position))));
-               // Toast.makeText(getContext(), String.valueOf(adapterlist.getItem(position)), Toast.LENGTH_SHORT).show();
+                ItemsModel i = new ItemsModel();
+                i.setQuantity(Integer.valueOf(adapterlist.getItem(position)));
+                i.setDescription(item.getDescription());
+                i.setPrice(Double.valueOf(item.getPrice()));
+                itemsList.add(i);
+                //.setQuantity(Integer.valueOf(String.valueOf(adapterlist.getItem(position))));
+                // Toast.makeText(getContext(), String.valueOf(adapterlist.getItem(position)), Toast.LENGTH_SHORT).show();
 
-               // adabter.setList(itemsList);
-               // holder.total_v.setText(list.get(position).getBalanc()+"");
-               // list.get(position).setContaty(Double.valueOf(String.valueOf(charSequence)));
-               // clic.cliceCuantaty(position,list.get(position).getBalanc());
-           //   adabter.notifyDataSetChanged();
+                // adabter.setList(itemsList);
+                // holder.total_v.setText(list.get(position).getBalanc()+"");
+                // list.get(position).setContaty(Double.valueOf(String.valueOf(charSequence)));
+                // clic.cliceCuantaty(position,list.get(position).getBalanc());
+                //   adabter.notifyDataSetChanged();
                 adabter.notifyItemChanged(postionList);
 
                 dialog.dismiss();
             }
         });
     }
-
 
 
     public void LoginFun(String s) {
@@ -1446,7 +1465,7 @@ public class HomeFragment extends Fragment implements OnClic {
 
         switch (item.getItemId()) {
             case R.id.action_settings:
-                homeViewModel.getItems("3", getContext(),"1524");
+                homeViewModel.getItems("3", getContext(), "1524");
                 homeViewModel.getItemsOnline(getContext());
                 break;
             case R.id.action_settings2:
@@ -1541,8 +1560,6 @@ public class HomeFragment extends Fragment implements OnClic {
         int Currently_high = 20;
         int ret = 0;
         CtPrint print = new CtPrint();
-
-
 
 
         print.initPage(900);
