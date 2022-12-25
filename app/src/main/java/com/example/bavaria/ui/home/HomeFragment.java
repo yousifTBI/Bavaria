@@ -143,30 +143,30 @@ public class HomeFragment extends Fragment implements OnClic {
 //        });
         // binding.textView21.setMovementMethod(LinkMovementMethod.getInstance());
 
-       new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
-           @Override
-           public boolean onMove(@androidx.annotation.NonNull RecyclerView recyclerView, @androidx.annotation.NonNull RecyclerView.ViewHolder viewHolder, @androidx.annotation.NonNull RecyclerView.ViewHolder target) {
-               //  Toast.makeText(ItemsActivity.this, "Swipe to delete", Toast.LENGTH_SHORT).show();
-               return false;
-           }
+   //  new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+   //      @Override
+   //      public boolean onMove(@androidx.annotation.NonNull RecyclerView recyclerView, @androidx.annotation.NonNull RecyclerView.ViewHolder viewHolder, @androidx.annotation.NonNull RecyclerView.ViewHolder target) {
+   //          //  Toast.makeText(ItemsActivity.this, "Swipe to delete", Toast.LENGTH_SHORT).show();
+   //          return false;
+   //      }
 
-           @Override
-           public void onSwiped(@androidx.annotation.NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-               Snackbar.make(binding.billRecycler, "Deleted item", Snackbar.LENGTH_SHORT).setAction("تم المسح", new View.OnClickListener() {
-                   @Override
-                   public void onClick(View view) {
+   //      @Override
+   //      public void onSwiped(@androidx.annotation.NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+   //          Snackbar.make(binding.billRecycler, "Deleted item", Snackbar.LENGTH_SHORT).setAction("تم المسح", new View.OnClickListener() {
+   //              @Override
+   //              public void onClick(View view) {
 
-                   }
-               }).show();
-               itemsList.remove(viewHolder.getAdapterPosition());
-               adabter.notifyDataSetChanged();
+   //              }
+   //          }).show();
+   //          itemsList.remove(viewHolder.getAdapterPosition());
+   //          adabter.notifyDataSetChanged();
 
-               adabter.notifyItemInserted(itemsList.size() - 1);
-               binding.billRecycler.scrollToPosition(itemsList.size());
-               binding.billRecycler.setAdapter(adabter);
+   //          adabter.notifyItemInserted(itemsList.size() - 1);
+   //          binding.billRecycler.scrollToPosition(itemsList.size());
+   //          binding.billRecycler.setAdapter(adabter);
 
-           }
-       }).attachToRecyclerView(binding.billRecycler);
+   //      }
+   //  }).attachToRecyclerView(binding.billRecycler);
 
 
 
@@ -253,7 +253,7 @@ public class HomeFragment extends Fragment implements OnClic {
                     // Send(r);
                     //     printp(QR,"android.binder.printer");
                     // String bill = setpill();
-                    ssss();
+                //    ssss();
                     // setPrintBT(bill, QR);
                     // printp(QR, "android.binder.printer");
 
@@ -328,7 +328,7 @@ public class HomeFragment extends Fragment implements OnClic {
                     // Log.d("onSuccess",g.toJson(r));
 
                     //  printp(sss,"Printer001");
-                    printp(sss, "Saturn1000");
+                 //   printp(sss, "Saturn1000");
 
                 }
             }
@@ -382,15 +382,7 @@ public class HomeFragment extends Fragment implements OnClic {
                             public void onSelected(BaseSearchDialogCompat dialog, ItemsModel item, int position) {
                                 // Toast.makeText(context, item.getTax()+"ء", Toast.LENGTH_SHORT).show();
                                 itemsList.add(item);
-                                        //.setValue(item);
-                                //  onClic.getQR("d");
-                                // itemsList1.setValue(new L);
-                                //.add(item);
-                                // binding.textView220.setText(item.getCurrencyName());
-                                // binding.textView23.setText(item.getValue());
-                                // binding.cashEditText1.setText("0");
-                                // binding.cashEditText2.setText("0.0");
-                                //   binding.textView22.setText(item.getCurrencyName()+"    ");
+
                                 adabter.notifyDataSetChanged();
                                 dialog.dismiss();
                             }
@@ -1454,7 +1446,7 @@ public class HomeFragment extends Fragment implements OnClic {
 
         switch (item.getItemId()) {
             case R.id.action_settings:
-                homeViewModel.getItems("3", getContext());
+                homeViewModel.getItems("3", getContext(),"1524");
                 homeViewModel.getItemsOnline(getContext());
                 break;
             case R.id.action_settings2:

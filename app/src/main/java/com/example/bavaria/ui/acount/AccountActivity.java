@@ -63,7 +63,7 @@ public class AccountActivity extends AppCompatActivity {
      //   HashMap <String,String> x =new HashMap<>();
      //   x.put("x" ,"1524");
      // accountViewModel.LoginFun(x);
-        accountViewModel.getItems("3");
+      //  accountViewModel.getItems("3");
        accountViewModel.ComLiveData.observe(this, new Observer<String>() {
            @Override
            public void onChanged(String s) {

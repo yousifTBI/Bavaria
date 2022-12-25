@@ -304,12 +304,12 @@ MutableLiveData <StateData<String> >stateItemsLiveData =new MutableLiveData<>();
         };
         observable.subscribe(observer);
     }
-    public void getItems(String ComID){
+    public void getItems(String ComID ,String AndroidID){
         Log.d("log","l");
 
         Observable observable = RetrofitRefranc.getInstance()
                 .getApiCalls()
-                .GetItemsAPI(ComID)
+                .GetItemsAPI(ComID,AndroidID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
         Observer<Task4<ItemsModel>> observer= new Observer<Task4<ItemsModel>>() {

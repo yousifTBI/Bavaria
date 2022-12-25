@@ -169,8 +169,12 @@ public class MainActivity extends AppCompatActivity {
                             products.setDescription(nameProduct.getText().toString());
                             products.setInternalCode(internalCode.getText().toString());
                             products.setUnitType(customerAutoTV2.getText().toString());
+                            //customerTextView item typ
                             products.setItemCode(itemCode.getText().toString());
+
                             products.setUnitPrice(priceID.getText().toString());
+
+                            //unit typ
                             products.setItemType(customerAutoTV.getText().toString());
 
 

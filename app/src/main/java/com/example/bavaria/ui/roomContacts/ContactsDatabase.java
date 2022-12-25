@@ -28,7 +28,7 @@ import com.example.bavaria.ui.roomContacts.productRoom.ProductsDao;
         HeaderBackup.class,ItemsBackup.class, HeaderBillOnline.class,
         ItemsBillOnlin.class, ItemsModel.class, LoginModel.class
 
-       }, version = 2)
+       }, version = 3)
 public abstract class ContactsDatabase  extends RoomDatabase {
     private static  volatile ContactsDatabase Instance;
     public abstract ContactsDao contactsDao();

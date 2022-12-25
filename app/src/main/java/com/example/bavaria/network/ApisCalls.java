@@ -27,8 +27,6 @@ import retrofit2.http.Query;
 public interface ApisCalls {
 
 
-
-
     @Headers("Content-Type: application/json")
     @GET("api/Account/GetCom")
     Observable<Task<CompanyModel>> GetComAPI();
@@ -45,9 +43,7 @@ public interface ApisCalls {
 
     @Headers("Content-Type: application/json")
     @POST("api/Account/Login")
-    Observable<Task3<LoginModel>>LoginAPI(@Body String s);
-
-
+    Observable<Task3<LoginModel>> LoginAPI(@Body String s);
 
 
 //    @Headers("Content-Type: application/json")
@@ -151,7 +147,8 @@ public interface ApisCalls {
     @Headers("Content-Type: application/json")
     @POST("api2/AndroidReciets/SetListBill")
     Observable<BillReturn> SetListBill(@Body Receipts root);
+
     @Headers("Content-Type: application/json")
     @GET("api/Account/GetItems")
-    Observable<TaskAPI<ItemsModel>> GetItemsAPI(@Query("ComID") String ComID);
+    Observable<TaskAPI<ItemsModel>> GetItemsAPI(@Query("ComID") String ComID, @Query("AndroidID")  String AndroidID );
 }
