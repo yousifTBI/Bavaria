@@ -38,16 +38,25 @@ public class CompanyDataFragment extends Fragment {
         branchAddress.getStreet();
         branchAddress.getBuildingNumber();
         binding.com.setText("   "+seller.getCompanyTradeName());
+        binding.numOfRecord.setEnabled(false);
+        binding.BuildingNumber.setEnabled(false);
+        binding.branchcode.setEnabled(false);
+        binding.comCode.setEnabled(false);
+        binding.streat.setEnabled(false);
+        binding.regin.setEnabled(false);
+        binding.postalcode.setEnabled(false);
+        binding.billDiscountEditText.setEnabled(false);
         binding.numOfRecord.setText("   "+seller.getRin());
+
         binding.branchcode.setText("   "+seller.getBranchCode());
         binding.BuildingNumber.setText("   "+branchAddress.getBuildingNumber());
      //   Toast.makeText(getActivity(), branchAddress.getBuildingNumber(), Toast.LENGTH_SHORT).show();
-        binding.button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getActivity(), "غير مسرح لك", Toast.LENGTH_SHORT).show();
-            }
-        });
+//        binding.button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Toast.makeText(getActivity(), "غير مسرح لك", Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
 //        binding.editText2.setText("   "+seller.getActivityCode());
 

@@ -11,24 +11,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/transparent"
-
+        android:layout_margin="8dp"
         tools:context=".CompanyDataFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <Button
-                android:id="@+id/button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="24dp"
-                android:layout_marginBottom="2dp"
-                android:backgroundTint="@color/red"
-                android:padding="16dp"
-                android:text="حفظ"
-                app:layout_constraintBottom_toBottomOf="parent"
-                tools:layout_editor_absoluteX="24dp" />
+
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/Company"
@@ -79,6 +69,7 @@
                 app:layout_constraintStart_toStartOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/comCode"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint=" كود الشركة"
@@ -156,7 +147,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint=" المحافظة"
-                    android:cursorVisible="false"/>
+                    android:cursorVisible="false"
+                    android:id="@+id/regin"/>
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -187,7 +179,7 @@
                 android:layout_height="0dp"
                 android:layout_margin="32dp"
                 android:cursorVisible="false"
-                app:layout_constraintBottom_toTopOf="@+id/button"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
