@@ -23,6 +23,7 @@ import com.example.bavaria.pojo.models.AddItemModel;
 import com.example.bavaria.pojo.models.EditItemModel;
 import com.example.bavaria.pojo.models.Task;
 import com.example.bavaria.pojo.models.Task3;
+import com.example.bavaria.pojo.models.TodayItemsModel;
 import com.example.bavaria.ui.roomContacts.AccountInfo.LoginModel;
 import com.example.bavaria.ui.roomContacts.onlineProduct.ItemsModel;
 import com.example.bavaria.pojo.TaskAPI;
@@ -76,6 +77,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 import ir.mirrajabi.searchdialog.SimpleSearchDialogCompat;
 import ir.mirrajabi.searchdialog.core.BaseSearchDialogCompat;
 import ir.mirrajabi.searchdialog.core.SearchResultListener;
+import retrofit2.http.Body;
 
 
 public class HomeViewModel extends ViewModel {
@@ -362,48 +364,48 @@ public class HomeViewModel extends ViewModel {
         DocumentType d = new DocumentType();
 
 
-        BranchAddress b = new BranchAddress(
-                "EG",
-                "Giza",
-                "6 Oct",
-                "Hyaber",
-                "1",
-                "",
-                "",
-                "",
-                "",
-                "");
+      // BranchAddress b = new BranchAddress(
+      //         "EG",
+      //         "Giza",
+      //         "6 Oct",
+      //         "Hyaber",
+      //         "1",
+      //         "",
+      //         "",
+      //         "",
+      //         "",
+      //         "");
 
 
-        Seller sa = new Seller("382107586",
-                "Domino's Pizza Hyper One Branch",
-                "2",
-                b,
-                "447788",
-                "",
-                "1071"
-        );
+      // Seller sa = new Seller("382107586",
+      //         "Domino's Pizza Hyper One Branch",
+      //         "2",
+      //         b,
+      //         "447788",
+      //         "",
+      //         "1071"
+      // );
 
-        //    Seller seller=   SharedPreferencesCom.getInstance().getSharedValuesSeller();
-        //    BranchAddress branchAddress=  SharedPreferencesCom.getInstance().getSharedValuesBranchAddress();
-        //    BranchAddress branch = new BranchAddress(branchAddress.getCountry(),
-        //            branchAddress.getGovernate(),
-        //            branchAddress.getRegionCity(),
-        //            branchAddress.getStreet(),
-        //            branchAddress.getBuildingNumber(),
-        //            "",
-        //            "",
-        //            "",
-        //            "",
-        //            "");
-        //    Seller sa = new Seller(seller.getRin(),
-        //            seller.getCompanyTradeName(),
-        //            seller.getBranchCode(),
-        //            branch,
-        //            seller.getDeviceSerialNumber(),
-        //            seller.getSyndicateLicenseNumber(),
-        //            seller.getActivityCode()
-        //    );
+             Seller seller=   SharedPreferencesCom.getInstance().getSharedValuesSeller();
+             BranchAddress branchAddress=  SharedPreferencesCom.getInstance().getSharedValuesBranchAddress();
+             BranchAddress branch = new BranchAddress(branchAddress.getCountry(),
+                     branchAddress.getGovernate(),
+                     branchAddress.getRegionCity(),
+                     branchAddress.getStreet(),
+                     branchAddress.getBuildingNumber(),
+                     "",
+                     "",
+                     "",
+                     "",
+                     "");
+             Seller sa = new Seller(seller.getRin(),
+                     seller.getCompanyTradeName(),
+                     seller.getBranchCode(),
+                     branch,
+                     seller.getDeviceSerialNumber(),
+                     seller.getSyndicateLicenseNumber(),
+                     seller.getActivityCode()
+             );
 
         Buyer BU = new Buyer("p",
                 "",
@@ -494,45 +496,45 @@ public class HomeViewModel extends ViewModel {
         );
         DocumentType d = new DocumentType();
 
-        //   Seller seller=   SharedPreferencesCom.getInstance().getSharedValuesSeller();
-        //   BranchAddress branchAddress=  SharedPreferencesCom.getInstance().getSharedValuesBranchAddress();
-        //   BranchAddress branch = new BranchAddress(branchAddress.getCountry(),
-        //           branchAddress.getGovernate(),
-        //           branchAddress.getRegionCity(),
-        //           branchAddress.getStreet(),
-        //           branchAddress.getBuildingNumber(),
-        //           "",
-        //           "",
-        //           "",
-        //           "",
-        //           "");
-        //   Seller sa = new Seller(seller.getRin(),
-        //           seller.getCompanyTradeName(),
-        //           seller.getBranchCode(),
-        //           branch,
-        //           seller.getDeviceSerialNumber(),
-        //           seller.getSyndicateLicenseNumber(),
-        //           seller.getActivityCode()
-        //   );
+            Seller seller=   SharedPreferencesCom.getInstance().getSharedValuesSeller();
+            BranchAddress branchAddress=  SharedPreferencesCom.getInstance().getSharedValuesBranchAddress();
+            BranchAddress branch = new BranchAddress(branchAddress.getCountry(),
+                    branchAddress.getGovernate(),
+                    branchAddress.getRegionCity(),
+                    branchAddress.getStreet(),
+                    branchAddress.getBuildingNumber(),
+                    "",
+                    "",
+                    "",
+                    "",
+                    "");
+            Seller sa = new Seller(seller.getRin(),
+                    seller.getCompanyTradeName(),
+                    seller.getBranchCode(),
+                    branch,
+                    seller.getDeviceSerialNumber(),
+                    seller.getSyndicateLicenseNumber(),
+                    seller.getActivityCode()
+            );
 
-        BranchAddress branch = new BranchAddress("EG",
-                "Giza",
-                "6 Oct",
-                "Hyaber",
-                "1",
-                "",
-                "",
-                "",
-                "",
-                "");
-        Seller sa = new Seller("382107586",
-                "Domino's Pizza Hyper One Branch",
-                "2",
-                branch,
-                "447788",
-                "",
-                "1071"
-        );
+      //  BranchAddress branch = new BranchAddress("EG",
+      //          "Giza",
+      //          "6 Oct",
+      //          "Hyaber",
+      //          "1",
+      //          "",
+      //          "",
+      //          "",
+      //          "",
+      //          "");
+      //  Seller sa = new Seller("382107586",
+      //          "Domino's Pizza Hyper One Branch",
+      //          "2",
+      //          branch,
+      //          "447788",
+      //          "",
+      //          "1071"
+      //  );
 
 
         Buyer BU = new Buyer("p",
@@ -951,6 +953,10 @@ public class HomeViewModel extends ViewModel {
                 String deviceSerialNumber = loginModelTask3.getItem().getPosserial();
                 String syndicateLicenseNumber = loginModelTask3.getItem().getLicenseExpiryDate();
                 String activityCode = loginModelTask3.getItem().getTaxpayerActivityCode();
+
+                SharedPreferencesCom.getInstance().setFlagsItems(String.valueOf(loginModelTask3.getItem().getItemFlag()),
+                        String.valueOf(loginModelTask3.getItem().getPriceFlag()));
+
                 SharedPreferencesCom.getInstance().setSharedValuesSeller(rin, companyTradeName, branchCode
                         , deviceSerialNumber, syndicateLicenseNumber, activityCode);
 
@@ -1241,8 +1247,9 @@ public class HomeViewModel extends ViewModel {
         observable.subscribe(observer);
 
     }
-
+    public MutableLiveData<StateData<String>> getItemstate = new MutableLiveData<>();
     public void EditItem(EditItemModel add) {
+        getItemstate.setValue(new StateData().loading());
         Observable observable = RetrofitRefranc.getInstance()
                 .getApiCalls()
                 .EditItemAPI(add)
@@ -1251,17 +1258,53 @@ public class HomeViewModel extends ViewModel {
         Observer<Task<EditItemModel>> observer = new Observer<Task<EditItemModel>>() {
             @Override
             public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
-
+                getItemstate.setValue(new StateData().loading());
             }
 
             @Override
             public void onNext(@io.reactivex.rxjava3.annotations.NonNull Task<EditItemModel> editItemModelTask) {
+                getItemstate.setValue(new StateData().success(editItemModelTask));
                 Log.d("log",editItemModelTask.Message);
             }
 
             @Override
             public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+                getItemstate.setValue(new StateData().error(e));
                 Log.d("log",e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+                getItemstate.setValue(new StateData().complete());
+            }
+        };
+
+        observable.subscribe(observer);
+
+
+    }
+
+    public void getTodayItems( int ComID,String date,String AndroidID) {
+
+        Observable observable = RetrofitRefranc.getInstance()
+                .getApiCalls()
+                .GetTodayItemsAPI(ComID,date,AndroidID )
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+        Observer<Task<TodayItemsModel>> observer = new Observer<Task<TodayItemsModel>>() {
+            @Override
+            public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(@io.reactivex.rxjava3.annotations.NonNull Task<TodayItemsModel> todayItemsModelTask) {
+
+            }
+
+            @Override
+            public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+
             }
 
             @Override
@@ -1271,7 +1314,5 @@ public class HomeViewModel extends ViewModel {
         };
 
         observable.subscribe(observer);
-
-
-    }
+}
 }

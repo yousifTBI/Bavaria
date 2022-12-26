@@ -48,7 +48,7 @@ public class ItemsModel implements Searchable {
     }
 
     public String getPrice() {
-        return String.valueOf(Price);
+               return String.valueOf(Price);
     }
 
     public String getBarcode() {

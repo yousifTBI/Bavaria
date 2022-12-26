@@ -6,6 +6,7 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintId"
         android:layout_width="match_parent"
 
         android:layout_marginVertical="5dp"
@@ -25,18 +26,6 @@
                 android:padding="4dp"
                 android:layout_margin="6dp"
                 android:layout_height="match_parent">
-
-                <ImageView
-                    android:id="@+id/editProductId"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="@+id/code"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_edit"
-                    android:layout_margin="6dp"
-                    android:layout_marginBottom="20dp"
-                    android:padding="2dp"/>
 
                 <TextView
                     android:id="@+id/code"
@@ -113,6 +102,12 @@
                             tools:text="09387407" />
 
                     </LinearLayout>
+                    <Button
+                        android:id="@+id/editProductIdBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="تعديل المنتج"
+                        android:layout_margin="20dp"/>
                 </LinearLayout>
 
                 <ImageView
@@ -150,7 +145,6 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="1360" />
 
-
                 <View
                     android:id="@+id/line"
                     android:layout_width="match_parent"
@@ -158,6 +152,8 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent" />
+
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

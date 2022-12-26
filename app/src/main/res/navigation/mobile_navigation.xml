@@ -56,7 +56,12 @@
         tools:layout="@layout/fragment_logout" />
     <fragment
         android:id="@+id/addProductFragment"
-        android:name="com.example.bavaria.addProductFragment"
-        android:label="fragment_add_product"
+        android:name="com.example.bavaria.ui.editProduct.addProductFragment"
+        android:label="تعديل المنتج"
         tools:layout="@layout/fragment_add_product" />
+    <fragment
+        android:id="@+id/returnsFragment"
+        android:name="com.example.bavaria.ui.returns.ReturnsFragment"
+        android:label="fragment_returns"
+        tools:layout="@layout/fragment_returns" />
 </navigation>

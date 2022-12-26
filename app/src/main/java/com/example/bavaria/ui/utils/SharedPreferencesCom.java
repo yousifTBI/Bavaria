@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 
 import com.example.bavaria.network.ApisCalls;
 import com.example.bavaria.network.RetrofitRefranc;
+import com.example.bavaria.pojo.Flags;
 import com.example.bavaria.pojo.classes.BranchAddress;
 import com.example.bavaria.pojo.classes.DocumentType;
 import com.example.bavaria.pojo.classes.Seller;
@@ -67,6 +68,26 @@ public class SharedPreferencesCom {
         String PriceFlag = sharedPreferencesLogIn.getString("PriceFlag", "0");
 
         return PriceFlag;
+    }
+
+    public void setFlagsItems(String itemsflage,String priceflage){
+
+        edits.putString("itemsflage", itemsflage);
+        edits.putString("priceflage", priceflage);
+        edits.apply();
+    }
+    public Flags getFlagsItems() {
+      //  Flags flags=new Flags();
+
+        String itemsflage = sharedPreferencesLogIn.getString("itemsflage", "");
+        String priceflage = sharedPreferencesLogIn.getString("priceflage", "");
+
+        Flags flags=new Flags(
+
+          Integer.valueOf(      itemsflage),
+                Integer.valueOf(       priceflage)
+        );
+        return flags;
     }
 
 

@@ -4,6 +4,7 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.example.bavaria.ui.roomContacts.ContactsRoom;
 
@@ -26,5 +27,9 @@ public interface ItemOnlineDao {
 
     @Query("Select * from ItemsModel   WHERE ITEMCODE= :ITEMCODE")
     Single<List<ItemsModel >> getlistItems(String ITEMCODE);
+
+   // @Query("UPDATE ItemsModel SET Price='newValue' WHERE Barcode=""")
+   @Update
+   void update(ItemsModel itemsModel);
 
 }

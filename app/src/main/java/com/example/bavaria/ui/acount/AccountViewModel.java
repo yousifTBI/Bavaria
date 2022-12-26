@@ -126,7 +126,7 @@ MutableLiveData <StateData<String> >stateItemsLiveData =new MutableLiveData<>();
         };
         observable.subscribe(observer);
     }
-    MutableLiveData<String> ComLiveData=new MutableLiveData<>();
+    MutableLiveData<CompanyModel> ComLiveData=new MutableLiveData<>();
    public void provideSimpleDialog(Context context) {
         SimpleSearchDialogCompat dialog = new SimpleSearchDialogCompat(context, "Search...",
                 "What are you looking for...?", null, getArrayList(),
@@ -137,7 +137,7 @@ MutableLiveData <StateData<String> >stateItemsLiveData =new MutableLiveData<>();
                         Log.d("loggg","onSelected");
                         branchArrayList.clear();
                         getBranches(item.getID());
-                        ComLiveData.setValue(item.getTitle());
+                        ComLiveData.setValue(item);
                        // itemsList.setValue(item);
                         //  onClic.getQR("d");
                         // itemsList1.setValue(new L);
@@ -271,6 +271,7 @@ MutableLiveData <StateData<String> >stateItemsLiveData =new MutableLiveData<>();
         };
         observable.subscribe(observer);
     }
+    MutableLiveData <StateData<Task<RequestModel>>> loginLiveData=new MutableLiveData<>();
     public void LoginFun(String s ){
         Log.d("Login", "cf");
 
@@ -287,14 +288,15 @@ MutableLiveData <StateData<String> >stateItemsLiveData =new MutableLiveData<>();
 
             @Override
             public void onNext(@NonNull Task3<LoginModel> loginModelTask3) {
-            Log.d("Login", loginModelTask3.Message+"cf");
-
+           // Log.d("Login", loginModelTask3.Message+"cf");
+                loginLiveData.setValue(new StateData().success(loginModelTask3));
 
             }
 
             @Override
             public void onError(@NonNull Throwable e) {
-                Log.d("Login", e.getMessage()+"chhf");
+             //   Log.d("Login", e.getMessage()+"chhf");
+                loginLiveData.setValue(new StateData().error(e));
             }
 
             @Override

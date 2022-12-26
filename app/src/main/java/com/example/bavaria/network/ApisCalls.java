@@ -9,6 +9,7 @@ import com.example.bavaria.pojo.models.RequestModel;
 import com.example.bavaria.pojo.models.Task;
 import com.example.bavaria.pojo.models.Task2;
 import com.example.bavaria.pojo.models.Task3;
+import com.example.bavaria.pojo.models.TodayItemsModel;
 import com.example.bavaria.ui.roomContacts.AccountInfo.LoginModel;
 import com.example.bavaria.ui.roomContacts.onlineProduct.ItemsModel;
 import com.example.bavaria.pojo.TaskAPI;
@@ -43,6 +44,7 @@ public interface ApisCalls {
     Observable<Task<RequestModel>> GetRequestAPI(@Body RequestModel add);
 
 
+
     @Headers("Content-Type: application/json")
     @POST("api/Account/Login")
     Observable<Task3<LoginModel>> LoginAPI(@Body String s);
@@ -58,6 +60,14 @@ public interface ApisCalls {
     @Headers("Content-Type: application/json")
     @POST("api/Account/EditItem")
     Observable<Task<EditItemModel>>EditItemAPI(@Body EditItemModel add);
+
+
+
+
+    @Headers("Content-Type: application/json")
+    @GET("api/Account/GetTodayItems")
+    Observable<Task<TodayItemsModel>> GetTodayItemsAPI(@Query("ComID") int ComID,@Query("date") String date,
+                                                       @Query("AndroidID") String AndroidID);
 
 
 
@@ -146,11 +156,11 @@ public interface ApisCalls {
 
 
     //   //   @Headers("Content-Type: application/json")
-////   @POST("api/Employee/EmployeeAttendanceV2")
-////   Single<LoginModel>Location(
-////           @Body LocationModelApi Map);
-///
-///
+//   @POST("api/Employee/EmployeeAttendanceV2")
+//   Single<LoginModel>Location(
+//           @Body LocationModelApi Map);
+//
+//
 ///
 ////  @Headers("Content-Type: application/json")
 ////   @POST("api/Employee/GetEmployeeInfo")
@@ -163,7 +173,7 @@ public interface ApisCalls {
 
     @Headers("Content-Type: application/json")
     @POST("api2/AndroidReciets/SetListBill")
-    Observable<BillReturn> SetListBill(@Body Receipts root);
+    Observable<BillReturn> SetListBill(@Body Receipts root,@Query("AndroidID") String AndroidID );
 
     @Headers("Content-Type: application/json")
     @GET("api/Account/GetItems")

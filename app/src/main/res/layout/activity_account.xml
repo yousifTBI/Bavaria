@@ -13,6 +13,12 @@
             android:layout_height="match_parent"
             tools:context=".MainActivity">
 
+            <TextView
+                android:id="@+id/comID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="" />
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView5"
                 android:layout_width="wrap_content"
@@ -125,14 +131,6 @@
                 app:layout_constraintTop_toBottomOf="@id/cardView6"
                 android:layout_margin="25dp" />
 
-            <EditText
-                android:id="@+id/AndroidIdTxt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Enter Android ID"
-                app:layout_constraintTop_toBottomOf="@id/POStxt"
-                android:layout_margin="25dp" />
-
 
             <Button
                 android:id="@+id/SendRequestId"
@@ -141,7 +139,7 @@
                 android:layout_margin="32dp"
                 android:text="ارسال طلب "
                 android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@+id/AndroidIdTxt"
+                app:layout_constraintTop_toBottomOf="@+id/POStxt"
                 tools:layout_editor_absoluteX="32dp" />
 
 

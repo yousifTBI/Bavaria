@@ -31,6 +31,8 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.bavaria.databinding.ActivityMainBinding;
 import com.example.bavaria.pojo.models.AddItemModel;
 import com.example.bavaria.pojo.models.EditItemModel;
+import com.example.bavaria.pojo.models.TodayItemsModel;
+import com.example.bavaria.ui.acount.AccountActivity;
 import com.example.bavaria.ui.home.HomeFragment;
 import com.example.bavaria.ui.home.HomeViewModel;
 import com.example.bavaria.ui.roomContacts.ContactsDatabase;
@@ -80,13 +82,8 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         homeViewModel = new ViewModelProvider(MainActivity.this).get(HomeViewModel.class);
-
-//       EditItemModel editItemModel=new EditItemModel(3,"12345",20.0,"1524");
-//
-//       homeViewModel.EditItem(editItemModel);
-
-
-
+      //  Intent i=new Intent(MainActivity.this, AccountActivity.class);
+      //  startActivity(i);
         SharedPreferencesCom.init(getApplicationContext());
         Toast.makeText(this, "here", Toast.LENGTH_SHORT).show();
         setSupportActionBar(binding.appBarMain.toolbar);
@@ -96,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.receiptstatus, R.id.sendsellsFragment, R.id.companyDataFragment, R.id.usersFragment, R.id.logoutFragment,
-                R.id.sellsID, R.id.logoutFragment, R.id.clientsId, R.id.sellsFragment ,R.id.addProductFragment)
+                R.id.sellsID, R.id.logoutFragment, R.id.clientsId, R.id.sellsFragment ,R.id.returnsFragment)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
@@ -194,7 +191,9 @@ public class MainActivity extends AppCompatActivity {
                                             itemCode.getText().toString() +
                                             priceID.getText().toString() +
                                             customerAutoTV.getText().toString() + "");
-                        int state =1;
+                       // int state =1;
+                            int state=   SharedPreferencesCom.getInstance().getFlagsItems().getItemFlag();
+                            //addItemINLocalDB
                             if (state==1){
                             ItemsModel itemsModel = new ItemsModel();
                             itemsModel.setBarcode(itemCode.getText().toString());
@@ -207,7 +206,7 @@ public class MainActivity extends AppCompatActivity {
                             homeViewModel.setOneItemOnline(itemsModel,MainActivity.this);
                             }
                           //  addItem(products);
-
+                            //addItemToOnline
                              else if (state ==0){
 
                                 AddItemModel addItemModel = new AddItemModel();

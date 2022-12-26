@@ -6,14 +6,15 @@ public class RequestModel {
     int BranchID;
     String AndroidID;
     String PosSerial;
+    int comID;
 
-
-    public RequestModel(String comName, String branchName, int branchID, String androidID, String posSerial) {
+    public RequestModel(String comName, String branchName, int branchID, String androidID, String posSerial, int comID) {
         ComName = comName;
         BranchName = branchName;
         BranchID = branchID;
         AndroidID = androidID;
         PosSerial = posSerial;
+        this.comID = comID;
     }
 
     public String getComName() {
@@ -22,6 +23,14 @@ public class RequestModel {
 
     public void setComName(String comName) {
         ComName = comName;
+    }
+
+    public String getBranchName() {
+        return BranchName;
+    }
+
+    public void setBranchName(String branchName) {
+        BranchName = branchName;
     }
 
     public int getBranchID() {
@@ -48,11 +57,11 @@ public class RequestModel {
         PosSerial = posSerial;
     }
 
-    public String getBranchName() {
-        return BranchName;
+    public int getComID() {
+        return comID;
     }
 
-    public void setBranchName(String branchName) {
-        BranchName = branchName;
+    public void setComID(int comID) {
+        this.comID = comID;
     }
 }
