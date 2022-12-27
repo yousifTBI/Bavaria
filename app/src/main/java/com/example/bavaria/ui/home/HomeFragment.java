@@ -228,6 +228,7 @@ public class HomeFragment extends Fragment implements OnClic {
                         totalPrice = price + Tax;
                         itemId++;
 
+
                         // Log.d("onSuccess", price+"");
                     }
 
@@ -269,6 +270,8 @@ public class HomeFragment extends Fragment implements OnClic {
                     // printp(QR, "android.binder.printer");
 
                     //To Create online Bill
+                  //  Root createRoot = homeViewModel.sentApi(uu, itemData, TimeRicet, numberRicet);
+                  //  homeViewModel.Send(createRoot, HeaderOnline, ItemsBillRoomOnlin, getActivity());
                     models.clear();
                     CastlesPrinter(QR);
                 } else if (state == 1) {

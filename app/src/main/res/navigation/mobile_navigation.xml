@@ -32,7 +32,7 @@
     <fragment
         android:id="@+id/sendsellsFragment"
         android:name="com.example.bavaria.ui.billsOnline.SellsFragment"
-        android:label="ارسال الايصالات"
+        android:label="المنتجات"
         tools:layout="@layout/fragment_sells" />
   <fragment
         android:id="@+id/sellsFragment"

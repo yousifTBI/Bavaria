@@ -403,7 +403,9 @@ public class HomeViewModel extends ViewModel {
                      seller.getBranchCode(),
                      branch,
                      seller.getDeviceSerialNumber(),
-                     seller.getSyndicateLicenseNumber(),
+                     ""
+                    // seller.getSyndicateLicenseNumber()
+                     ,
                      seller.getActivityCode()
              );
 
