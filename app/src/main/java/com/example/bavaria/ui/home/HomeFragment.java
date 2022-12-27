@@ -101,12 +101,12 @@ import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 public class HomeFragment extends Fragment implements OnClic {
 
-    private FragmentHomeBinding binding;
     AdabterInvoice adabter;
     HomeViewModel homeViewModel;
     SharedPreferences sharedPreferenclanguageg;
     PrintBluetooth printBT = new PrintBluetooth();
     ArrayList<ItemsModel> itemsList;
+    private FragmentHomeBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -270,6 +270,7 @@ public class HomeFragment extends Fragment implements OnClic {
 
                     //To Create online Bill
                     models.clear();
+                    CastlesPrinter(QR);
                 } else if (state == 1) {
                     //To Create number Ricet Bill
                     String numberRicet = homeViewModel.getNumberBill(getContext());
@@ -1223,6 +1224,7 @@ public class HomeFragment extends Fragment implements OnClic {
 
 
         }
+
         sb.append("\n");
         sb.append("_________________________________");
         sb.append("\n");

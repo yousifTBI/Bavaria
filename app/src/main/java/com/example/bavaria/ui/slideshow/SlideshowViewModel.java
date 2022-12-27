@@ -149,7 +149,7 @@ public class SlideshowViewModel extends ViewModel {
     MutableLiveData <StateData<String>>stateBranchLiveData2 =new MutableLiveData<>();
     public void sendList(Receipts r){
         stateBranchLiveData2.setValue(new StateData().loading());
-        Observable GetTransactions= RetrofitRefranc.getInstance().getApiCalls().SetListBill(r,"1524")
+        Observable GetTransactions= RetrofitRefranc.getInstance().getApiCalls().SetListBill(r,"25810")
                 .subscribeOn(io())
                 .observeOn(AndroidSchedulers.mainThread());
         Observer <BillReturn>listObserver= new Observer<BillReturn>() {

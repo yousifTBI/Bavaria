@@ -26,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
         Observable observable = RetrofitRefranc.getInstance()
                 .getApiCalls()
                 .LoginAPI("25810")
