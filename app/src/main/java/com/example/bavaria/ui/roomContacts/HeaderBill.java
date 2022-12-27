@@ -45,6 +45,7 @@ public class HeaderBill {
     @ColumnInfo(name = "InvoiceType")
     String InvoiceType;
 
+
     public String getLink() {
         return Link;
     }
@@ -84,7 +85,6 @@ public class HeaderBill {
         InvoiceDate = invoiceDate;
     }
 
-
     public int getId() {
         return id;
     }
@@ -108,8 +108,6 @@ public class HeaderBill {
     public void setUUID(String UUID) {
         this.UUID = UUID;
     }
-
-
 
     public String getBillNumber() {
         return BillNumber;

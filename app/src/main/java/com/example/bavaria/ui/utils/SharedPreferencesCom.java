@@ -92,7 +92,7 @@ public class SharedPreferencesCom {
 
 
     public void setSharedValuesSeller(String rin, String companyTradeName, String branchCode, String deviceSerialNumber,
-                                      String syndicateLicenseNumber, String activityCode
+                                      String syndicateLicenseNumber, String activityCode,String BranchName
     ) {
         edits.putString("rin", rin);
         edits.putString("companyTradeName", companyTradeName);
@@ -100,10 +100,16 @@ public class SharedPreferencesCom {
         edits.putString("deviceSerialNumber", deviceSerialNumber);
         edits.putString("syndicateLicenseNumber", syndicateLicenseNumber);
         edits.putString("activityCode", activityCode);
+        edits.putString("BranchName", BranchName);
 
         edits.apply();
     }
 
+    public String getBranchName(){
+        String BranchName = sharedPreferencesLogIn.getString("BranchName", "");
+        return BranchName;
+
+    }
 
     public Seller getSharedValuesSeller() {
         Seller seller = new Seller();
@@ -114,6 +120,9 @@ public class SharedPreferencesCom {
         String deviceSerialNumber = sharedPreferencesLogIn.getString("deviceSerialNumber", "");
         String syndicateLicenseNumber = sharedPreferencesLogIn.getString("syndicateLicenseNumber", "");
         String activityCode = sharedPreferencesLogIn.getString("activityCode", "");
+        String BranchName = sharedPreferencesLogIn.getString("BranchName", "");
+
+      //  seller.set
         seller.setRin(rin);
         seller.setCompanyTradeName(companyTradeName);
         seller.setBranchCode(branchCode);
