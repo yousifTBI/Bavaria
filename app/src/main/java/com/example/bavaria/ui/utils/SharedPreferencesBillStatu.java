@@ -34,7 +34,7 @@ public class SharedPreferencesBillStatu {
 
 
     public String getNumberOFBill() {
-        String Number = sharedPreferencesLogIn.getString("NumberOFBill", "0");
+        String Number = sharedPreferencesLogIn.getString("NumberOFBill", "6");
         //   Toast.makeText(context, Number, Toast.LENGTH_SHORT).show();
         int newNumber = Integer.valueOf(Number) + 1;
         //ToPost

@@ -7,7 +7,7 @@ public class DocumentType {
     public String receiptType="S";
 
     //        "TypeVersion": "1.1",
-    public String typeVersion="1.1";
+    public String typeVersion="1.2";
 
 
 
