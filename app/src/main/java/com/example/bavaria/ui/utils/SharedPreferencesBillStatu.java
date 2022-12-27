@@ -30,6 +30,7 @@ public class SharedPreferencesBillStatu {
         sharedPreferencesLogIn = context.getSharedPreferences("NumberBill", MODE_PRIVATE);
         edits = sharedPreferencesLogIn.edit();
 
+
     }
 
 

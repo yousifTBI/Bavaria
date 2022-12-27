@@ -398,8 +398,10 @@ public class HomeViewModel extends ViewModel {
                      "",
                      "",
                      "");
-             Seller sa = new Seller(seller.getRin(),
-                     seller.getCompanyTradeName(),
+             Seller sa = new Seller(
+                     seller.getRin(),
+                   //  seller.getCompanyTradeName(),
+                     SharedPreferencesCom.getInstance().getBranchName(),
                      seller.getBranchCode(),
                      branch,
                      seller.getDeviceSerialNumber(),
@@ -511,11 +513,13 @@ public class HomeViewModel extends ViewModel {
                     "",
                     "");
             Seller sa = new Seller(seller.getRin(),
-                    seller.getCompanyTradeName(),
+                 //   seller.getCompanyTradeName(),
+                    SharedPreferencesCom.getInstance().getBranchName(),
                     seller.getBranchCode(),
                     branch,
                     seller.getDeviceSerialNumber(),
-                    seller.getSyndicateLicenseNumber(),
+                   // seller.getSyndicateLicenseNumber(),
+                    "",
                     seller.getActivityCode()
             );
 
@@ -955,12 +959,13 @@ public class HomeViewModel extends ViewModel {
                 String deviceSerialNumber = loginModelTask3.getItem().getPosserial();
                 String syndicateLicenseNumber = loginModelTask3.getItem().getLicenseExpiryDate();
                 String activityCode = loginModelTask3.getItem().getTaxpayerActivityCode();
+             String BranchName=   loginModelTask3.getItem().getBranchName();
 
                 SharedPreferencesCom.getInstance().setFlagsItems(String.valueOf(loginModelTask3.getItem().getItemFlag()),
                         String.valueOf(loginModelTask3.getItem().getPriceFlag()));
 
                 SharedPreferencesCom.getInstance().setSharedValuesSeller(rin, companyTradeName, branchCode
-                        , deviceSerialNumber, syndicateLicenseNumber, activityCode);
+                        , deviceSerialNumber, syndicateLicenseNumber, activityCode,BranchName);
 
                 String country = loginModelTask3.getItem().getCountry();
                 String governate = loginModelTask3.getItem().getGovernate();
