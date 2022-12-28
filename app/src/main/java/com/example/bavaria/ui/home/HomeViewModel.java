@@ -56,6 +56,7 @@ import com.example.bavaria.ui.utils.SharedPreferencesCom;
 import com.google.gson.Gson;
 
 import java.io.UnsupportedEncodingException;
+import java.net.InetAddress;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
