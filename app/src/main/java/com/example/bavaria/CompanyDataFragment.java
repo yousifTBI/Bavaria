@@ -38,14 +38,14 @@ public class CompanyDataFragment extends Fragment {
         branchAddress.getStreet();
         branchAddress.getBuildingNumber();
         binding.com.setText("   "+seller.getCompanyTradeName());
-        binding.numOfRecord.setEnabled(false);
-        binding.BuildingNumber.setEnabled(false);
-        binding.branchcode.setEnabled(false);
-        binding.comCode.setEnabled(false);
-        binding.streat.setEnabled(false);
-        binding.regin.setEnabled(false);
-        binding.postalcode.setEnabled(false);
-        binding.billDiscountEditText.setEnabled(false);
+//        binding.numOfRecord.setEnabled(false);
+//        binding.BuildingNumber.setEnabled(false);
+//        binding.branchcode.setEnabled(false);
+//        binding.comCode.setEnabled(false);
+//        binding.streat.setEnabled(false);
+//        binding.regin.setEnabled(false);
+//        binding.postalcode.setEnabled(false);
+//        binding.billDiscountEditText.setEnabled(false);
         binding.numOfRecord.setText("   "+seller.getRin());
 
         binding.branchcode.setText("   "+seller.getBranchCode());

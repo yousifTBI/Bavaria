@@ -6,10 +6,10 @@ public class CompanyModel implements Searchable {
     public String ComID;
     public String Name;
 
-    public CompanyModel(String comID, String name) {
-        ComID = comID;
-        Name = name;
-    }
+//    public CompanyModel(String comID, String name) {
+//        ComID = comID;
+//        Name = name;
+//    }
 
     public String getComID() {
         return ComID;
@@ -34,4 +34,6 @@ public class CompanyModel implements Searchable {
     public String getID() {
         return ComID;
     }
+
+
 }

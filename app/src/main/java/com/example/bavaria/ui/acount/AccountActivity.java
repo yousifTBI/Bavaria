@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.ui.AppBarConfiguration;
 
 import com.example.bavaria.MainActivity;
+import com.example.bavaria.R;
 import com.example.bavaria.databinding.ActivityAccountBinding;
 import com.example.bavaria.network.RetrofitRefranc;
 import com.example.bavaria.network.StateData;
@@ -22,6 +25,7 @@ import com.example.bavaria.pojo.models.Task;
 import com.example.bavaria.pojo.models.Task3;
 import com.example.bavaria.ui.roomContacts.AccountInfo.LoginModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -66,12 +70,37 @@ public class AccountActivity extends AppCompatActivity {
 //        });
 
 
-        binding.progressBar.setVisibility(View.VISIBLE);
+        binding.progressBar.setVisibility(View.GONE);
         AccountViewModel accountViewModel= new ViewModelProvider(this).get(AccountViewModel.class);
-       accountViewModel.getCom();
+      // accountViewModel.getCom();
 
 
-      // String x ="1524";
+        Button submit= findViewById(R.id.submit);
+
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("loggg","d");
+                binding.textView21.setText("");
+                accountViewModel.branchArrayList.clear();
+                String ComPlusId =binding.com.getText().toString();
+                // String[] CompanyId = ComPlusId.split("1");
+                StringBuffer BafferComId = splitString(ComPlusId);
+                String CompanyId =BafferComId.toString();
+                Log.d("loggg","d11");
+                accountViewModel.getBranches(CompanyId,AccountActivity.this);
+
+            }
+        });
+
+
+
+
+
+
+
+
+                // String x ="1524";
      //   HashMap <String,String> x =new HashMap<>();
      //   x.put("x" ,"1524");
      // accountViewModel.LoginFun(x);
@@ -91,13 +120,13 @@ public class AccountActivity extends AppCompatActivity {
             @Override
             public void onNext(@NonNull Task3<LoginModel> loginModelTask3) {
                 Toast.makeText(AccountActivity.this, loginModelTask3.getMessage(), Toast.LENGTH_SHORT).show();
-                Toast.makeText(AccountActivity.this, loginModelTask3.getMessage(), Toast.LENGTH_SHORT).show();
-                Toast.makeText(AccountActivity.this, loginModelTask3.getMessage(), Toast.LENGTH_SHORT).show();
-                Toast.makeText(AccountActivity.this, loginModelTask3.getMessage(), Toast.LENGTH_SHORT).show();
-                Toast.makeText(AccountActivity.this, loginModelTask3.getMessage(), Toast.LENGTH_SHORT).show();
+               //Toast.makeText(AccountActivity.this, loginModelTask3.getMessage(), Toast.LENGTH_SHORT).show();
+               //Toast.makeText(AccountActivity.this, loginModelTask3.getMessage(), Toast.LENGTH_SHORT).show();
+               //Toast.makeText(AccountActivity.this, loginModelTask3.getMessage(), Toast.LENGTH_SHORT).show();
+               //Toast.makeText(AccountActivity.this, loginModelTask3.getMessage(), Toast.LENGTH_SHORT).show();
                 if (loginModelTask3.State==1){
-                    Intent intent=new Intent(AccountActivity.this, MainActivity.class);
-                    startActivity(intent);
+                  //  Intent intent=new Intent(AccountActivity.this, MainActivity.class);
+                 //   startActivity(intent);
                 }
                 // Log.d("Login", loginModelTask3.Message+"cf");
               //  loginLiveData.setValue(new StateData().success(loginModelTask3));
@@ -158,17 +187,17 @@ public class AccountActivity extends AppCompatActivity {
     //   });
 
 
-       accountViewModel.ComLiveData.observe(this, new Observer<CompanyModel>() {
-           @Override
-           public void onChanged(CompanyModel companyModel) {
-               if (companyModel==null){
+     // accountViewModel.ComLiveData.observe(this, new Observer<CompanyModel>() {
+     //     @Override
+     //     public void onChanged(CompanyModel companyModel) {
+     //         if (companyModel==null){
 
-               }else {
-                   binding.textView21.setText("");
-                   binding.textView20.setText(companyModel.Name);}
-               binding.comID.setText(companyModel.getID());
-           }
-       });
+     //         }else {
+     //             binding.textView21.setText("");
+     //             binding.textView20.setText(companyModel.Name);}
+     //         binding.comID.setText(companyModel.getID());
+     //     }
+     // });
      //         .observe(this, new Observer<String>() {
      //     @Override
      //     public void onChanged(String s) {
@@ -198,23 +227,30 @@ public class AccountActivity extends AppCompatActivity {
             @Override
             public void onChanged(StateData<String> stringStateData) {
                 switch (stringStateData.getStatus()) {
-                    case SUCCESS:
-                        //      listStateData
-                        Toast.makeText(AccountActivity.this, stringStateData.getData(), Toast.LENGTH_SHORT).show();
+                  case SUCCESS:
+                      //      listStateData
+//                      Toast.makeText(AccountActivity.this, stringStateData.getData(), Toast.LENGTH_SHORT).show();
+                      binding.progressBar.setVisibility(View.GONE);
+
+                      break;
+                  case ERROR:
+                      binding.progressBar.setVisibility(View.GONE);
+
+                      break;
+                  case LOADING:
+                      // binding.progressBar;
+                      binding.progressBar.setVisibility(View.VISIBLE);
+                    //  binding.progressBar.setVisibility(View.GONE);
+
+                      break;
+                  case COMPLETE:
+                      binding.progressBar.setVisibility(View.GONE);
+
+                      break;
+                    case Problem:
                         binding.progressBar.setVisibility(View.GONE);
-
-                        break;
-                    case ERROR:
-
-                        break;
-                    case LOADING:
-                        // binding.progressBar;
-                        binding.progressBar.setVisibility(View.VISIBLE);
-
-
-                        break;
-                    case COMPLETE:
-                        binding.progressBar.setVisibility(View.GONE);
+                        Toast.makeText(AccountActivity.this, "لاااااا يوجد انترنت", Toast.LENGTH_SHORT).show();
+                      //  Toast.makeText(AccountActivity.this, "لاااااا يوجد انترنت", Toast.LENGTH_SHORT).show();
 
                         break;
                 }
@@ -246,42 +282,42 @@ public class AccountActivity extends AppCompatActivity {
                 }
             }
         });
-        accountViewModel.stateCompanyLiveData.observe(AccountActivity.this, new Observer<StateData<List<CompanyModel>>>() {
-            @Override
-            public void onChanged(StateData<List<CompanyModel>> listStateData) {
+     //  accountViewModel.stateCompanyLiveData.observe(AccountActivity.this, new Observer<StateData<List<CompanyModel>>>() {
+     //      @Override
+     //      public void onChanged(StateData<List<CompanyModel>> listStateData) {
 
-                switch (listStateData.getStatus()) {
-                       case SUCCESS:
-                     //      listStateData
-                           binding.progressBar.setVisibility(View.GONE);
+     //          switch (listStateData.getStatus()) {
+     //                 case SUCCESS:
+     //               //      listStateData
+     //                     binding.progressBar.setVisibility(View.GONE);
 
-                           break;
-                       case ERROR:
+     //                     break;
+     //                 case ERROR:
 
-                           break;
-                    case LOADING:
-                       // binding.progressBar;
-                        binding.progressBar.setVisibility(View.VISIBLE);
+     //                     break;
+     //              case LOADING:
+     //                 // binding.progressBar;
+     //                  binding.progressBar.setVisibility(View.VISIBLE);
 
 
-                        break;
-                    case COMPLETE:
-                        binding.progressBar.setVisibility(View.GONE);
+     //                  break;
+     //              case COMPLETE:
+     //                  binding.progressBar.setVisibility(View.GONE);
 
-                         break;
-                }
-            }
-        });
+     //                   break;
+     //          }
+     //      }
+     //  });
 
-        binding.cardView5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+    //  binding.cardView5.setOnClickListener(new View.OnClickListener() {
+    //      @Override
+    //      public void onClick(View view) {
 
-            accountViewModel.provideSimpleDialog(AccountActivity.this);
-           // binding.textView20.setText(accountViewModel.getArrayList().get().getName());
+    //      accountViewModel.provideSimpleDialog(AccountActivity.this);
+    //     // binding.textView20.setText(accountViewModel.getArrayList().get().getName());
 
-            }
-        });
+    //      }
+    //  });
 
         binding.cardView6.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -295,8 +331,8 @@ public class AccountActivity extends AppCompatActivity {
         binding.SendRequestId.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String name = (String) binding.textView20.getText();
-                Log.d("account",name);
+              //  String name = (String) binding.textView20.getText();
+             //   Log.d("account",name);
 
                 String BranchName = (String) binding.textView21.getText().toString();
                 Log.d("account",BranchName);
@@ -305,14 +341,27 @@ public class AccountActivity extends AppCompatActivity {
                // Log.d("account",ID+"d");
                 binding.comID.getText().toString();
 
-                 Log.d("account",  "...."+binding.comID.getText().toString()+"...."+ID+"...");
-                requestModel=new RequestModel(name,BranchName,Integer.parseInt(ID)
+                requestModel=new RequestModel("",BranchName,Integer.parseInt(ID)
                         ,"25810", binding.POStxt.getText().toString(),  Integer.parseInt(binding.comID.getText().toString()));
                accountViewModel.getRequest(requestModel);
 
             }
         });
 
+    }
+    public StringBuffer splitString(String str)
+    {
+      //  ArrayList CompanyId =new ArrayList<>();
+        StringBuffer CompanyId = new StringBuffer();
+       // StringBuffer    num = new StringBuffer();
+        for (int i=0; i<str.length(); i++)
+        {
+           if(i>1)
+           {
+               CompanyId .append(str.charAt(i));
+           }
+        }
+        return CompanyId;
     }
 
 

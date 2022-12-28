@@ -36,7 +36,7 @@ public interface ApisCalls {
 
     @Headers("Content-Type: application/json")
     @GET("api/Account/GetBranch")
-    Observable<Task2<BranchModel>> GetBranchAPI(@Query("ComID") String ComID);
+    Observable<Task2<BranchModel>> GetBranchAPI(@Query("comID") String ComID);
 
 
     @Headers("Content-Type: application/json")

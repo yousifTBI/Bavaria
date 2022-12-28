@@ -16,28 +16,30 @@ public class StateData<T> {
     @Nullable
     private String Problem;
 
-    @Nullable
-    public String getProblem() {
-        this.data = null;
-        this.error = null;
-        return Problem;
-    }
-
-    public StateData<String> setProblem(@Nullable String problem) {
-        Problem = problem;
-        return null;
-    }
+//    @Nullable
+//    public String getProblem() {
+//        this.data = null;
+//        this.error = null;
+//        return Problem;
+//    }
+//
+//    public StateData<String> setProblem(@Nullable String problem) {
+//        Problem = problem;
+//        return null;
+//    }
 
     public StateData() {
         this.status = DataStatus.CREATED;
         this.data = null;
         this.error = null;
+        this.Problem = null;
     }
 
     public StateData<T> loading() {
         this.status = DataStatus.LOADING;
         this.data = null;
         this.error = null;
+        this.Problem = null;
         return this;
     }
 
@@ -45,6 +47,7 @@ public class StateData<T> {
         this.status = DataStatus.SUCCESS;
         this.data = data;
         this.error = null;
+        this.Problem = null;
         return this;
     }
 
@@ -52,6 +55,14 @@ public class StateData<T> {
         this.status = DataStatus.ERROR;
         this.data = null;
         this.error = error;
+        return this;
+    }
+
+    public StateData<T> Problem(String error) {
+        this.status = DataStatus.Problem;
+        this.data = null;
+        this.error = null;
+        this.Problem = error;
         return this;
     }
 
@@ -80,6 +91,6 @@ public class StateData<T> {
         SUCCESS,
         ERROR,
         LOADING,
-        COMPLETE
+        COMPLETE,Problem
     }
 }

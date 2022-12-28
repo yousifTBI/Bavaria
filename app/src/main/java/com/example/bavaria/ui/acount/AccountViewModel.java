@@ -1,6 +1,8 @@
 package com.example.bavaria.ui.acount;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
@@ -18,6 +20,10 @@ import com.example.bavaria.pojo.models.Task4;
 import com.example.bavaria.ui.roomContacts.AccountInfo.LoginModel;
 import com.example.bavaria.ui.roomContacts.onlineProduct.ItemsModel;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.InetAddress;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -136,7 +142,7 @@ MutableLiveData <StateData<String> >stateItemsLiveData =new MutableLiveData<>();
                           //Toast.makeText(context, "onSelected", Toast.LENGTH_SHORT).show();
                         Log.d("loggg","onSelected");
                         branchArrayList.clear();
-                        getBranches(item.getID());
+                       // getBranches(item.getID());
                         ComLiveData.setValue(item);
                        // itemsList.setValue(item);
                         //  onClic.getQR("d");
@@ -163,48 +169,113 @@ MutableLiveData <StateData<String> >stateItemsLiveData =new MutableLiveData<>();
   //      return list;
   //
   //  }
+  public  boolean isConnected(Context context) {
+      ConnectivityManager cm = (ConnectivityManager)context
+              .getSystemService(Context.CONNECTIVITY_SERVICE);
 
-    public void getBranches(String ComID){
+      NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+      if (activeNetwork != null && activeNetwork.isConnected()) {
+          try {
+              URL url = new URL("http://www.google.com/");
+              HttpURLConnection urlc = (HttpURLConnection)url.openConnection();
+              urlc.setRequestProperty("User-Agent", "test");
+              urlc.setRequestProperty("Connection", "close");
+              urlc.setConnectTimeout(1000); // mTimeout is in seconds
+              urlc.connect();
+              if (urlc.getResponseCode() == 200) {
+               //   Log.d("loggg","true1");
+                  return true;
+
+
+              } else {
+                  return false;
+              }
+          } catch (IOException e) {
+           //   Log.d("loggg",e.getMessage()+"");
+              Log.i("warning", "Error checking internet connection", e);
+              return false;
+          }
+      }
+
+      return false;
+
+  }
+  public boolean isInternetAvailable() {
+      try {
+          InetAddress ipAddr = InetAddress.getByName("http://www.google.com/");
+          //You can replace it with your name
+          Boolean x=!ipAddr.equals("");
+          Log.d("loggg",x.toString());
+
+          return !ipAddr.equals("");
+
+      } catch (Exception e) {
+        Log.d("loggg", e.getMessage()+"");
+          return false;
+      }
+  }
+    public boolean internetIsConnected() {
+        try {
+            String command = "ping -c 1 google.com";
+            return (Runtime.getRuntime().exec(command).waitFor() == 0);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public void getBranches(String ComID,Context context){
+        Log.d("loggg","d");
         stateBranchLiveData.setValue(new StateData().loading());
-        Observable observable = RetrofitRefranc.getInstance()
-                .getApiCalls()
-                .GetBranchAPI(ComID)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-        Observer<Task2<BranchModel>> observer=new Observer<Task2<BranchModel>>() {
-            @Override
-            public void onSubscribe(@NonNull Disposable d) {
+     //   if (isConnected(context)==true){
+        if (internetIsConnected()==true){
+            Log.d("loggg","123456");
+           Observable observable = RetrofitRefranc.getInstance()
+                   .getApiCalls()
+                   .GetBranchAPI(ComID)
+                   .subscribeOn(Schedulers.io())
+                   .observeOn(AndroidSchedulers.mainThread());
+           Observer<Task2<BranchModel>> observer=new Observer<Task2<BranchModel>>() {
+               @Override
+               public void onSubscribe(@NonNull Disposable d) {
 
-            }
+               }
 
-            @Override
-            public void onNext(@NonNull Task2<BranchModel> branchModelTask) {
-                if (branchModelTask.State==2){
-                 //   stateBranchLiveData.setValue(new StateData().error(e));
-                    stateBranchLiveData.setValue(new StateData().success("لا يوجد فروح  لهذه الشركه "));
-                }else {
-                    Log.d("loggg","onNext");
-                   // stateBranchLiveData.setValue(new StateData().success(branchModelTask));
-                    setBranchArrayList(branchModelTask.getBranches());
-                }
+               @Override
+               public void onNext(@NonNull Task2<BranchModel> branchModelTask) {
+
+                   if (branchModelTask.State==2){
+                       //   stateBranchLiveData.setValue(new StateData().error(e));
+                       stateBranchLiveData.setValue(new StateData().success("لا يوجد فروح  لهذه الشركه "));
+                       Log.d("loggg",branchModelTask.Message);
+                   }else {
+                       Log.d("loggg",branchModelTask.Message);
+                        stateBranchLiveData.setValue(new StateData().success(branchModelTask));
+                       setBranchArrayList(branchModelTask.getBranches());
+                   }
 
 
-            }
+               }
 
-            @Override
-            public void onError(@NonNull Throwable e) {
-              //  Toast.makeText(context, "onError", Toast.LENGTH_SHORT).show();
-                Log.d("loggg","onError");
-                Log.d("SUCCESS", e.getMessage());
-                stateBranchLiveData.setValue(new StateData().error(e));
-            }
+               @Override
+               public void onError(@NonNull Throwable e) {
+                   //  Toast.makeText(context, "onError", Toast.LENGTH_SHORT).show();
+                   Log.d("loggg",e.getMessage());
+                   Log.d("SUCCESS", e.getMessage());
+                   stateBranchLiveData.setValue(new StateData().error(e));
+               }
 
-            @Override
-            public void onComplete() {
-                stateBranchLiveData.setValue(new StateData().complete());
-            }
-        };
-        observable.subscribe(observer);
+               @Override
+               public void onComplete() {
+                   stateBranchLiveData.setValue(new StateData().complete());
+               }
+           };
+           observable.subscribe(observer);
+       }else if (internetIsConnected()==false){
+            stateBranchLiveData.setValue(new StateData().Problem(""));
+
+        }
+
+
     }
     MutableLiveData<BranchModel> BranchLiveData=new MutableLiveData<>();
     public void provideBranchSimpleDialog(Context context) {

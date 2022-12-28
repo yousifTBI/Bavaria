@@ -34,6 +34,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint=" اسم الشركة"
+                    android:enabled="false"
                     android:id="@+id/com"
                     android:cursorVisible="false"/>
             </com.google.android.material.textfield.TextInputLayout>
@@ -54,6 +55,7 @@
                     android:layout_height="wrap_content"
                     android:hint=" رقم التسجيل الضريبي"
                     android:id="@+id/numOfRecord"
+                    android:enabled="false"
                     android:cursorVisible="false"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -73,6 +75,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint=" كود الشركة"
+                    android:enabled="false"
                     android:cursorVisible="false"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -91,6 +94,7 @@
                     android:id="@+id/branchcode"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:enabled="false"
                     android:hint=" رقم الفرع" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -110,6 +114,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="الشارع "
+                    android:enabled="false"
                     android:cursorVisible="false"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -129,6 +134,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint=" رقم المبني"
+                    android:enabled="false"
                     android:cursorVisible="false"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -148,6 +154,7 @@
                     android:layout_height="wrap_content"
                     android:hint=" المحافظة"
                     android:cursorVisible="false"
+                    android:enabled="false"
                     android:id="@+id/regin"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -167,6 +174,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="معرف العميل"
+                    android:enabled="false"
                     android:cursorVisible="false"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -187,6 +195,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint=" مفتاح سري"
+                    android:enabled="false"
                     android:cursorVisible="false"/>
             </com.google.android.material.textfield.TextInputLayout>
 

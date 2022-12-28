@@ -140,7 +140,7 @@ public class SlideshowViewModel extends ViewModel {
     public void delete(){
 //        ContactsDatabase contactsDatabase = ContactsDatabase.getGetInstance(getContext());
 //        contactsDatabase.headerBillDao().delete().subscribeOn(computation())
-////                .subscribeOn(computation())
+//                .subscribeOn(computation())
 //                .observeOn(computation())
 //                .subscribe();
 
