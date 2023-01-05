@@ -274,7 +274,7 @@ public class HomeFragment extends Fragment implements OnClic {
                   //  Root createRoot = homeViewModel.sentApi(uu, itemData, TimeRicet, numberRicet);
                   //  homeViewModel.Send(createRoot, HeaderOnline, ItemsBillRoomOnlin, getActivity());
                     models.clear();
-                    CastlesPrinter(QR);
+                  //  CastlesPrinter(QR);
                 } else if (state == 1) {
                     //To Create number Ricet Bill
                     String numberRicet = homeViewModel.getNumberBill(getContext());
@@ -350,6 +350,7 @@ public class HomeFragment extends Fragment implements OnClic {
                 }
             }
         });
+
         binding.progressBar2.setVisibility(View.GONE);
         homeViewModel.setheadBill.observe(getViewLifecycleOwner(), new androidx.lifecycle.Observer<StateData<String>>() {
             @Override

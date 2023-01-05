@@ -2,6 +2,7 @@ package com.example.bavaria.ui.acount;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +24,7 @@ import com.example.bavaria.pojo.models.CompanyModel;
 import com.example.bavaria.pojo.models.RequestModel;
 import com.example.bavaria.pojo.models.Task;
 import com.example.bavaria.pojo.models.Task3;
+import com.example.bavaria.ui.home.HomeFragment;
 import com.example.bavaria.ui.roomContacts.AccountInfo.LoginModel;
 
 import java.util.ArrayList;
@@ -98,6 +100,8 @@ public class AccountActivity extends AppCompatActivity {
 
 
 
+        Intent i=new Intent(AccountActivity.this, MainActivity.class);
+        startActivity(i);
 
 
                 // String x ="1524";
@@ -327,6 +331,10 @@ public class AccountActivity extends AppCompatActivity {
             }
         });
 
+        String androidId = Settings.Secure.getString(getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+     //   Log.d("account",BranchName);
+       // binding.textView4.setText(androidId);
 
         binding.SendRequestId.setOnClickListener(new View.OnClickListener() {
             @Override
