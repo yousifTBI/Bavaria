@@ -147,9 +147,9 @@ public class SlideshowViewModel extends ViewModel {
     }
 
     MutableLiveData <StateData<String>>stateBranchLiveData2 =new MutableLiveData<>();
-    public void sendList(Receipts r){
+    public void sendList(Receipts r,String IDandroid){
         stateBranchLiveData2.setValue(new StateData().loading());
-        Observable GetTransactions= RetrofitRefranc.getInstance().getApiCalls().SetListBill(r,"25810")
+        Observable GetTransactions= RetrofitRefranc.getInstance().getApiCalls().SetListBill(r,IDandroid)
                 .subscribeOn(io())
                 .observeOn(AndroidSchedulers.mainThread());
         Observer <BillReturn>listObserver= new Observer<BillReturn>() {
@@ -160,7 +160,7 @@ public class SlideshowViewModel extends ViewModel {
 
             @Override
             public void onNext(@NonNull BillReturn billReturn) {
-                Log.d("Loginchhf2",billReturn.getStatus());
+                Log.d("c2",billReturn.getStatus()+"ss");
 
               if (billReturn.getSubmitionID()=="2"){
                   Log.d("Loginchhf2",billReturn.getSubmitionID());
@@ -194,13 +194,17 @@ public class SlideshowViewModel extends ViewModel {
                 Log.d("Loginchhf2",e.getMessage());
 
                 Log.d("onSuccess", e.getMessage());
+                Log.d("c2",e.getMessage()+"es");
+
             }
 
 
             @Override
             public void onComplete() {
                 Log.d("onSuccess", "onComplete");
+                Log.d("c2","comp");
             }
+
         };
 
        // io.reactivex.rxjava3.core.Observer <LoginModel> listObserver=new io.reactivex.rxjava3.core.Observer<LoginModel>() {

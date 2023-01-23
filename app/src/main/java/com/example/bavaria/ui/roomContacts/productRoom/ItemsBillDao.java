@@ -21,6 +21,10 @@ public interface ItemsBillDao {
 
     @Query("Select * from ItemsBill  WHERE IDBill= :ID")
     Single<List<ItemsBill>> getlistItems(String ID);
+
+    @Query("Select * from ItemsBill  WHERE IDBill= :ID")
+    Single<ItemsBill> getOneItems(String ID);
+
     @Query("DELETE FROM ItemsBill")
     public void delete();
 

@@ -6,6 +6,15 @@ public class Task<t> {
     public int State;
     public String Message;
     ArrayList<t>data;
+    t Item;
+
+    public t getItem() {
+        return Item;
+    }
+
+    public void setItem(t item) {
+        Item = item;
+    }
 
     public int getState() {
         return State;

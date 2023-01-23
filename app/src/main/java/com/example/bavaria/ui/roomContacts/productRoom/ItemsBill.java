@@ -23,6 +23,20 @@ public class ItemsBill {
     @ColumnInfo(name = "PName")
     String PName;
 
+    @ColumnInfo(name = "itemType")
+    public String itemType;
+
+
+    @ColumnInfo(name = "itemCode")
+    public String itemCode;
+
+    @ColumnInfo(name = "internalCode")
+    String internalCode;
+
+
+    @ColumnInfo(name = "unitType")
+    public String unitType;
+
 
     public String getItemID() {
         return ItemID;
@@ -79,7 +93,39 @@ public class ItemsBill {
     public void setPName(String PName) {
         this.PName = PName;
     }
-//    public static Comparator<Student> StuRollno = new Comparator<Student>() {
+
+    public String getItemType() {
+        return itemType;
+    }
+
+    public void setItemType(String itemType) {
+        this.itemType = itemType;
+    }
+
+    public String getItemCode() {
+        return itemCode;
+    }
+
+    public void setItemCode(String itemCode) {
+        this.itemCode = itemCode;
+    }
+
+    public String getInternalCode() {
+        return internalCode;
+    }
+
+    public void setInternalCode(String internalCode) {
+        this.internalCode = internalCode;
+    }
+
+    public String getUnitType() {
+        return unitType;
+    }
+
+    public void setUnitType(String unitType) {
+        this.unitType = unitType;
+    }
+    //    public static Comparator<Student> StuRollno = new Comparator<Student>() {
 //
 //        // Method
 //        public int compare(Student s1, Student s2) {

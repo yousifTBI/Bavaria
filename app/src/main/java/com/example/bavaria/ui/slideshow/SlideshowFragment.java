@@ -26,6 +26,7 @@ import com.example.bavaria.ui.home.HomeViewModel;
 import com.example.bavaria.ui.roomContacts.ContactsDatabase;
 import com.example.bavaria.ui.roomContacts.HeaderBill;
 import com.example.bavaria.ui.roomContacts.productRoom.ItemsBill;
+import com.example.bavaria.ui.utils.SharedPreferencesCom;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -117,7 +118,14 @@ public class SlideshowFragment extends Fragment  {
                   Gson gson = new Gson();
                   gson.toJson(receipts);
                   Log.d("onSuccess", "4" + gson.toJson(receipts));
-                  slideshowViewModel.sendList(receipts);
+
+                SharedPreferencesCom.init(getContext());
+                String IDandroid=   SharedPreferencesCom.getInstance().gerSharedandroidId();
+                Log.d("c2",IDandroid);
+                Toast.makeText(getContext(), IDandroid, Toast.LENGTH_SHORT).show();
+
+
+                slideshowViewModel.sendList(receipts,IDandroid);
 
            //    delete();
               slideshowViewModel.  stateBranchLiveData2.observe(getViewLifecycleOwner(), new Observer<StateData<String>>() {
@@ -253,7 +261,19 @@ public class SlideshowFragment extends Fragment  {
                                                           // Collections.sort(itemData,
                                                           //         ItemDatum);
                                                            for (ItemsBill i :  x) {
-                                                               itemData.add(homeViewModel.getItems(1.0, i.getUnitPrice(), i.getUnitPrice(), i.getPName()));
+                                                               itemData.add(homeViewModel.getItems(i.getQuantity(), i.getUnitPrice(), i.getUnitPrice(), i.getPName()
+                                                                       ,i.getInternalCode(),i.getUnitType()
+                                                                       ,i.getItemType()
+                                                                       , String.valueOf( i.getItemCode())
+                                                               ));
+                                                           //    itemData.add(homeViewModel.getItems(1.0, i.getUnitPrice(), i.getUnitPrice(), i.getPName()));
+                                                             // itemData.add(homeViewModel.getItems(Double.valueOf(i.getQuantity()),
+                                                             //         Double.valueOf(i.getPrice()),
+                                                             //         Double.valueOf(i.getPrice()), i.getDescription(),i.getBarcode(),i.getUnitType()
+                                                             //         ,i.getItemType()
+                                                             //         , String.valueOf( i.getItemCode())
+
+                                                             // ));
                                                            }
                                                            Root r = homeViewModel.sentApi(uu, itemData, TimeRicet, id);
                                                            receiptslist1.add(r);
@@ -545,7 +565,11 @@ public class SlideshowFragment extends Fragment  {
                         for (ItemsBill i : itemsBills) {
                             // Log.d("onSuccess",i.getIDBill()+"tesor");
                             //  Log.d("onSuccess",i.getPName()+"tesor");
-                            itemData.add(homeViewModel.getItems(1.0, i.getUnitPrice(), i.getUnitPrice(), i.getPName()));
+                          itemData.add(homeViewModel.getItems(i.getQuantity(), i.getUnitPrice(), i.getUnitPrice(), i.getPName()
+                                 ,i.getInternalCode(),i.getUnitType()
+                                  ,i.getItemType()
+                                  , String.valueOf( i.getItemCode())
+                          ));
                             //  Log.d("onSuccess","yousif");
                         }
                         Root

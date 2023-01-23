@@ -7,8 +7,8 @@
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -22,6 +22,13 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ui.acount.AccountActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".ui.login.LoginActivity"
             android:exported="false">
             <meta-data
@@ -34,8 +41,9 @@
             android:label="@string/app_name"
             android:theme="@style/Theme.Bavaria.NoActionBar" />
         <activity
+            android:name=".ui.acount.ProgressRequestActivity"
 
-            android:name=".ui.acount.AccountActivity"
+
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Bavaria.NoActionBar">

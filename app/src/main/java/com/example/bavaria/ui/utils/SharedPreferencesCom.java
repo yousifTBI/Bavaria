@@ -46,6 +46,19 @@ public class SharedPreferencesCom {
         edits.apply();
     }
 
+    public void setSharedandroidId(String androidId
+    ) {
+        edits.putString("androidId", androidId);
+        edits.apply();
+    }
+
+    public String gerSharedandroidId(
+    ) {
+        String androidId = sharedPreferencesLogIn.getString("androidId", "");
+        return androidId;
+
+    }
+
     public void setSharedItemFlag(String ItemFlag
     ) {
         edits.putString("ItemFlag", ItemFlag);

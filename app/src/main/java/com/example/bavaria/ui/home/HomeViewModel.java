@@ -59,10 +59,14 @@ import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -218,12 +222,41 @@ public class HomeViewModel extends ViewModel {
         return mText;
     }
 
-    public ItemsBill setItemsRoom(String nameItem, Double price, String ID, String itemId) {
+    public ItemsBill setItemsRoom(String nameItem, Double price, String ID, String itemId,
+
+                                  Double Quantity,
+                                // double unitPrice,
+                                // double totalSale,
+                                // String PName,
+                                // String internalCode,
+                                  String unitType,
+                                  String itemType,
+                                  String itemCode,
+                                  String barCode
+                                  ) {
         ItemsBill bill = new ItemsBill();
         bill.setPName(nameItem);
         bill.setItemID(itemId);
         bill.setUnitPrice(price);
         bill.setIDBill(ID);
+        bill.setQuantity( Quantity);
+        bill.setUnitType(unitType);
+        bill.setItemType(itemType);
+        bill.setItemCode(itemCode);
+        bill.setInternalCode(barCode);
+
+        Log.d("onSuccess1",  "internalCode"+barCode+
+                "PName"+  nameItem+
+                "itemType"+   itemType+
+                "itemCode"+    itemCode+
+                "unitType"+    unitType+
+                "Quantity"+    Double.valueOf(Quantity)+
+                "unitPrice"+   Double.valueOf(price)+
+                "netSale"+    "------"
+               );
+
+
+
         return bill;
     }
 
@@ -250,7 +283,7 @@ public class HomeViewModel extends ViewModel {
 
         Observable observable = RetrofitRefranc.getInstance()
                 .getApiCalls()
-                .GetItemsAPI(ComID,AndroidID)
+                .GetItemsAPI(ComID, AndroidID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
         Observer<TaskAPI<ItemsModel>> observer = new Observer<TaskAPI<ItemsModel>>() {
@@ -265,6 +298,7 @@ public class HomeViewModel extends ViewModel {
 
                 setItemsOnline(itemsModelTask4.getData(), context);
                 Log.d("log", itemsModelTask4.State + "l");
+             getItemsOnline(context);
 
             }
 
@@ -282,15 +316,28 @@ public class HomeViewModel extends ViewModel {
         observable.subscribe(observer);
     }
 
-    public ItemDatum getItems(Double Quantity, double unitPrice,
-                              double totalSale, String PName
-
+    public ItemDatum getItems(Double Quantity,
+                              double unitPrice,
+                              double totalSale,
+                              String PName,
+                              String internalCode,
+                              String unitType,
+                              String itemType,
+                              String itemCode
     ) {
         DecimalFormat numberFormat = new DecimalFormat("#.00");
 
+      // Double Quantitys= 2.0;
+      // double unitPrices= 50.0;
+      //         "netSale": 100.0000,
+      //         "totalSale": 100.0000,
+      //         "total": 114.0000,
 
-        Double totalSales = (totalSale * 14.0) / 100.0;
-        Double total = totalSale + totalSales;
+
+
+        Double netSale=unitPrice*Quantity;
+        Double totalSales = (netSale * 14.0) / 100.0;
+        Double total = netSale + totalSales;
 
         ArrayList<CommercialDiscountDatum> commercialDiscountData = new ArrayList<>();
         commercialDiscountData.add(new CommercialDiscountDatum());
@@ -310,17 +357,41 @@ public class HomeViewModel extends ViewModel {
                 Double.valueOf(numberFormat.format(totalSales))
                 , 14.0));
 
-        ItemDatum z = new ItemDatum("29130",
+        ItemDatum z = new ItemDatum(
+                internalCode,
                 PName,
-                "GS1",
-                "99999999",
-                "EA",
+                itemType,
+                itemCode,
+                unitType,
                 Double.valueOf(numberFormat.format(Quantity)),
                 Double.valueOf(numberFormat.format(unitPrice)),
-                Double.valueOf(numberFormat.format(totalSale)),
-                Double.valueOf(numberFormat.format(totalSale)),
+                Double.valueOf(numberFormat.format(netSale)),
+                Double.valueOf(numberFormat.format(netSale)),
                 Double.valueOf(numberFormat.format(total))
                 , commercialDiscountData, itemDiscountData, 0, taxableItems);
+        Log.d("onSuccess1",  "internalCode"+internalCode+
+                "PName"+  PName+
+                "itemType"+   itemType+
+                "itemCode"+    itemCode+
+                "unitType"+    unitType+
+                "Quantity"+    Double.valueOf(numberFormat.format(Quantity))+
+                "unitPrice"+   Double.valueOf(numberFormat.format(unitPrice))+
+                "netSale"+    Double.valueOf(numberFormat.format(netSale))+
+                "netSale"+    Double.valueOf(numberFormat.format(netSale))+
+                "total"+     Double.valueOf(numberFormat.format(total)));
+
+      //  ItemDatum z = new ItemDatum(
+      //          "29130",
+      //          PName,
+      //          "GS1",
+      //          "99999999",
+      //          "EA",
+      //          Double.valueOf(numberFormat.format(Quantity)),
+      //          Double.valueOf(numberFormat.format(unitPrice)),
+      //          Double.valueOf(numberFormat.format(totalSale)),
+      //          Double.valueOf(numberFormat.format(totalSale)),
+      //          Double.valueOf(numberFormat.format(total))
+      //          , commercialDiscountData, itemDiscountData, 0, taxableItems);
 
         // ArrayList<ItemDatum> itemData=new ArrayList<>();
         // itemData.add(z);
@@ -365,52 +436,52 @@ public class HomeViewModel extends ViewModel {
         DocumentType d = new DocumentType();
 
 
-      // BranchAddress b = new BranchAddress(
-      //         "EG",
-      //         "Giza",
-      //         "6 Oct",
-      //         "Hyaber",
-      //         "1",
-      //         "",
-      //         "",
-      //         "",
-      //         "",
-      //         "");
+        // BranchAddress b = new BranchAddress(
+        //         "EG",
+        //         "Giza",
+        //         "6 Oct",
+        //         "Hyaber",
+        //         "1",
+        //         "",
+        //         "",
+        //         "",
+        //         "",
+        //         "");
 
 
-      // Seller sa = new Seller("382107586",
-      //         "Domino's Pizza Hyper One Branch",
-      //         "2",
-      //         b,
-      //         "447788",
-      //         "",
-      //         "1071"
-      // );
+        // Seller sa = new Seller("382107586",
+        //         "Domino's Pizza Hyper One Branch",
+        //         "2",
+        //         b,
+        //         "447788",
+        //         "",
+        //         "1071"
+        // );
 
-             Seller seller=   SharedPreferencesCom.getInstance().getSharedValuesSeller();
-             BranchAddress branchAddress=  SharedPreferencesCom.getInstance().getSharedValuesBranchAddress();
-             BranchAddress branch = new BranchAddress(branchAddress.getCountry(),
-                     branchAddress.getGovernate(),
-                     branchAddress.getRegionCity(),
-                     branchAddress.getStreet(),
-                     branchAddress.getBuildingNumber(),
-                     "",
-                     "",
-                     "",
-                     "",
-                     "");
-             Seller sa = new Seller(
-                     seller.getRin(),
-                   //  seller.getCompanyTradeName(),
-                     SharedPreferencesCom.getInstance().getBranchName(),
-                     seller.getBranchCode(),
-                     branch,
-                     seller.getDeviceSerialNumber(),
-                     ""
-                    // seller.getSyndicateLicenseNumber()
-                     ,
-                     seller.getActivityCode()
-             );
+        Seller seller = SharedPreferencesCom.getInstance().getSharedValuesSeller();
+        BranchAddress branchAddress = SharedPreferencesCom.getInstance().getSharedValuesBranchAddress();
+        BranchAddress branch = new BranchAddress(branchAddress.getCountry(),
+                branchAddress.getGovernate(),
+                branchAddress.getRegionCity(),
+                branchAddress.getStreet(),
+                branchAddress.getBuildingNumber(),
+                "",
+                "",
+                "",
+                "",
+                "");
+        Seller sa = new Seller(
+                seller.getRin(),
+                //  seller.getCompanyTradeName(),
+                SharedPreferencesCom.getInstance().getBranchName(),
+                seller.getBranchCode(),
+                branch,
+                seller.getDeviceSerialNumber(),
+                ""
+                // seller.getSyndicateLicenseNumber()
+                ,
+                seller.getActivityCode()
+        );
 
         Buyer BU = new Buyer("p",
                 "",
@@ -501,47 +572,47 @@ public class HomeViewModel extends ViewModel {
         );
         DocumentType d = new DocumentType();
 
-            Seller seller=   SharedPreferencesCom.getInstance().getSharedValuesSeller();
-            BranchAddress branchAddress=  SharedPreferencesCom.getInstance().getSharedValuesBranchAddress();
-            BranchAddress branch = new BranchAddress(branchAddress.getCountry(),
-                    branchAddress.getGovernate(),
-                    branchAddress.getRegionCity(),
-                    branchAddress.getStreet(),
-                    branchAddress.getBuildingNumber(),
-                    "",
-                    "",
-                    "",
-                    "",
-                    "");
-            Seller sa = new Seller(seller.getRin(),
-                 //   seller.getCompanyTradeName(),
-                    SharedPreferencesCom.getInstance().getBranchName(),
-                    seller.getBranchCode(),
-                    branch,
-                    seller.getDeviceSerialNumber(),
-                   // seller.getSyndicateLicenseNumber(),
-                    "",
-                    seller.getActivityCode()
-            );
+        Seller seller = SharedPreferencesCom.getInstance().getSharedValuesSeller();
+        BranchAddress branchAddress = SharedPreferencesCom.getInstance().getSharedValuesBranchAddress();
+        BranchAddress branch = new BranchAddress(branchAddress.getCountry(),
+                branchAddress.getGovernate(),
+                branchAddress.getRegionCity(),
+                branchAddress.getStreet(),
+                branchAddress.getBuildingNumber(),
+                "",
+                "",
+                "",
+                "",
+                "");
+        Seller sa = new Seller(seller.getRin(),
+                //   seller.getCompanyTradeName(),
+                SharedPreferencesCom.getInstance().getBranchName(),
+                seller.getBranchCode(),
+                branch,
+                seller.getDeviceSerialNumber(),
+                // seller.getSyndicateLicenseNumber(),
+                "",
+                seller.getActivityCode()
+        );
 
-      //  BranchAddress branch = new BranchAddress("EG",
-      //          "Giza",
-      //          "6 Oct",
-      //          "Hyaber",
-      //          "1",
-      //          "",
-      //          "",
-      //          "",
-      //          "",
-      //          "");
-      //  Seller sa = new Seller("382107586",
-      //          "Domino's Pizza Hyper One Branch",
-      //          "2",
-      //          branch,
-      //          "447788",
-      //          "",
-      //          "1071"
-      //  );
+        //  BranchAddress branch = new BranchAddress("EG",
+        //          "Giza",
+        //          "6 Oct",
+        //          "Hyaber",
+        //          "1",
+        //          "",
+        //          "",
+        //          "",
+        //          "",
+        //          "");
+        //  Seller sa = new Seller("382107586",
+        //          "Domino's Pizza Hyper One Branch",
+        //          "2",
+        //          branch,
+        //          "447788",
+        //          "",
+        //          "1071"
+        //  );
 
 
         Buyer BU = new Buyer("p",
@@ -636,14 +707,26 @@ public class HomeViewModel extends ViewModel {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public String getTimeBill() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
+       // LocalDate today = LocalDate.now(); // Added 1.8
 
-        LocalDateTime datetime = LocalDateTime.now();
-        //  System.out.println("Before subtraction of hours from date: "+datetime.format(formatter));
 
-        datetime = datetime.minusHours(2);
-        String aftersubtraction = datetime.format(formatter);
-        return aftersubtraction;
+
+     //  DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+     //  LocalDateTime datetime = LocalDateTime.now();
+     //  //  System.out.println("Before subtraction of hours from date: "+datetime.format(formatter));
+
+     //  datetime = datetime.minusHours(2);
+     //  String aftersubtraction = datetime.format(formatter);
+     //  return aftersubtraction;
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        //get current date time with Calendar()
+        Calendar cal = Calendar.getInstance();
+
+        cal = Calendar.getInstance();
+        cal.add(Calendar.HOUR, -2);
+        //  System.out.println("Subtract one hour from current date : " + dateFormat.format(cal.getTime()));
+        return dateFormat.format(cal.getTime()).toString();
     }
 
     //  public MutableLiveData<List<ItemsBill>> liveData=new MutableLiveData<>();
@@ -951,6 +1034,7 @@ public class HomeViewModel extends ViewModel {
 
             @Override
             public void onNext(@io.reactivex.rxjava3.annotations.NonNull Task3<LoginModel> loginModelTask3) {
+               // Log.d("f1",loginModelTask3.getItem().getBranchName() );
 
 
                 SharedPreferencesCom.init(context);
@@ -960,13 +1044,13 @@ public class HomeViewModel extends ViewModel {
                 String deviceSerialNumber = loginModelTask3.getItem().getPosserial();
                 String syndicateLicenseNumber = loginModelTask3.getItem().getLicenseExpiryDate();
                 String activityCode = loginModelTask3.getItem().getTaxpayerActivityCode();
-             String BranchName=   loginModelTask3.getItem().getBranchName();
+                String BranchName = loginModelTask3.getItem().getBranchName();
 
                 SharedPreferencesCom.getInstance().setFlagsItems(String.valueOf(loginModelTask3.getItem().getItemFlag()),
                         String.valueOf(loginModelTask3.getItem().getPriceFlag()));
 
                 SharedPreferencesCom.getInstance().setSharedValuesSeller(rin, companyTradeName, branchCode
-                        , deviceSerialNumber, syndicateLicenseNumber, activityCode,BranchName);
+                        , deviceSerialNumber, syndicateLicenseNumber, activityCode, BranchName);
 
                 String country = loginModelTask3.getItem().getCountry();
                 String governate = loginModelTask3.getItem().getGovernate();
@@ -986,7 +1070,7 @@ public class HomeViewModel extends ViewModel {
 
             @Override
             public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
-                Log.d("Loginchhf", e.getMessage() + "chhf");
+                Log.d("f1", e.getMessage() + "chhf");
             }
 
             @Override
@@ -1230,18 +1314,18 @@ public class HomeViewModel extends ViewModel {
             @Override
             public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
 
-               // Log.d("log",add.getDescription().toString());
+                // Log.d("log",add.getDescription().toString());
 
             }
 
             @Override
             public void onNext(@io.reactivex.rxjava3.annotations.NonNull Task<AddItemModel> addItemModelTask) {
-            Log.d("log",addItemModelTask.Message);
+                Log.d("log", addItemModelTask.Message);
             }
 
             @Override
             public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
-                Log.d("log",e.getMessage());
+                Log.d("log", e.getMessage());
 
 
             }
@@ -1255,7 +1339,9 @@ public class HomeViewModel extends ViewModel {
         observable.subscribe(observer);
 
     }
+
     public MutableLiveData<StateData<String>> getItemstate = new MutableLiveData<>();
+
     public void EditItem(EditItemModel add) {
         getItemstate.setValue(new StateData().loading());
         Observable observable = RetrofitRefranc.getInstance()
@@ -1272,13 +1358,13 @@ public class HomeViewModel extends ViewModel {
             @Override
             public void onNext(@io.reactivex.rxjava3.annotations.NonNull Task<EditItemModel> editItemModelTask) {
                 getItemstate.setValue(new StateData().success(editItemModelTask));
-                Log.d("log",editItemModelTask.Message);
+                Log.d("log", editItemModelTask.Message);
             }
 
             @Override
             public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
                 getItemstate.setValue(new StateData().error(e));
-                Log.d("log",e.getMessage());
+                Log.d("log", e.getMessage());
             }
 
             @Override
@@ -1292,11 +1378,11 @@ public class HomeViewModel extends ViewModel {
 
     }
 
-    public void getTodayItems( int ComID,String date,String AndroidID) {
+    public void getTodayItems(int ComID, String date, String AndroidID) {
 
         Observable observable = RetrofitRefranc.getInstance()
                 .getApiCalls()
-                .GetTodayItemsAPI(ComID,date,AndroidID )
+                .GetTodayItemsAPI(ComID, date, AndroidID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
         Observer<Task<TodayItemsModel>> observer = new Observer<Task<TodayItemsModel>>() {
@@ -1322,5 +1408,5 @@ public class HomeViewModel extends ViewModel {
         };
 
         observable.subscribe(observer);
-}
+    }
 }

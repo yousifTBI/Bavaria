@@ -342,40 +342,48 @@ MutableLiveData <StateData<String> >stateItemsLiveData =new MutableLiveData<>();
         };
         observable.subscribe(observer);
     }
-    MutableLiveData <StateData<Task<RequestModel>>> loginLiveData=new MutableLiveData<>();
+    MutableLiveData <StateData<Task3<LoginModel>>> loginLiveData=new MutableLiveData<>();
     public void LoginFun(String s ){
         Log.d("Login", "cf");
+        loginLiveData.setValue(new StateData().loading());
 
-        Observable observable = RetrofitRefranc.getInstance()
-                .getApiCalls()
-                .LoginAPI(s)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-        Observer<Task3<LoginModel>> observer=new Observer<Task3<LoginModel>>() {
-            @Override
-            public void onSubscribe(@NonNull Disposable d) {
+
+        if (internetIsConnected()==true) {
+
+                Observable observable = RetrofitRefranc.getInstance()
+                        .getApiCalls()
+                        .LoginAPI(s)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread());
+                Observer<Task3<LoginModel>> observer = new Observer<Task3<LoginModel>>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@NonNull Task3<LoginModel> loginModelTask3) {
+                        // Log.d("Login", loginModelTask3.Message+"cf");
+                        loginLiveData.setValue(new StateData().success(loginModelTask3));
+
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        //   Log.d("Login", e.getMessage()+"chhf");
+                        loginLiveData.setValue(new StateData().error(e));
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                };
+                observable.subscribe(observer);
+            } else if (internetIsConnected()==false){
+                loginLiveData.setValue(new StateData().Problem("الانترنت ضعيف حاول مره اخرى"));
 
             }
-
-            @Override
-            public void onNext(@NonNull Task3<LoginModel> loginModelTask3) {
-           // Log.d("Login", loginModelTask3.Message+"cf");
-                loginLiveData.setValue(new StateData().success(loginModelTask3));
-
-            }
-
-            @Override
-            public void onError(@NonNull Throwable e) {
-             //   Log.d("Login", e.getMessage()+"chhf");
-                loginLiveData.setValue(new StateData().error(e));
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-        };
-        observable.subscribe(observer);
     }
     public void getItems(String ComID ,String AndroidID){
         Log.d("log","l");

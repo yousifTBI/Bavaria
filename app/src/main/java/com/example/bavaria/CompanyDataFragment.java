@@ -29,6 +29,9 @@ public class CompanyDataFragment extends Fragment {
         Toast.makeText(getActivity(), "asa", Toast.LENGTH_SHORT).show();
         // return inflater.inflate(R.layout.fragment_company_data, container, false);
         Seller seller = SharedPreferencesCom.getInstance().getSharedValuesSeller();
+        SharedPreferencesCom.getInstance();
+        SharedPreferencesCom.init(getActivity());
+
         BranchAddress branchAddress = SharedPreferencesCom.getInstance().getSharedValuesBranchAddress();
 
 

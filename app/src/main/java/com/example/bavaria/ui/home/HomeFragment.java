@@ -6,6 +6,7 @@ import static java.lang.System.lineSeparator;
 import static io.reactivex.rxjava3.schedulers.Schedulers.computation;
 import static io.reactivex.rxjava3.schedulers.Schedulers.io;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -47,6 +48,7 @@ import com.example.bavaria.databinding.FragmentHomeBinding;
 
 import com.example.bavaria.network.RetrofitRefranc;
 import com.example.bavaria.network.StateData;
+import com.example.bavaria.network.TestDate;
 import com.example.bavaria.pojo.classes.ItemDatum;
 import com.example.bavaria.pojo.classes.Root;
 import com.example.bavaria.pojo.models.BillReturn;
@@ -80,10 +82,14 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 import CTOS.CtPrint;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -122,6 +128,30 @@ public class HomeFragment extends Fragment implements OnClic {
         //   adabter.setOnClic(this);
     //    LoginFun("1524");
 
+
+  //     Calendar cal = Calendar.getInstance();
+  //   int  hours = cal.get( Calendar.HOUR_OF_DAY );
+  //     if ( hours > 12 ) hours -= 10;
+  //     int  minutes = cal.get( Calendar.MINUTE );
+  //     int   seconds = cal.get( Calendar.SECOND );
+
+  //     SimpleDateFormat formatter = new SimpleDateFormat("hh:mm:ss");
+  //     Date date = cal.getTime();
+  //  String   timeString = formatter.format( date );
+   //  Log.d("onSuccess",timeString);
+      //  @SuppressLint("NewApi") LocalDate today = LocalDate.now(); // Added 1.8
+
+    //    Calendar cal = Calendar.getInstance();
+// r//emove next line if you're always using the current time.
+    ////    cal.setTime(currentDate);
+    //    cal.add(Calendar.HOUR, -0);
+    //    Date oneHourBack = cal.getTime();
+    //    Date currentDate = new Date(System.currentTimeMillis() - TimeUnit.HOURS.toMillis(1));
+//
+    //    Date currentDate1 = new Date(System.currentTimeMillis() - 3600 * 1000);
+
+        TestDate t=new TestDate();
+        Log.d("onSuccess",t.date());
 
         homeViewModel.qr.observe(getActivity(), new androidx.lifecycle.Observer<String>() {
             @Override
@@ -211,11 +241,38 @@ public class HomeFragment extends Fragment implements OnClic {
                     Double totalPrice = 0.0;
                     int itemId = 0;
                     for (ItemsModels i : models) {
+
+                        Log.d("onSuccess1",
+                            //    "-" + Double.valueOf(i.getQuantity()) +"-" +
+                            //    Double.valueOf(i.getPrice()) +"-" +
+                            //    Double.valueOf(i.getPrice())
+                            //    +"-]" +"s"+
+                            //    i.getDescription() +"s" +"-]" +i.getBarcode()+"-" +i.getUnitType()
+                            //            + "-" +i.getItemType() +
+                            //    "-" +
+                                String.valueOf( i.getItemCode()));
                         //To Create List to UUID
-                        itemData.add(homeViewModel.getItems(1.0, Double.valueOf(i.getPrice()), Double.valueOf(i.getPrice()), i.getDescription()));
+                       itemData.add(homeViewModel.getItems(
+                               Double.valueOf(i.getQuantity()),
+                               Double.valueOf(i.getPrice()),
+                               Double.valueOf(i.getPrice()),
+                               i.getDescription()
+                               ,i.getBarcode()
+                               ,i.getUnitType()
+                               ,i.getItemType()
+                               , String.valueOf( i.getItemCode())
+
+                       ));
 
                         //To Create List to Room
-                        ItemsBillRoom.add(homeViewModel.setItemsRoom(i.getDescription(), Double.valueOf(i.getPrice()), numberRicet, String.valueOf(itemId)));
+                       ItemsBillRoom.add(homeViewModel.setItemsRoom(i.getDescription(),
+                               Double.valueOf(i.getPrice()),
+                               numberRicet, String.valueOf(itemId), Double.valueOf(i.getQuantity())
+                               ,i.getUnitType()
+                               ,i.getItemType()
+                               , String.valueOf( i.getItemCode()),i.getBarcode()
+
+                       ));
 
                         //To Create List to Room Backup
                         ItemsBillRoomBackup.add(homeViewModel.setItemsRoomBackup(i.getDescription(), Double.valueOf(i.getPrice()), numberRicet, String.valueOf(itemId)));
@@ -230,7 +287,7 @@ public class HomeFragment extends Fragment implements OnClic {
                         itemId++;
 
 
-                        // Log.d("onSuccess", price+"");
+                        Log.d("onSuccesss", price+"");
                     }
 
 
@@ -274,7 +331,7 @@ public class HomeFragment extends Fragment implements OnClic {
                   //  Root createRoot = homeViewModel.sentApi(uu, itemData, TimeRicet, numberRicet);
                   //  homeViewModel.Send(createRoot, HeaderOnline, ItemsBillRoomOnlin, getActivity());
                     models.clear();
-                  //  CastlesPrinter(QR);
+                 //  CastlesPrinter(QR);
                 } else if (state == 1) {
                     //To Create number Ricet Bill
                     String numberRicet = homeViewModel.getNumberBill(getContext());
@@ -294,10 +351,10 @@ public class HomeFragment extends Fragment implements OnClic {
                     for (ItemsModel i : itemsList) {
 
                         //To Create List to UUID
-                        itemData.add(homeViewModel.getItems(1.0, Double.valueOf(i.getPrice()), Double.valueOf(i.getPrice()), i.getTitle()));
+                    //    itemData.add(homeViewModel.getItems(1.0, Double.valueOf(i.getPrice()), Double.valueOf(i.getPrice()), i.getTitle()));
 
                         //To Create List to Room
-                        ItemsBillRoom.add(homeViewModel.setItemsRoom(i.getTitle(), Double.valueOf(i.getPrice()), numberRicet, String.valueOf(itemId)));
+                     //   ItemsBillRoom.add(homeViewModel.setItemsRoom(i.getTitle(), Double.valueOf(i.getPrice()), numberRicet, String.valueOf(itemId)));
 
                         //To Create List to Room Backup
                         ItemsBillRoomBackup.add(homeViewModel.setItemsRoomBackup(i.getTitle(), Double.valueOf(i.getPrice()), numberRicet, String.valueOf(itemId)));
@@ -393,6 +450,9 @@ public class HomeFragment extends Fragment implements OnClic {
             public void onClick(View view) {
                 // homeViewModel.provideSimpleDialog(getContext());
 
+                homeViewModel.getItemsOnline(getContext());
+
+
                 SimpleSearchDialogCompat dialog = new SimpleSearchDialogCompat(getActivity(), "Search...",
                         "What are you looking for...?", null,
                         homeViewModel.itemsModels1
@@ -409,7 +469,9 @@ public class HomeFragment extends Fragment implements OnClic {
                                 products.setItemType(item.getItemType());
                                 products.setBarcode(item.getBarcode());
                                 products.setPrice(Double.parseDouble(item.getPrice()));
-
+                                products.setItemCode(item.getItemCode());
+                                products.setUnitType(item.getUnitType());
+                                Log.d("onSuccess1",item.getItemCode());
                                 models.add(products);
 
                                 adabter.notifyDataSetChanged();
@@ -440,10 +502,10 @@ public class HomeFragment extends Fragment implements OnClic {
         //   });
 
 
-        homeViewModel.getItems(1.0, 50, 50, "فلامنكو");
-        homeViewModel.getItems(1.0, 50, 50, "فلامنكو");
-        homeViewModel.getItems(1.0, 50, 50, "فلامنكو");
-        homeViewModel.getItems(1.0, 50, 50, "فلامنكو");
+      // homeViewModel.getItems(1.0, 50, 50, "فلامنكو");
+      // homeViewModel.getItems(1.0, 50, 50, "فلامنكو");
+      // homeViewModel.getItems(1.0, 50, 50, "فلامنكو");
+      // homeViewModel.getItems(1.0, 50, 50, "فلامنكو");
 
         // String uuID=  homeViewModel. sentApi("");
 
@@ -863,8 +925,9 @@ public class HomeFragment extends Fragment implements OnClic {
                         for (ItemsBill i : itemsBills) {
                             // Log.d("onSuccess",i.getIDBill()+"tesor");
                             //  Log.d("onSuccess",i.getPName()+"tesor");
-                            itemData.add(homeViewModel.getItems(1.0, i.getUnitPrice(), i.getUnitPrice(), i.getPName()));
                             //  Log.d("onSuccess","yousif");
+                        //    itemData.add(homeViewModel.getItems(1.0, i.getUnitPrice(), i.getUnitPrice(), i.getPName()));
+
                         }
                         Root r = homeViewModel.sentApi(uuID, itemData, timeBill, id);
                         Send(r);
@@ -1482,21 +1545,36 @@ public class HomeFragment extends Fragment implements OnClic {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         //handle menu item clicks
         //  int id = item.getItemId();
+        SharedPreferencesCom.init(getContext());
+     String IDandroid=   SharedPreferencesCom.getInstance().gerSharedandroidId();
 
         switch (item.getItemId()) {
+
             case R.id.action_settings:
 
 
              //   homeViewModel.getItems("3", getContext(), "1524");
-                homeViewModel.getItems("1", getContext(), "25810");
+              //  homeViewModel.getItems("1", getContext(), "25810");
+              //  homeViewModel.getItemsOnline(getContext());
+              //  homeViewModel.getItems("1", getContext(), "25810");
+              //  homeViewModel.getItemsOnline(getContext());
+//
+              //  homeViewModel.getItems("1", getContext(), "25810");
+              //  homeViewModel.getItemsOnline(getContext());
+                homeViewModel.getItemsOnline(getContext());
+                homeViewModel.getItems("1", getContext(), IDandroid);
                 homeViewModel.getItemsOnline(getContext());
                 break;
             case R.id.action_settings2:
-                homeViewModel.LoginFun("25810", getContext());
+                homeViewModel.LoginFun(IDandroid, getContext());
+              //  homeViewModel.LoginFun(IDandroid, getContext());
+              //  homeViewModel.LoginFun("25810", getContext());
+              //  homeViewModel.LoginFun("25810", getContext());
                 break;
         }
 

@@ -29,6 +29,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.bavaria.databinding.ActivityMainBinding;
+import com.example.bavaria.pojo.Flags;
 import com.example.bavaria.pojo.models.AddItemModel;
 import com.example.bavaria.pojo.models.EditItemModel;
 import com.example.bavaria.pojo.models.TodayItemsModel;
@@ -109,9 +110,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // String x="0";
                 Double cc = Double.valueOf(SharedPreferencesCom.getInstance().getSharedItemFlag());
+                Toast.makeText(MainActivity.this, cc+"", Toast.LENGTH_SHORT).show();
 
-                Toast.makeText(MainActivity.this, SharedPreferencesCom.getInstance().getSharedItemFlag() + "--", Toast.LENGTH_SHORT).show();
-                if (cc == 0) {
+                if (cc ==0) {
                     dialog = new Dialog(MainActivity.this);
 
                     // set custom dialog
@@ -191,8 +192,10 @@ public class MainActivity extends AppCompatActivity {
                                             itemCode.getText().toString() +
                                             priceID.getText().toString() +
                                             customerAutoTV.getText().toString() + "");
-                       // int state =1;
-                            int state=   SharedPreferencesCom.getInstance().getFlagsItems().getItemFlag();
+                        int state =1;
+                           Flags flags=   SharedPreferencesCom.getInstance().getFlagsItems();
+                            Toast.makeText(MainActivity.this,"khkjkhj", Toast.LENGTH_SHORT).show();
+
                             //addItemINLocalDB
                             if (state==1){
                             ItemsModel itemsModel = new ItemsModel();
@@ -232,10 +235,10 @@ public class MainActivity extends AppCompatActivity {
 
 
                 } else {
-                    Toast.makeText(MainActivity.this, "غير متاح", Toast.LENGTH_SHORT).show();
 
 
                 }
+
 
 
             }

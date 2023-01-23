@@ -22,8 +22,10 @@ public interface HeaderBillDao {
     @Query("select*from HeaderBill")
     Single<List<HeaderBill>> getHeaderBill();
 
-    @Query("Select * from HeaderBill  WHERE InvoiceType= :invoiceType")
-    Single<List<HeaderBill>> getInvoiceByType(String invoiceType);
+    @Query("Select * from HeaderBill  WHERE BillNumber= :invoiceType")
+    Single<List<HeaderBill>> getBillNumber(String invoiceType);
+    @Query("Select * from HeaderBill  WHERE BillNumber= :invoiceType")
+    Single<HeaderBill> getOneBillNumber(String invoiceType);
 
     @Query("DELETE FROM HeaderBill")
     Completable  delete() ;

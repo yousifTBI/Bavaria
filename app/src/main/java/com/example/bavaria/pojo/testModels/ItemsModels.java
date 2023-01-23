@@ -12,11 +12,14 @@ public class ItemsModels {
     String Description;
     String Editor;
     String Date;
-    String ItemType;
-    int ItemCode;
 
 
     String UnitType;
+    String ItemType;
+    String ItemCode;
+
+
+
 
     double Price;
 
@@ -71,6 +74,14 @@ public class ItemsModels {
         Date = date;
     }
 
+    public String getUnitType() {
+        return UnitType;
+    }
+
+    public void setUnitType(String unitType) {
+        UnitType = unitType;
+    }
+
     public String getItemType() {
         return ItemType;
     }
@@ -79,20 +90,12 @@ public class ItemsModels {
         ItemType = itemType;
     }
 
-    public int getItemCode() {
+    public String getItemCode() {
         return ItemCode;
     }
 
-    public void setItemCode(int itemCode) {
+    public void setItemCode(String itemCode) {
         ItemCode = itemCode;
-    }
-
-    public String getUnitType() {
-        return UnitType;
-    }
-
-    public void setUnitType(String unitType) {
-        UnitType = unitType;
     }
 
     public double getPrice() {

@@ -8,6 +8,11 @@
     </data>
 
 
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -34,7 +39,20 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/bavaria" />
+                app:srcCompat="@drawable/logo_tbi" />
+
+            <com.github.ybq.android.spinkit.SpinKitView
+                android:id="@+id/spin_kit"
+                style="@style/SpinKitView.Large.Circle"
+                android:layout_width="94dp"
+                android:layout_height="87dp"
+                android:layout_gravity="center"
+                app:SpinKit_Color="@color/purple_200"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingConstraints" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/Company"
@@ -152,14 +170,14 @@
                 android:layout_width="176dp"
                 android:layout_height="54dp"
                 android:layout_marginTop="159dp"
+                android:gravity="center"
                 android:text="TextView"
                 android:textStyle="bold"
-                android:gravity="center"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/SendRequestId"
-                app:layout_constraintVertical_bias="0.0"
-                tools:layout_editor_absoluteX="128dp"
-                android:visibility="gone"/>
+                app:layout_constraintVertical_bias="0.0" />
 
 
             <Button
@@ -177,10 +195,15 @@
                 android:id="@+id/comID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="411dp"
                 android:text=""
-                android:visibility="gone"/>
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 
 
 </layout>
