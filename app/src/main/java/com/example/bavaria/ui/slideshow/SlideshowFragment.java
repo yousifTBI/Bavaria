@@ -49,8 +49,7 @@ public class SlideshowFragment extends Fragment  {
     SlideshowViewModel slideshowViewModel;
   // ArrayList<Root> receiptslist = new ArrayList<>();
     ArrayList<Root> receiptslist1 = new ArrayList<>();
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         slideshowViewModel =
                 new ViewModelProvider(this).get(SlideshowViewModel.class);
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
@@ -59,8 +58,9 @@ public class SlideshowFragment extends Fragment  {
         //     bind  ing.getRoot();
         //  getRoom();
         // getRoom();
-        getRoom();
         binding.setLifecycleOwner(this);
+        getRoom();
+
         getRoot();
          slideshowViewModel.getHeadersBill(getActivity());
         AdabterBill adabter = new AdabterBill(getActivity());
