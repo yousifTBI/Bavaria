@@ -65,7 +65,7 @@ public class SlideshowFragment extends Fragment  {
          slideshowViewModel.getHeadersBill(getActivity());
         AdabterBill adabter = new AdabterBill(getActivity());
       //  adabter.setOnClic(this);
-
+        binding.progressBar4.setVisibility(View.GONE);
 //        Runtime rt = Runtime.getRuntime();
 //        long maxMemory = rt.maxMemory();
 //        Log.v("onSuccess", "onSuccess:" + Long.toString(maxMemory));

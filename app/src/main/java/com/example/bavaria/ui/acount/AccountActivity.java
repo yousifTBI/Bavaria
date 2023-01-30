@@ -1,12 +1,10 @@
 package com.example.bavaria.ui.acount;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -27,9 +25,7 @@ import com.example.bavaria.pojo.models.RequestModel;
 import com.example.bavaria.pojo.models.Task;
 import com.example.bavaria.pojo.models.Task3;
 import com.example.bavaria.ui.home.HomeFragment;
-import com.example.bavaria.ui.home.HomeViewModel;
 import com.example.bavaria.ui.roomContacts.AccountInfo.LoginModel;
-import com.example.bavaria.ui.utils.SharedPreferencesCom;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,9 +41,6 @@ public class AccountActivity extends AppCompatActivity {
     private AppBarConfiguration appBarConfiguration;
     private ActivityAccountBinding binding;
     RequestModel requestModel;
-    String androidId;
-    HomeViewModel homeViewModel;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,9 +90,7 @@ public class AccountActivity extends AppCompatActivity {
                 StringBuffer BafferComId = splitString(ComPlusId);
                 String CompanyId =BafferComId.toString();
                 Log.d("loggg","d11");
-                hideSoftKeyboard(AccountActivity.this);
                 accountViewModel.getBranches(CompanyId,AccountActivity.this);
-
 
             }
         });
@@ -109,8 +100,8 @@ public class AccountActivity extends AppCompatActivity {
 
 
 
-      //  Intent i=new Intent(AccountActivity.this, MainActivity.class);
-      //  startActivity(i);
+        Intent i=new Intent(AccountActivity.this, MainActivity.class);
+        startActivity(i);
 
 
                 // String x ="1524";
@@ -118,178 +109,46 @@ public class AccountActivity extends AppCompatActivity {
      //   x.put("x" ,"1524");
      // accountViewModel.LoginFun(x);
       //  accountViewModel.getItems("3");
-         androidId = Settings.Secure.getString(getContentResolver(),
-                Settings.Secure.ANDROID_ID);
-       Log.d("onSuccess", androidId);
-        binding.spinKit.setVisibility(View.GONE);
 
-
-    //    accountViewModel.LoginFun(androidId);
-
-        accountViewModel.loginLiveData.observe(this, new Observer<StateData<Task3<LoginModel>>>() {
+        Observable observable = RetrofitRefranc.getInstance()
+                .getApiCalls()
+                .LoginAPI("25810")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+        io.reactivex.rxjava3.core.Observer<Task3<LoginModel>> observer=new io.reactivex.rxjava3.core.Observer<Task3<LoginModel>>() {
             @Override
-            public void onChanged(StateData<Task3<LoginModel>> taskStateData) {
-                switch (taskStateData.getStatus()) {
-                    case SUCCESS:
-                        //      listStateData
-//                      Toast.makeText(AccountActivity.this, stringStateData.getData(), Toast.LENGTH_SHORT).show();
-                      //  binding.spinKit.setVisibility(View.GONE);
-                        //Toast.makeText(AccountActivity.this, loginModelTask3.getMessage(), Toast.LENGTH_SHORT).show();
-                        if (taskStateData.getData().State==1){
-                            // taskStateData.getData().getMessage()
-                            Toast.makeText(AccountActivity.this, taskStateData.getData().getMessage(), Toast.LENGTH_SHORT).show();
-                            Intent intent=new Intent(AccountActivity.this, MainActivity.class);
-                            startActivity(intent);
-                            finish();
-                        } else if(taskStateData.getData().State==0){
+            public void onSubscribe(@NonNull Disposable d) {
 
-                            Intent intent=new Intent(AccountActivity.this, ProgressRequestActivity.class);
-                            startActivity(intent);
-                            finish();
-                        }
-
-                        // Log.d("Login", loginModelTask3.Message+"cf");
-                        //  loginLiveData.setValue(new StateData().success(loginModelTask3));
-
-
-                        break;
-                    case ERROR:
-
-
-                        Toast.makeText(AccountActivity.this, taskStateData.getData().getMessage(), Toast.LENGTH_SHORT).show();
-
-                        binding.spinKit.setVisibility(View.GONE);
-
-                        break;
-                    case LOADING:
-                        // binding.progressBar;
-                        binding.spinKit.setVisibility(View.VISIBLE);
-                        //  binding.progressBar.setVisibility(View.GONE);
-
-                        break;
-                    case COMPLETE:
-                        binding.spinKit.setVisibility(View.GONE);
-
-                        break;
-                    case Problem:
-                        binding.spinKit.setVisibility(View.GONE);
-                        Toast.makeText(AccountActivity.this, "لا يوجد انترنت", Toast.LENGTH_SHORT).show();
-                        Toast.makeText(AccountActivity.this, "لا يوجد انترنت", Toast.LENGTH_SHORT).show();
-                        //  Toast.makeText(AccountActivity.this, "لاااااا يوجد انترنت", Toast.LENGTH_SHORT).show();
-
-                        break;
-
-                }
             }
-        });
-     // accountViewModel.loginLiveData.observe(this, new Observer<StateData<Task<RequestModel>>>() {
-     //     @Override
-     //     public void onChanged(StateData<Task<RequestModel>> taskStateData) {
-     //         switch (taskStateData.getStatus()) {
-     //             case SUCCESS:
-     //                 //      listStateData
-//   //                  Toast.makeText(AccountActivity.this, stringStateData.getData(), Toast.LENGTH_SHORT).show();
-     //                 binding.spinKit.setVisibility(View.GONE);
-     //                       //Toast.makeText(AccountActivity.this, loginModelTask3.getMessage(), Toast.LENGTH_SHORT).show();
-     //                        if (taskStateData.getData().State==1){
-     //                           // taskStateData.getData().getMessage()
-     //                           Toast.makeText(AccountActivity.this, taskStateData.getData().getMessage(), Toast.LENGTH_SHORT).show();
-     //                           Intent intent=new Intent(AccountActivity.this, MainActivity.class);
-     //                           startActivity(intent);
-     //                            finish();
-     //                        } else if(taskStateData.getData().State==0){
 
-     //                             Intent intent=new Intent(AccountActivity.this, ProgressRequestActivity.class);
-     //                              startActivity(intent);
-     //                              finish();
-     //                        }
+            @Override
+            public void onNext(@NonNull Task3<LoginModel> loginModelTask3) {
+                Toast.makeText(AccountActivity.this, loginModelTask3.getMessage(), Toast.LENGTH_SHORT).show();
+               //Toast.makeText(AccountActivity.this, loginModelTask3.getMessage(), Toast.LENGTH_SHORT).show();
+               //Toast.makeText(AccountActivity.this, loginModelTask3.getMessage(), Toast.LENGTH_SHORT).show();
+               //Toast.makeText(AccountActivity.this, loginModelTask3.getMessage(), Toast.LENGTH_SHORT).show();
+               //Toast.makeText(AccountActivity.this, loginModelTask3.getMessage(), Toast.LENGTH_SHORT).show();
+                if (loginModelTask3.State==1){
+                  //  Intent intent=new Intent(AccountActivity.this, MainActivity.class);
+                 //   startActivity(intent);
+                }
+                // Log.d("Login", loginModelTask3.Message+"cf");
+              //  loginLiveData.setValue(new StateData().success(loginModelTask3));
 
-     //                        // Log.d("Login", loginModelTask3.Message+"cf");
-     //                      //  loginLiveData.setValue(new StateData().success(loginModelTask3));
+            }
 
+            @Override
+            public void onError(@NonNull Throwable e) {
+                //   Log.d("Login", e.getMessage()+"chhf");
+              //  loginLiveData.setValue(new StateData().error(e));
+            }
 
-     //                 break;
-     //             case ERROR:
-     //                 binding.spinKit.setVisibility(View.GONE);
+            @Override
+            public void onComplete() {
 
-     //                 break;
-     //             case LOADING:
-     //                 // binding.progressBar;
-     //                 binding.spinKit.setVisibility(View.VISIBLE);
-     //                 //  binding.progressBar.setVisibility(View.GONE);
-
-     //                 break;
-     //             case COMPLETE:
-     //                 binding.spinKit.setVisibility(View.GONE);
-
-     //                 break;
-     //             case Problem:
-     //                 binding.spinKit.setVisibility(View.GONE);
-     //                 Toast.makeText(AccountActivity.this, "لاااااا يوجد انترنت", Toast.LENGTH_SHORT).show();
-     //                 //  Toast.makeText(AccountActivity.this, "لاااااا يوجد انترنت", Toast.LENGTH_SHORT).show();
-
-     //                 break;
-
-     //         }
-     //     }
-     // });
-      // Toast.makeText(AccountActivity.this, androidId+"---", Toast.LENGTH_SHORT).show();
-      // Toast.makeText(AccountActivity.this, androidId+"---", Toast.LENGTH_SHORT).show();
-      // Toast.makeText(AccountActivity.this, androidId+"---", Toast.LENGTH_SHORT).show();
-
-    //  Observable observable = RetrofitRefranc.getInstance()
-    //          .getApiCalls()
-    //       //   .LoginAPI("25810")
-    //          .LoginAPI(androidId)
-    //          .subscribeOn(Schedulers.io())
-    //          .observeOn(AndroidSchedulers.mainThread());
-    //  io.reactivex.rxjava3.core.Observer<Task3<LoginModel>> observer=new io.reactivex.rxjava3.core.Observer<Task3<LoginModel>>() {
-    //      @Override
-    //      public void onSubscribe(@NonNull Disposable d) {
-
-    //      }
-
-    //      @Override
-    //      public void onNext(@NonNull Task3<LoginModel> loginModelTask3) {
-    //          Toast.makeText(AccountActivity.this, loginModelTask3.getMessage(), Toast.LENGTH_SHORT).show();
-    //        //  Toast.makeText(AccountActivity.this, loginModelTask3.State+"---", Toast.LENGTH_SHORT).show();
-    //         //Toast.makeText(AccountActivity.this, loginModelTask3.getMessage(), Toast.LENGTH_SHORT).show();
-    //         //Toast.makeText(AccountActivity.this, loginModelTask3.getMessage(), Toast.LENGTH_SHORT).show();
-    //         //Toast.makeText(AccountActivity.this, loginModelTask3.getMessage(), Toast.LENGTH_SHORT).show();
-    //         //Toast.makeText(AccountActivity.this, loginModelTask3.getMessage(), Toast.LENGTH_SHORT).show();
-    //          if (loginModelTask3.State==1){
-    //             Toast.makeText(AccountActivity.this, loginModelTask3.getMessage(), Toast.LENGTH_SHORT).show();
-    //             Intent intent=new Intent(AccountActivity.this, MainActivity.class);
-    //             startActivity(intent);
-    //              finish();
-    //          } else if(loginModelTask3.State==0){
-
-    //               Intent intent=new Intent(AccountActivity.this, ProgressRequestActivity.class);
-    //                startActivity(intent);
-    //                finish();
-    //          }
-
-    //          // Log.d("Login", loginModelTask3.Message+"cf");
-    //        //  loginLiveData.setValue(new StateData().success(loginModelTask3));
-
-    //      }
-
-    //      @Override
-    //      public void onError(@NonNull Throwable e) {
-    //          Toast.makeText(AccountActivity.this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
-    //          Log.d("onSuccess",e.getMessage().toString());
-
-    //          //   Log.d("Login", e.getMessage()+"chhf");
-    //        //  loginLiveData.setValue(new StateData().error(e));
-    //      }
-
-    //      @Override
-    //      public void onComplete() {
-
-    //      }
-    //  };
-    //  observable.subscribe(observer);
-
+            }
+        };
+        observable.subscribe(observer);
     //   accountViewModel.LoginFun("25810");
 
     //   accountViewModel.loginLiveData.observe(AccountActivity.this, new Observer<StateData<Task<RequestModel>>>() {
@@ -407,26 +266,21 @@ public class AccountActivity extends AppCompatActivity {
                 switch (taskStateData.getStatus()) {
                     case SUCCESS:
                         //      listStateData
-                        binding.spinKit.setVisibility(View.GONE);
+                        binding.progressBar.setVisibility(View.GONE);
                         Toast.makeText(AccountActivity.this, taskStateData.getData().Message+"SUCCESS" , Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(AccountActivity.this, ProgressRequestActivity.class);
-                        startActivity(intent);
-                        finish();
                         break;
                     case ERROR:
-                        binding.spinKit.setVisibility(View.GONE);
-
-                        Toast.makeText(AccountActivity.this, taskStateData.getData().Message+"حاول مره اخرى" , Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AccountActivity.this, taskStateData.getData().Message+"ERROR" , Toast.LENGTH_SHORT).show();
 
                         break;
                     case LOADING:
                         // binding.progressBar;
-                        binding.spinKit.setVisibility(View.VISIBLE);
+                        binding.progressBar.setVisibility(View.VISIBLE);
 
 
                         break;
                     case COMPLETE:
-                        binding.spinKit.setVisibility(View.GONE);
+                        binding.progressBar.setVisibility(View.GONE);
 
                         break;
                 }
@@ -479,8 +333,6 @@ public class AccountActivity extends AppCompatActivity {
 
         String androidId = Settings.Secure.getString(getContentResolver(),
                 Settings.Secure.ANDROID_ID);
-        SharedPreferencesCom.init(this);
-        SharedPreferencesCom.getInstance().setSharedandroidId(androidId);
      //   Log.d("account",BranchName);
        // binding.textView4.setText(androidId);
 
@@ -496,15 +348,9 @@ public class AccountActivity extends AppCompatActivity {
                //  int branchid = Integer.parseInt(ID);
                // Log.d("account",ID+"d");
                 binding.comID.getText().toString();
-                Toast.makeText(AccountActivity.this, binding.comID.getText().toString(), Toast.LENGTH_SHORT).show();
-                String ComPlusId =binding.com.getText().toString();
-                // String[] CompanyId = ComPlusId.split("1");
-                StringBuffer BafferComId = splitString(ComPlusId);
-                String CompanyId =BafferComId.toString();
-                requestModel=new RequestModel("tpi",BranchName,Integer.parseInt(ID)
-                     //   ,"25810",
-                        ,androidId,
-                        binding.POStxt.getText().toString(),  Integer.parseInt(CompanyId));
+
+                requestModel=new RequestModel("",BranchName,Integer.parseInt(ID)
+                        ,"25810", binding.POStxt.getText().toString(),  Integer.parseInt(binding.comID.getText().toString()));
                accountViewModel.getRequest(requestModel);
 
             }
@@ -526,16 +372,5 @@ public class AccountActivity extends AppCompatActivity {
         return CompanyId;
     }
 
-    public static void hideSoftKeyboard(Activity activity) {
-        InputMethodManager inputMethodManager =
-                (InputMethodManager) activity.getSystemService(
-                        Activity.INPUT_METHOD_SERVICE);
-        if(inputMethodManager.isAcceptingText()){
-            inputMethodManager.hideSoftInputFromWindow(
-                    activity.getCurrentFocus().getWindowToken(),
-                    0
-            );
-        }
-    }
 
 }

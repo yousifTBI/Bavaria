@@ -314,7 +314,9 @@ public class ReturnsFragment extends Fragment {
             }
         });
         return binding.getRoot();
+
     }
+
 
     private boolean isValid() {
         if (startDate.isEmpty() || startDate.equals(null) || startDate == "") {

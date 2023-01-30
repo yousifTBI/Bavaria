@@ -64,4 +64,16 @@
         android:name="com.example.bavaria.ui.returns.ReturnsFragment"
         android:label="fragment_returns"
         tools:layout="@layout/fragment_returns" />
+
+    <fragment
+        android:id="@+id/foodyFragmentt"
+        android:name="com.example.bavaria.ui.foody.FoodyFragmentt"
+        android:label="fragment_foody_fragmentt"
+        tools:layout="@layout/fragment_foody_fragmentt" />
+
+    <fragment
+        android:id="@+id/returnsBillsFragment"
+        android:name="com.example.bavaria.ReturnsBillsFragment"
+        android:label="المرتجعات"
+        tools:layout="@layout/fragment_returns_bills" />
 </navigation>

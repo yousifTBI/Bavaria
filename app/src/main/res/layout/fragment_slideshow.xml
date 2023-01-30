@@ -30,6 +30,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ProgressBar
+            android:id="@+id/progressBar4"
+            style="?android:attr/progressBarStyle"
+
+            android:layout_width="122dp"
+            android:layout_height="148dp"
+            android:shadowColor="@color/red"
+            app:layout_constraintBottom_toBottomOf="@+id/recyclerView"
+            app:layout_constraintEnd_toEndOf="@+id/paybtn"
+            app:layout_constraintStart_toStartOf="@+id/paybtn"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
         <Button
             android:id="@+id/paybtn"
             android:layout_width="271dp"
@@ -42,6 +55,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -65,5 +65,17 @@
             android:title="تسجيل خروج" />
 
 
+        <item
+            android:id="@+id/foodyFragmentt"
+            android:icon="@drawable/untitled_1_08"
+            android:title="مطعم" />
+
+
+        <item
+            android:id="@+id/returnsBillsFragment"
+            android:icon="@drawable/untitled_1_08"
+            android:title="returnsBillsFragment" />
+
+
     </group>
 </menu>

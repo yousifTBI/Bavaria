@@ -89,12 +89,12 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, "here", Toast.LENGTH_SHORT).show();
         setSupportActionBar(binding.appBarMain.toolbar);
         DrawerLayout drawer = binding.drawerLayout;
-        NavigationView navigationView = binding.navView;
+        NavigationView  navigationView = binding.navView;
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.receiptstatus, R.id.sendsellsFragment, R.id.companyDataFragment, R.id.usersFragment, R.id.logoutFragment,
-                R.id.sellsID, R.id.logoutFragment, R.id.clientsId, R.id.sellsFragment ,R.id.returnsFragment)
+                R.id.sellsID, R.id.logoutFragment, R.id.clientsId, R.id.sellsFragment ,R.id.returnsFragment,R.id.foodyFragmentt)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);

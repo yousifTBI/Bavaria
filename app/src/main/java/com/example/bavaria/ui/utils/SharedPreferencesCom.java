@@ -59,8 +59,7 @@ public class SharedPreferencesCom {
 
     }
 
-    public void setSharedItemFlag(String ItemFlag
-    ) {
+    public void setSharedItemFlag(String ItemFlag) {
         edits.putString("ItemFlag", ItemFlag);
         edits.apply();
     }
@@ -103,7 +102,17 @@ public class SharedPreferencesCom {
         return flags;
     }
 
+   public void setComId(int comId){
+       edits.putString("comId", String.valueOf(comId));
+       edits.apply();
+   }
+    public String getComId(){
 
+       String comid = sharedPreferencesLogIn.getString("comId", "1");
+
+        return comid;
+
+    }
     public void setSharedValuesSeller(String rin, String companyTradeName, String branchCode, String deviceSerialNumber,
                                       String syndicateLicenseNumber, String activityCode,String BranchName
     ) {

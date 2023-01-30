@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:hint="السعر الجديد"
             android:id="@+id/price"
-            android:cursorVisible="false"/>
+           />
     </com.google.android.material.textfield.TextInputLayout>
 
 

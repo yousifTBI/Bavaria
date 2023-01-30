@@ -112,7 +112,8 @@ public class SellsFragment extends Fragment implements OnClickEditProduct{
                     editItemModel.setAndroidID("1524");
                     editItemModel.setBarCode(internalCode.getText().toString());
                     editItemModel.setNewPrice(Double.parseDouble(priceID.getText().toString()));
-                    editItemModel.setComId(3);
+                    String SharedComId = SharedPreferencesCom.getInstance().getComId();
+                    editItemModel.setComId(Integer.valueOf(SharedComId));
                     homeViewModel.EditItem(editItemModel);
 
                     //Update Price in local data ...
@@ -142,6 +143,9 @@ public class SellsFragment extends Fragment implements OnClickEditProduct{
                             }
                         }
                     });
+                    homeViewModel.getItems("1", getContext(), "25810");
+                    homeViewModel.getItemsOnline(getContext());
+                    dialog.hide();
 
                 }
             });

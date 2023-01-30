@@ -189,7 +189,6 @@
             android:layout_height="300dp"
             android:layout_margin="8dp"
             android:background="@drawable/strok"
-
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:nestedScrollingEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
