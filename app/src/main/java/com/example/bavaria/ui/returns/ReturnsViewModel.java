@@ -84,7 +84,7 @@ public class ReturnsViewModel extends ViewModel {
 
         return i;
     }
-
+    MutableLiveData<String> stringUUID = new MutableLiveData<>();
     public void getRoot(String billNumber, Context context) {
         Log.d("onSuccessReturns", "headerBills.get(0).getInvoiceDate()");
 
@@ -122,6 +122,7 @@ public class ReturnsViewModel extends ViewModel {
                             public void onNext(@io.reactivex.rxjava3.annotations.NonNull HeaderBill headerBill) {
 
                                 String uu = headerBill.getUUID();
+                                stringUUID.setValue(uu);
                                 String id = headerBill.getBillNumber();
                                 String TimeRicet = headerBill.getInvoiceDate();
                                 ContactsDatabase contactsDatabase = ContactsDatabase.getGetInstance(context);
@@ -360,7 +361,7 @@ public class ReturnsViewModel extends ViewModel {
     }
 
 
-    public String CreateUUID(String BillNumber, String LastUUID, String date, ArrayList<ItemDatum> list, String referenceUUID) {
+    public String CreateUUIDReturns(String BillNumber, String LastUUID, String date, ArrayList<ItemDatum> list, String referenceUUID) {
         //   Date df = new Date();
         DecimalFormat numberFormat = new DecimalFormat("#.00");
 
@@ -525,5 +526,6 @@ public class ReturnsViewModel extends ViewModel {
         return String.valueOf(newNumber);
 
     }
+
 
 }

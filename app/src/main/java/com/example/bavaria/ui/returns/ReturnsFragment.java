@@ -1,8 +1,10 @@
 package com.example.bavaria.ui.returns;
 
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -26,6 +28,7 @@ import com.example.bavaria.ui.home.HomeViewModel;
 import com.example.bavaria.ui.roomContacts.HeaderBill;
 import com.example.bavaria.ui.roomContacts.backup.ItemsBackup;
 import com.example.bavaria.ui.roomContacts.productRoom.ItemsBill;
+import com.example.bavaria.ui.roomContacts.returnsBill.HeaderReturn;
 import com.example.bavaria.ui.utils.SharedPreferencesBillStatu;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -42,6 +45,7 @@ public class ReturnsFragment extends Fragment {
     List<ItemsModels> itemsModelsk;
     List<ItemsModels> itemsReturn;
     private String startDate = "";
+    private String stringUUID = "";
     HomeViewModel homeViewModel;
 
 
@@ -76,6 +80,12 @@ public class ReturnsFragment extends Fragment {
 
                 returnsViewModel.getRoot(binding.com.getText().toString(), getContext());
 
+            }
+        });
+        returnsViewModel.stringUUID.observe(getActivity(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                stringUUID=s;
             }
         });
 
@@ -197,6 +207,7 @@ public class ReturnsFragment extends Fragment {
         //  });
 
         binding.button3.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
                 int state=0;
@@ -210,7 +221,7 @@ public class ReturnsFragment extends Fragment {
 
 
                     //To Create Date Time Bill
-              //      String TimeRicet = homeViewModel.getTimeBill();
+                     String TimeRicet = homeViewModel.getTimeBill();
 
                     ArrayList<ItemDatum> itemData = new ArrayList<>();
                     ArrayList<ItemsBill> ItemsBillRoom = new ArrayList<>();
@@ -223,15 +234,7 @@ public class ReturnsFragment extends Fragment {
                     int itemId = 0;
                     for (ItemsModels i : itemsReturn) {
 
-                        Log.d("onSuccess1",
-                                //    "-" + Double.valueOf(i.getQuantity()) +"-" +
-                                //    Double.valueOf(i.getPrice()) +"-" +
-                                //    Double.valueOf(i.getPrice())
-                                //    +"-]" +"s"+
-                                //    i.getDescription() +"s" +"-]" +i.getBarcode()+"-" +i.getUnitType()
-                                //            + "-" +i.getItemType() +
-                                //    "-" +
-                                String.valueOf( i.getItemCode()));
+
                         //To Create List to UUID
                         itemData.add(homeViewModel.getItems(
                                 Double.valueOf(i.getQuantity()),
@@ -255,13 +258,7 @@ public class ReturnsFragment extends Fragment {
 
                         ));
 
-                        //To Create List to Room Backup
-                        ItemsBillRoomBackup.add(homeViewModel.setItemsRoomBackup(i.getDescription(), Double.valueOf(i.getPrice()), numberRicet, String.valueOf(itemId)));
 
-                        // Tax += i.getTax();
-                        // price += i.getprice();
-                        // totalPrice += i.getTotal();
-//
                         price += Double.valueOf(i.getPrice());
                         Tax = (price * 14.0) / 100;
                         totalPrice = price + Tax;
@@ -278,7 +275,7 @@ public class ReturnsFragment extends Fragment {
 
 
                     //To Create UUID
-              //      String uu = homeViewModel.CreateUUID(numberRicet, "", TimeRicet, itemData);
+                    String uu = returnsViewModel.CreateUUIDReturns(numberRicet, "", TimeRicet, itemData,stringUUID);
                  //   Log.d("onSuccess", uu);
                  //   String QR = " https://preprod.invoicing.eta.gov.eg/receipts/search/" + uu;
 
@@ -286,10 +283,10 @@ public class ReturnsFragment extends Fragment {
                     //    String url ="https://preprod.invoicing.eta.gov.eg/receipts/search/a700243730510ebd8499d9d895ad7eb4ee4ba9d22b3bf155d81552f7e31dd93d";
                     //To Create New Bill in Room db
 
-                    HeaderBill headerBill = new HeaderBill();
-                //    headerBill.setUUID(uu);
+                    HeaderReturn headerBill = new HeaderReturn();
+                     headerBill.setUUID(uu);
                     headerBill.setBillNumber(numberRicet);
-                  //  headerBill.setInvoiceDate(TimeRicet);
+                     headerBill.setInvoiceDate(TimeRicet);
                     headerBill.setTax(Tax);
                     headerBill.setNetPrice(price);
                     headerBill.setTotalPrice(totalPrice);
