@@ -293,7 +293,7 @@ public class ReturnsFragment extends Fragment {
                   //  headerBill.setLink(QR);
 
                     //To Insert New Bill in Room db
-                    homeViewModel.headBill(headerBill, ItemsBillRoom, getActivity());
+                 //   homeViewModel.headBill(headerBill, ItemsBillRoom, getActivity());
 
                     // Root r = homeViewModel.sentApi(uu, itemData, TimeRicet, numberRicet);
 

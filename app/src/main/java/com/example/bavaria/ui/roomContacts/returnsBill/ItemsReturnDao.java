@@ -18,4 +18,7 @@ public interface ItemsReturnDao {
 
     @Query("select*from ItemsReturn")
     Single<List<ItemsReturn>> getitemsReturn();
+
+    @Query("DELETE FROM ItemsReturn")
+    Completable  delete() ;
 }

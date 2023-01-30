@@ -13,8 +13,11 @@ import io.reactivex.rxjava3.core.Single;
 @Dao
 public interface HeaderReturnDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    Completable insertheaderReturn(HeaderReturn type);
+    Completable insertHeaderReturn(HeaderReturn type);
 
     @Query("select*from HeaderReturn")
-    Single<List<HeaderReturn>> getheaderReturn();
+    Single<List<HeaderReturn>> getHeaderReturn();
+
+    @Query("DELETE FROM HeaderReturn")
+    Completable  delete() ;
 }
